@@ -5,16 +5,18 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
+import svelte from "@astrojs/svelte";
+
 // https://astro.build/config
 export default defineConfig({
-	experimental: {
-		fonts: [{
-			provider: fontProviders.adobe({ id: "oft2wtu" }),
-			name: "Myriad Pro",
-			cssVariable: "--font-myriad-pro"
-		}]
-	},
-  integrations: [mdx(), sitemap()],
+    experimental: {
+        fonts: [{
+            provider: fontProviders.adobe({ id: "oft2wtu" }),
+            name: "Myriad Pro",
+            cssVariable: "--font-myriad-pro"
+        }]
+    },
+  integrations: [mdx(), sitemap(), svelte()],
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],
