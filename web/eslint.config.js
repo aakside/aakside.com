@@ -5,6 +5,6 @@ export default [
   js.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   {
-    rules: {}
-  }
+    rules: {},
+  },
 ];

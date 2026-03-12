@@ -1,0 +1,312 @@
+---
+description: "Inspired by Bill Rankin, I made an interactive map that can overlay and move any geographic body anywhere."
+favicon: "/blog/wherever-isle-may-roam/favicon.svg"
+heroImage: "../../assets/blog/wherever-isle-may-roam/hero.png"
+pubDate: 0
+title: "Wherever Isle May Roam"
+updatedDate: 0
+---
+
+import { Image } from "astro:assets";
+import CodeFromUrl from "../../components/CodeFromUrl.astro";
+import { FourwaySplitMap } from "@aakside/svelte-maplibre-stack";
+import dualBasemapMissingLandImage from "../../assets/blog/wherever-isle-may-roam/dual-basemap-missing-land.png";
+import manhattanFigurePlaceholderImage from "../../assets/blog/wherever-isle-may-roam/manhattan-by-chicago.png";
+import ManhattanMapFigure from "../../components/blog/wherever-isle-may-roam/manhattan-map.svelte";
+import Manhattan from "../../components/blog/wherever-isle-may-roam/manhattan.json";
+
+## Manhattan on the Move
+
+In 9th grade, I discovered William Rankin's ["The Errant Isle"](http://radicalcartography.net/manhattan.html) and loved being able to compare the size of a familiar place to other notable areas, but the static images left me wanting more. Decades later, it inspired me to create an _interactive_ map that can overlay and move any geographic body _anywhere_. Some of the examples below of Manhattan Island on the move are inspired by Rankin's original work.
+
+<ManhattanMapFigure
+  client:only="svelte"
+  mapConfigPresets={[
+    {
+      caption: "Docking at Navy Pier.",
+      desiredWidthMeters: 11000,
+      layerConfigs: [
+        {
+          bearing: 0,
+          center: {
+            lng: -87.60852374017941,
+            lat: 41.87175882462512,
+          },
+          style: "https://tiles.openfreemap.org/styles/bright",
+        },
+        {
+          baseMapPosition: {
+            lng: -87.5780357257552,
+            lat: 41.93233259543629,
+          },
+          bearing: 28.9,
+          center: {
+            lng: -74.02511672470418,
+            lat: 40.74663655767597,
+          },
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+          geojson: Manhattan.geojson,
+          style: "https://tiles.openfreemap.org/styles/bright",
+        },
+      ],
+    },
+    {
+      caption: "Landed at Logan.",
+      desiredWidthMeters: 13000,
+      layerConfigs: [
+        {
+          bearing: 0,
+          center: { lng: -71.05308335464832, lat: 42.3600737078053 },
+          style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+        },
+        {
+          baseMapPosition: {
+            lng: -70.93098589955794,
+            lat: 42.33444781571319,
+          },
+          bearing: -94.69481204568348,
+          center: { lng: -73.98423988955895, lat: 40.696713105660365 },
+          geojson: Manhattan.geojson,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+        },
+      ],
+    },
+    {
+      caption:
+        "In search of a larger tidal estuary. Try comparing Central Park to Golden Gate Park.",
+      desiredWidthMeters: 65000,
+      layerConfigs: [
+        {
+          bearing: 0,
+          center: { lng: -122.21374839547263, lat: 37.666778417425895 },
+        },
+        {
+          baseMapPosition: {
+            lng: -122.29194048242766,
+            lat: 37.73140755999954,
+          },
+          bearing: 63.7163475596982,
+          center: { lng: -74.0007006538324, lat: 40.704584517377015 },
+          geojson: Manhattan.geojson,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+        },
+      ],
+    },
+    {
+      caption: "Manhattan en route to beach Manhattan Beach.",
+      desiredWidthMeters: 165000,
+      layerConfigs: [
+        {
+          bearing: 0,
+          center: { lng: -118.31508107831093, lat: 33.9564992910609 },
+        },
+        {
+          baseMapPosition: {
+            lng: -118.74521825448824,
+            lat: 33.57205083641303,
+          },
+          bearing: 74.39999999999986,
+          center: { lng: -73.34488859191379, lat: 40.54828309974769 },
+          geojson: Manhattan.geojson,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+        },
+      ],
+      style: "https://tiles.openfreemap.org/styles/liberty",
+    },
+    {
+      caption: "Brotherly love.",
+      desiredWidthMeters: 13000,
+      layerConfigs: [
+        {
+          bearing: 0,
+          center: { lng: -75.1626661884901, lat: 39.950848490016256 },
+          style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+        },
+        {
+          baseMapPosition: {
+            lng: -75.1188517650644,
+            lat: 39.8640306148111,
+          },
+          bearing: -162.40000000000003,
+          center: { lng: -73.95267766189863, lat: 40.69586249251924 },
+          geojson: Manhattan.geojson,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+        },
+      ],
+    },
+    {
+      caption: "Rectifying the Cha Chaan Teng deficit.",
+      desiredWidthMeters: 20000,
+      layerConfigs: [
+        {
+          bearing: 28.913152691267218,
+          center: { lng: 114.12848677033003, lat: 22.272936240035236 },
+        },
+        {
+          baseMapPosition: {
+            lng: 114.08127041469976,
+            lat: 22.23424311237285,
+          },
+          bearing: 29.74354406212842,
+          center: { lng: -73.90185495140781, lat: 40.82672286842751 },
+          geojson: Manhattan.geojson,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+        },
+      ],
+    },
+    {
+      caption:
+        "The distance between Nieuw Amsterdam and Harlem looks similar to the distance between Amsterdam and Haarlem.",
+      desiredWidthMeters: 20500,
+      layerConfigs: [
+        {
+          bearing: 51.18984463023775,
+          center: { lng: 4.739517088304751, lat: 52.39343218995583 },
+          style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+        },
+        {
+          baseMapPosition: { lng: 4.718919121989131, lat: 52.37830101100832 },
+          bearing: 165.08464915552838,
+          center: { lng: -73.94876127879073, lat: 40.77103699334282 },
+          geojson: Manhattan.geojson,
+          opacity: 0.65,
+          overlayCenter: { lng: Number(Manhattan.lon), lat: Number(Manhattan.lat) },
+          style: "https://tiles.openfreemap.org/styles/fiord",
+        },
+      ],
+    },
+  ]}
+>
+  <div slot="fallback">
+    <figure>
+      <Image
+        src={manhattanFigurePlaceholderImage}
+        alt="Manhattan in Lake Michigan next to Chicago."
+      />
+      <figcaption>Loading Manhattan on the move...</figcaption>
+    </figure>
+  </div>
+</ManhattanMapFigure>
+
+### Try it out!
+
+You can play with it at [Borders Without Borders](/projects/borders-without-borders)! You might notice instability when zooming (moreso with touch due to unintentional combined drag/zoom) and dealing with geography near poles, but I think it works well enough.
+
+## How I got here
+
+I hadn't used mapping libraries before, so I began by experimenting with GeoJSON layers and masks while playing with [Leaflet](https://leafletjs.com/), [MapLibre GL JS](https://github.com/maplibre/maplibre-gl-js), and [deck.gl](https://deck.gl/).
+
+<figure>
+  <video autoplay loop muted class="w-full">
+    <source src="/blog/wherever-isle-may-roam/overlay-mapper.webm" type="video/webm" />
+    <source src="/blog/wherever-isle-may-roam/overlay-mapper.mp4" type="video/mp4" />
+  </video>
+  <figcaption>
+    I tried to vibe code transformations under the Web Mercator projection, but I'm confident this
+    is wrong.
+  </figcaption>
+</figure>
+
+### [deck.gl](https://deck.gl/) and [react-map-gl](https://visgl.github.io/react-map-gl/)
+
+I tried to make things work with deck.gl, as it seemed the "coolest" and I thought I could utilize [`MaskExtension`](https://deck.gl/docs/api-reference/extensions/mask-extension) for clipping overlays (though unfortunately not in a [`GlobeView`](https://deck.gl/docs/api-reference/core/globe-view)). I overlaid one [`MapView`](https://deck.gl/docs/api-reference/core/map-view) over another, used [custom load resource](https://maplibre.org/maplibre-gl-js/docs/API/functions/addProtocol/) functions that transformed tiles/GeoJSON based on latitude, and modified the top map style to make portions, like water, transparent so that the lower map was visible through areas where the top style did not draw features.
+
+Before I successfully masked or clipped the top `MapView`, however, I was already feeling discouraged.
+
+#### Terrifying tile transformation
+
+At first I naively treated latitude/longitude coordinates as Cartesian coordinates, which led to very wonky/wrong behavior, especially when incorporating trigonometry to handle different bearings between maps because I completely forgot that the ranges for latitude and longitude are not the same, and that lines of latitude vary in length. After several failed attempts at projecting/unprojecting points between different spaces, I still couldn't correct the vibe-coded tile data transformation under Web Mercator projection, nor validate any AI-produced "improvements."
+
+#### No land's man
+
+I also temporarily chased basemap-over-basemap rendering and forgot clipping/masking could avoid that complexity. Whether I added layers to a single `MapView` or added another `MapView` over the base one, I needed to make the top map's water and "background" transparent. Unfortunately, doing so made everything except labels/text transparent because all the free tiles I came across explicitly encoded water polygons, but not land.
+
+<figure>
+  <Image src={dualBasemapMissingLandImage} alt="Overlaid map without water and land" />
+  <figcaption>
+    Atlantis rising? No, it's just [Hispaniola](https://en.wikipedia.org/wiki/Hispaniola) arriving
+    with delicious mangoes.
+  </figcaption>
+</figure>
+
+To get land to be opaque without resorting to further complicated tile data hackery, I added a land polygons layer with [data from MapTiler](https://docs.maptiler.com/schema/land/), but I disliked the idea of relying on another external service and I still would have had a lot of work to do to get things styled correctly.
+
+<figure>
+  <video autoplay loop muted class="w-full">
+    <source src="/blog/wherever-isle-may-roam/dual-basemap.webm" type="video/webm" />
+    <source src="/blog/wherever-isle-may-roam/dual-basemap.mkv" type="video/x-matroska" />
+    <source src="/blog/wherever-isle-may-roam/dual-basemap.mp4" type="video/mp4" />
+  </video>
+  <figcaption>Overlay now featuring land, but slowly.</figcaption>
+</figure>
+
+### [Svelte MapLibre GL](https://svelte-maplibre-gl.mierune.dev/)
+
+I almost gave up, but then I encountered the "scope" implementation in [Svelte MapLibre GL's "Side by Side" example](https://svelte-maplibre-gl.mierune.dev/examples/side-by-side). It overlays one map over another, using a simple CSS clipping mask to selectively display the top map, and I figured the approach would work for the geography clipping I sought. The fact that it would work on a globe excited me because I could theoretically then avoid all the Web Mercator-related troubles I had.
+I hacked together a proof of concept, but it was absurdly janky, and abused [`$effect`](https://svelte.dev/docs/svelte/$effect).
+
+<figure>
+  <CodeFromUrl
+    collapse={["1-68", "98-163"]}
+    collapseStyle="collapsible-auto"
+    lang="svelte"
+    title="Map.svelte"
+    url="https://raw.githubusercontent.com/aakside/svelte-maplibre-stack/5d5ca5e10495c3eda3ae823e0befdd233e5338a6/src/lib/Map.svelte"
+  />
+  <figcaption>
+    [Disgusting](https://github.com/aakside/svelte-maplibre-stack/blob/5d5ca5e10495c3eda3ae823e0befdd233e5338a6/src/lib/Map.svelte#L69),
+    but it [got even
+    worse](https://github.com/aakside/svelte-maplibre-stack/blob/d50513ffea74f3bb9d18161709aacb430f3039b3/src/lib/Map.svelte#L71-L138).
+  </figcaption>
+</figure>
+
+I needed more reasonable ways to synchronize map bearings, centers, and zooms. After much experimentation, I created the following ["Fourway Split Map"](https://github.com/aakside/svelte-maplibre-stack/blob/a22ba2908a69d333daa629ff6286a196fa1e162f/src/lib/FourwaySplitMap.svelte).
+
+<figure>
+  <div class="relative aspect-square w-full">
+    <FourwaySplitMap
+      client:only="svelte"
+      bearings={[0, 0, 0, 0]}
+      centers={[
+        { lng: -73.935242, lat: 40.73061 },
+        { lng: -50.62529, lat: -23.533773 },
+        { lng: 45.307045, lat: -4.322447 },
+        { lng: 76.889709, lat: 43.238949 },
+      ]}
+      minZoom={0.75}
+      styles={[
+        "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+        "https://tiles.openfreemap.org/styles/liberty",
+        "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+        "https://demotiles.maplibre.org/style.json",
+      ]}
+      zoom={1.5}
+    >
+      <div slot="fallback">Loading fourway split map...</div>
+    </FourwaySplitMap>
+  </div>
+  <figcaption>Try moving/rotating each map quadrant.</figcaption>
+</figure>
+
+The map in the top left quadrant "controls" the others by pushing drag/rotate interactions to them, but the other 3 maps also maintain their own positions/bearings. Zooming on any quadrant will update the zooms of all quadrants.
+
+<figure>
+  <CodeFromUrl
+    collapse={["1-50", "58-84"]}
+    collapseStyle="collapsible-auto"
+    lang="html"
+    title="zoom-and-planet-size-relation-on-globe.html"
+    url="https://raw.githubusercontent.com/maplibre/maplibre-gl-js/e9478ae76328e7c1606d649d84b56e3c1b9ca148/test/examples/zoom-and-planet-size-relation-on-globe.html"
+  />
+  <figcaption>
+    Synchronizing zoom levels between maps was daunting until I conveniently encountered this
+    snippet in [an
+    example](https://maplibre.org/maplibre-gl-js/docs/examples/zoom-and-planet-size-relation-on-globe/).
+  </figcaption>
+</figure>
+
+I ported the relevant logic from the Fourway Split Map into a [more flexible multi-layer map state class](https://github.com/aakside/svelte-maplibre-stack/blob/496558993fbfeb406c94cba01bcaa660d0fb10c8/src/lib/map-state.svelte.ts) used by the [`Map` component](https://github.com/aakside/svelte-maplibre-stack/blob/496558993fbfeb406c94cba01bcaa660d0fb10c8/src/lib/Map.svelte) demonstrated near the top of this post. I added hacky synchronization logic to ensure overlays are anchored to basemap locations and Svelte reactivity is both utilized and kept at bay.
+
+### Potential improvement
+
+I would love to figure out how to transform (and maybe even merge) tile data quickly to avoid overlaying maps and relying on CSS clipping, which interferes with renders of labels and 3D features at the edges of overlays. In addition to looking nicer and being more robust, using a single map with custom tiles could let you switch from a globe to a Web Mercator projection, which would let you see how places get distorted as they get dragged around on a familiar map.

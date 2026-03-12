@@ -1,0 +1,9 @@
+{
+  "component": "borders-without-borders.astro",
+  "description": "An interactive map featuring movable geographic overlays.",
+  "favicon": "/projects/borders-without-borders/favicon.png",
+  "heroImage": "../../assets/projects/borders-without-borders/hero.png",
+  "pubDate": 0,
+  "title": "Borders Without Borders",
+  "updatedDate": 0
+}

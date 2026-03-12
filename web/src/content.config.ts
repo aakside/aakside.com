@@ -1,36 +1,38 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const blog = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	// Type-check frontmatter using a schema
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			// Transform string to Date object
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: image().optional(),
-		}),
+  loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+  schema: ({ image }) =>
+    z.object({
+      description: z.string(),
+      favicon: z.string().optional(),
+      heroImage: image().optional(),
+      pubDate: z.coerce.date(),
+      title: z.string(),
+      updatedDate: z.coerce.date().optional(),
+    }),
 });
 
 const projects = defineCollection({
-	loader: glob({ base: './src/content/projects', pattern: '**/*.{md,mdx}' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: image().optional(),
-		}).transform((data) => {
-			if (!data.updatedDate) {
-				data.updatedDate = data.pubDate;
-			}
-			return data;
-		}),
+  loader: glob({ base: "./src/content/projects", pattern: "**/*.{json,md,mdx,toml,yaml,yml}" }),
+  schema: ({ image }) =>
+    z
+      .object({
+        component: z.string().optional(),
+        description: z.string(),
+        favicon: z.string().optional(),
+        heroImage: image().optional(),
+        pubDate: z.coerce.date(),
+        title: z.string(),
+        updatedDate: z.coerce.date().optional(),
+      })
+      .transform((data) => {
+        if (!data.updatedDate) {
+          data.updatedDate = data.pubDate;
+        }
+        return data;
+      }),
 });
 
 export const collections = { blog, projects };

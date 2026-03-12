@@ -1,20 +1,41 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import Project from '../../layouts/Project.astro';
+import { getCollection, render } from "astro:content";
+import Project from "../../layouts/Project.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('projects');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+  const posts = await getCollection("projects");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
 }
-type Props = CollectionEntry<'projects'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+
+const projectComponentModules = import.meta.glob("../../components/projects/*.astro", {
+  eager: true,
+}) as Record<string, { default: any }>;
+
+const componentPath = post.data.component
+  ? `../../components/projects/${post.data.component}`
+  : undefined;
+
+const ProjectComponent = componentPath
+  ? projectComponentModules[componentPath]?.default
+  : undefined;
+
+const hasContentBody = "body" in post && typeof post.body === "string";
+const Content = !ProjectComponent && hasContentBody ? (await render(post)).Content : undefined;
 ---
 
 <Project {...post.data}>
-	<Content />
+  {
+    ProjectComponent ? (
+      <ProjectComponent project={post.data} />
+    ) : Content ? (
+      <Content />
+    ) : (
+      <p>Error loading project.</p>
+    )
+  }
 </Project>

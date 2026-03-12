@@ -1,86 +1,172 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
 
-type Props = CollectionEntry<'blog'>['data'];
+type BlogHeading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+type Props = CollectionEntry<"blog">["data"] & {
+  headings?: BlogHeading[];
+};
+
+const { title, description, favicon, pubDate, updatedDate, heroImage, headings = [] } = Astro.props;
+const tocHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.text.toLowerCase() !== "toc",
+);
+
+function getTocItemClass(depth: number) {
+  if (depth <= 2) return "my-1";
+  if (depth === 3) return "my-1 ml-3";
+  return "my-1 ml-6";
+}
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--blue));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+  <head>
+    <BaseHead title={title} description={description} favicon={favicon} image={heroImage} />
+    <meta name="theme-color" content="steelblue" />
+    <script src="../scripts/theme-color.ts"></script>
+    <style>
+      @reference "tailwindcss";
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+      main {
+        width: calc(100% - 1em);
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero-image {
+        width: 100%;
+      }
+
+      .hero-image img {
+        display: block;
+        margin: 0 auto;
+        @apply rounded-xl;
+      }
+
+      .prose {
+        width: 720px;
+        max-width: calc(100% - 1em);
+        margin: auto;
+        padding: 1em;
+      }
+
+      .post-layout {
+        width: 100%;
+      }
+
+      .post-toc {
+        display: none;
+      }
+
+      .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: center;
+        line-height: 1;
+      }
+
+      .title h1 {
+        margin: 0 0 0.5em 0;
+      }
+
+      .date {
+        margin-bottom: 0.5em;
+      }
+
+      .last-updated-on {
+        font-style: italic;
+      }
+
+      :global(img, video) {
+        @apply rounded-xl;
+        max-width: 100%;
+        height: auto;
+      }
+
+      :global(.maplibregl-canvas) {
+        @apply rounded-xl;
+      }
+
+      @media (min-width: 1200px) {
+        .post-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 720px) minmax(220px, 280px);
+          justify-content: center;
+          align-items: start;
+          gap: 1.5rem;
+        }
+
+        .prose {
+          width: 100%;
+          margin: 0;
+        }
+
+        .post-toc {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <article>
+        <div class="hero-image">
+          {heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+        </div>
+        <div class="post-layout">
+          <div class="prose">
+            <div class="title">
+              <h1>{title}</h1>
+              <div class="date">
+                <FormattedDate date={pubDate} />
+                {
+                  updatedDate && (
+                    <div class="last-updated-on">
+                      Last updated on <FormattedDate date={updatedDate} />
+                    </div>
+                  )
+                }
+              </div>
+              <hr />
+            </div>
+            <slot />
+          </div>
+          {
+            tocHeadings.length > 0 && (
+              <aside
+                class="post-toc border-base-300 bg-base-100 mt-5 max-h-[calc(100vh-6rem)] overflow-auto rounded-xl border px-4 py-3 min-[1200px]:sticky min-[1200px]:top-5"
+                aria-label="Table of contents"
+              >
+                <h5 class="mb-2 text-base">On this page</h5>
+                <ul class="m-0 list-none p-0">
+                  {tocHeadings.map((heading) => (
+                    <li class={getTocItemClass(heading.depth)}>
+                      <a
+                        class="text-base-content/70 hover:text-base-content no-underline transition-colors"
+                        href={`#${heading.slug}`}
+                      >
+                        {heading.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )
+          }
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
