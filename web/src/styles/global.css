@@ -102,6 +102,92 @@ p {
   margin: 0;
 }
 
+mark {
+  background-color: var(--color-accent) !important;
+}
+
+.pagefind-ui {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-border-width: 0;
+
+  form.pagefind-ui__form::before {
+    @apply bg-base-content absolute top-4.5 left-1.75 -translate-y-1/2 mask-no-repeat;
+  }
+
+  input.pagefind-ui__search-input {
+    @apply focus:text-base-content not-placeholder-shown:text-base-content bg-base-100 text-base-300 input m-0 p-2 text-sm font-normal placeholder:italic;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply bg-base-content/50 hover:bg-base-content mt-1.5 mr-1 mb-0 ml-0 w-6 cursor-pointer rounded-l-none rounded-r-md border mask-no-repeat px-2 py-0;
+    font-size: 0;
+    mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>');
+  }
+
+  .pagefind-ui__drawer:not(.pagefind-ui__hidden) {
+    @apply text-base-content/70 mt-4 px-3 py-2 text-sm!;
+    div.pagefind-ui__results-area {
+      @apply m-0;
+
+      p.pagefind-ui__message {
+        @apply py-0 text-sm;
+      }
+
+      ol.pagefind-ui__results {
+        @apply py-0;
+        li.pagefind-ui__result {
+          @apply border-base-content/50 mb-0 border-b py-0!;
+
+          .pagefind-ui__result-link {
+            @apply text-base-content! text-base;
+          }
+          .pagefind-ui__result-excerpt {
+            @apply text-base-content/70 text-sm!;
+          }
+        }
+
+        li.pagefind-ui__result:first-child {
+          @apply border-base-content/50 mb-0 border-t;
+        }
+
+        li.pagefind-ui__result:last-child {
+          @apply border-b-0;
+        }
+      }
+    }
+  }
+}
+
+header nav .pagefind-ui {
+  input.pagefind-ui__search-input {
+    @apply border-base-300 h-full w-8 rounded-md border transition-[width] not-placeholder-shown:w-sm not-placeholder-shown:pl-7 not-focus:placeholder-shown:pr-0! focus:w-sm focus:pl-7;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply absolute top-0 right-0 h-full;
+  }
+
+  .pagefind-ui__drawer {
+    @apply bg-base-200 shadow-base-300 absolute right-0 z-50 w-full min-w-2xl overflow-auto rounded-lg shadow;
+  }
+}
+
+#site-search-modal .pagefind-ui {
+  input.pagefind-ui__search-input {
+    @apply h-9 w-[calc(100%-2.25rem)] rounded-md border p-2 pl-7;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply absolute top-0 right-8.75 h-9;
+  }
+
+  .pagefind-ui__drawer {
+    @apply static;
+    max-height: 60vh;
+    overflow: auto;
+  }
+}
+
 .sr-only {
   border: 0;
   padding: 0;

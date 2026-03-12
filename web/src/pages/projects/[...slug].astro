@@ -29,6 +29,10 @@ const Content = !ProjectComponent && hasContentBody ? (await render(post)).Conte
 ---
 
 <Project {...post.data}>
+  <section class="sr-only">
+    <h1>{post.data.title}</h1>
+    {post.data.description && <p>{post.data.description}</p>}
+  </section>
   {
     ProjectComponent ? (
       <ProjectComponent project={post.data} />
