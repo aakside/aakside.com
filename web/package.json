@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aakside/svelte-maplibre-stack": "file:../../svelte-maplibre-stack",
+    "@americana/maplibre-shield-generator": "^0.1.1",
     "@astrojs/check": "^0.9.7",
     "@astrojs/mdx": "^4.3.12",
     "@astrojs/rss": "^4.0.14",

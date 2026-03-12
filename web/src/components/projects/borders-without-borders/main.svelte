@@ -62,8 +62,8 @@
 
 <script lang="ts">
   import { Map, MapLayer, MapState } from "@aakside/svelte-maplibre-stack";
+  import { URLShieldRenderer } from "@americana/maplibre-shield-generator";
   import { bounds, BoundsFrom, controls, ControlFrom, disabled, draggable } from "@neodrag/svelte";
-  import PlaceSearch, { lookupRelationByOsmId, type NominatimResult } from "./search.svelte";
   import {
     Eye,
     EyeOff,
@@ -89,8 +89,12 @@
   import LayerSettings from "./layer-settings.svelte";
   import Share, { type ShareConfig } from "./share.svelte";
   import ImportConfig from "./import-config.svelte";
+  import PlaceSearch, { lookupRelationByOsmId, type NominatimResult } from "./search.svelte";
   import { decodeJsonFromUrl } from "../../../utils/url-codec";
   import { onMount } from "svelte";
+  import { installAmericanaRuntimeAssets } from "./americana";
+
+  const americanaShieldRenderers = new WeakMap<maplibregl.Map, URLShieldRenderer>();
 
   const searchParams = new URLSearchParams(window.location.search);
 
@@ -159,6 +163,16 @@
   let expanded = new SvelteSet<string>(["toolbar"]);
   let addLayerSelectedResult = $state<NominatimResult | undefined>(undefined);
   let importedConfigJson = $state<string | undefined>(undefined);
+
+  $effect(() => {
+    console.log("Americana mapState.layers", mapState.layers);
+    mapState.layers.forEach((layer) => {
+      if (layer.map && !americanaShieldRenderers.has(layer.map)) {
+        console.log("Americana mapState.layers 2", mapState.layers);
+        americanaShieldRenderers.set(layer.map, installAmericanaRuntimeAssets(layer.map));
+      }
+    });
+  });
 
   function toggleCollapsed(key: string) {
     expanded.has(key) ? expanded.delete(key) : expanded.add(key);
