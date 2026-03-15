@@ -33,10 +33,14 @@ function parseParamId(id: string): { kind: string; params: Record<string, string
 function tintFromBaseImage(
   base: maplibregl.StyleImage,
   rgb: [number, number, number],
-): maplibregl.StyleImage {
+): {
+  width: number;
+  height: number;
+  data: Uint8Array<ArrayBufferLike> | Uint8ClampedArray<ArrayBufferLike>;
+} {
   const src = base.data;
-  const out = new Uint8Array(src.length);
-  out.set(src);
+  const out = new Uint8Array(src.data.length);
+  out.set(src.data);
 
   const [tr, tg, tb] = rgb;
 
@@ -62,8 +66,8 @@ function tintFromBaseImage(
   }
 
   return {
-    width: base.width,
-    height: base.height,
+    width: base.data.width,
+    height: base.data.height,
     data: out,
   };
 }
@@ -120,7 +124,7 @@ export function installAmericanaRuntimeAssets(map: maplibregl.Map) {
     generated.add(id);
 
     const tinted = tintFromBaseImage(base, rgb);
-    map.addImage(id, tinted.spriteData!, {
+    map.addImage(id, tinted, {
       pixelRatio: (base as any).pixelRatio ?? 1,
     });
   };
