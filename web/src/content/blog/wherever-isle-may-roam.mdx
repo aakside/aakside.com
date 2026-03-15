@@ -1,5 +1,5 @@
 ---
-description: "Inspired by Bill Rankin, I made an interactive map that can overlay and move any geographic body anywhere."
+description: "Inspired by Bill Rankin, I made an interactive map that can overlay and move any geography anywhere. See and move the examples of Manhattan Island juxtaposed with notable areas around the world."
 favicon: "/blog/wherever-isle-may-roam/favicon.svg"
 heroImage: "../../assets/blog/wherever-isle-may-roam/hero.png"
 pubDate: 0
@@ -17,7 +17,7 @@ import Manhattan from "../../components/blog/wherever-isle-may-roam/manhattan.js
 
 ## Manhattan on the Move
 
-In 9th grade, I discovered William Rankin's ["The Errant Isle"](http://radicalcartography.net/manhattan.html) and loved being able to compare the size of a familiar place to other notable areas, but the static images left me wanting more. Decades later, it inspired me to create an _interactive_ map that can overlay and move any geographic body _anywhere_. Some of the examples below of Manhattan Island on the move are inspired by Rankin's original work.
+In 9th grade, I discovered William Rankin's ["The Errant Isle"](http://radicalcartography.net/manhattan.html) and loved being able to compare the size of a familiar place to other notable areas, but the static images left me wanting more. Decades later, it inspired me to create an _interactive_ map that can overlay and move any geographic body _anywhere_. Some examples below of Manhattan Island on the move are inspired by Rankin's original work.
 
 <ManhattanMapFigure
   client:only="svelte"
@@ -188,9 +188,9 @@ In 9th grade, I discovered William Rankin's ["The Errant Isle"](http://radicalca
   </div>
 </ManhattanMapFigure>
 
-### Try it out!
+## Try it out!
 
-You can play with it at [Borders Without Borders](/projects/borders-without-borders)! You might notice instability when zooming (moreso with touch due to unintentional combined drag/zoom) and dealing with geography near poles, but I think it works well enough.
+You can play with it at [Borders Without Borders](/projects/borders-without-borders)! You might notice instability when zooming (moreso with touch due to unintentional combined drag/zoom) and dealing with geography near poles.
 
 ## How I got here
 
@@ -202,8 +202,7 @@ I hadn't used mapping libraries before, so I began by experimenting with GeoJSON
     <source src="/blog/wherever-isle-may-roam/overlay-mapper.mp4" type="video/mp4" />
   </video>
   <figcaption>
-    I tried to vibe code transformations under the Web Mercator projection, but I'm confident this
-    is wrong.
+    I tried to vibe code transformations under the Web Mercator projection, but this looks wrong.
   </figcaption>
 </figure>
 
@@ -219,7 +218,7 @@ At first I naively treated latitude/longitude coordinates as Cartesian coordinat
 
 #### No land's man
 
-I also temporarily chased basemap-over-basemap rendering and forgot clipping/masking could avoid that complexity. Whether I added layers to a single `MapView` or added another `MapView` over the base one, I needed to make the top map's water and "background" transparent. Unfortunately, doing so made everything except labels/text transparent because all the free tiles I came across explicitly encoded water polygons, but not land.
+I also temporarily chased basemap-over-basemap rendering and forgot that clipping/masking could avoid that complexity. Whether I added layers to a single `MapView` or added another `MapView` over the base one, I needed to make the top map's water and "background" transparent. Unfortunately, doing so made everything except labels/text transparent because all the free tiles I came across explicitly encoded water polygons, but not land.
 
 <figure>
   <Image src={dualBasemapMissingLandImage} alt="Overlaid map without water and land" />
@@ -309,4 +308,4 @@ I ported the relevant logic from the Fourway Split Map into a [more flexible mul
 
 ### Potential improvement
 
-I would love to figure out how to transform (and maybe even merge) tile data quickly to avoid overlaying maps and relying on CSS clipping, which interferes with renders of labels and 3D features at the edges of overlays. In addition to looking nicer and being more robust, using a single map with custom tiles could let you switch from a globe to a Web Mercator projection, which would let you see how places get distorted as they get dragged around on a familiar map.
+I would love to figure out how to transform (and maybe even merge) tile data quickly to avoid overlaying maps and relying on CSS clipping, which interferes with label and 3D feature rendering at overlay edges. In addition to looking nicer and being more robust, using a single map with custom tiles would allow switching between globe and Web Mercator projections, offering an open-source [TrueSize.net](https://truesize.net/) experience, but with normal tile rendering and support for more geographies.
