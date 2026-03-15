@@ -3,10 +3,11 @@
 </script>
 
 <dialog id="app-info" class="modal">
-  <div class="modal-box">
+  <div class="modal-box overflow-visible">
     <form method="dialog">
-      <button class="btn btn-sm btn-square tooltip tooltip-info absolute top-2 right-2"
-        ><X /></button
+      <button
+        class="btn btn-sm btn-square tooltip tooltip-info absolute top-2 right-2"
+        data-tip="Close"><X /></button
       >
     </form>
     <h3 class="text-lg font-bold">Borders Without Borders</h3>
