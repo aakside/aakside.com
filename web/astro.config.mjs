@@ -104,7 +104,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
   },
-  site: "https://aakside.com",
+  site: 'https://aakside.github.io',
+  base: '/aakside.com',
   vite: {
     plugins: [tailwindcss()],
   },
