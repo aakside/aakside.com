@@ -1,7 +1,11 @@
 ---
 import { getCollection, render } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
-import { withGitContentDates } from "../../utils/content-git-dates";
+import {
+  getGitHubRepoPathForEntry,
+  latestCommitDiffUrlForEntry,
+  withGitContentDates,
+} from "../../utils/content-meta";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -13,8 +17,15 @@ export async function getStaticPaths() {
 
 const post = withGitContentDates<"blog">(Astro.props);
 const { Content, headings } = await render(post);
+const sourcePath = getGitHubRepoPathForEntry(post);
+const latestCommitDiffUrl = latestCommitDiffUrlForEntry(post);
 ---
 
-<BlogPost {...post.data} headings={headings}>
+<BlogPost
+  {...post.data}
+  headings={headings}
+  sourcePath={sourcePath}
+  latestCommitDiffUrl={latestCommitDiffUrl}
+>
   <Content />
 </BlogPost>

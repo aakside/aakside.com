@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import Project from "../../layouts/Project.astro";
-import { withGitContentDates } from "../../utils/content-git-dates";
+import { withGitContentDates } from "../../utils/content-meta";
 
 export async function getStaticPaths() {
   const posts = await getCollection("projects");

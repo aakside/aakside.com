@@ -5,7 +5,7 @@ import BaseHead from "../../components/BaseHead.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { withGitContentDates } from "../../utils/content-git-dates";
+import { withGitContentDates } from "../../utils/content-meta";
 
 const posts = (await getCollection("projects"))
   .map(withGitContentDates)

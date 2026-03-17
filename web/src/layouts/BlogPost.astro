@@ -1,9 +1,11 @@
 ---
+import { History } from "@lucide/astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
+import { GITHUB_REPO_URL } from "../consts";
 
 type BlogHeading = {
   depth: number;
@@ -13,6 +15,8 @@ type BlogHeading = {
 
 type Props = CollectionEntry<"blog">["data"] & {
   headings?: BlogHeading[];
+  latestCommitDiffUrl?: string;
+  sourcePath?: string;
 };
 
 const {
@@ -24,7 +28,11 @@ const {
   heroAlt,
   heroImage,
   headings = [],
+  latestCommitDiffUrl,
+  sourcePath,
 } = Astro.props;
+
+const historyUrl = sourcePath ? `${GITHUB_REPO_URL}/commits/HEAD/${sourcePath}` : undefined;
 const tocHeadings = headings.filter(
   (heading) => heading.depth >= 2 && heading.text.toLowerCase() !== "toc",
 );
@@ -92,14 +100,6 @@ function getTocItemClass(depth: number) {
         margin: 0 0 0.1em 0;
       }
 
-      .date {
-        margin-bottom: 0.5em;
-      }
-
-      .last-updated-on {
-        font-style: italic;
-      }
-
       :global(img, video) {
         @apply rounded-xl;
         max-width: 100%;
@@ -142,12 +142,30 @@ function getTocItemClass(depth: number) {
           <div class="prose">
             <div class="title">
               <h1>{title}</h1>
-              <div class="date">
-                <FormattedDate date={pubDate} />
+              <div class="mb-1 flex flex-col items-center">
+                <div>Published on <FormattedDate date={pubDate} /></div>
                 {
                   updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
-                    <div class="last-updated-on">
-                      Last updated on <FormattedDate date={updatedDate} />
+                    <div class="inline-flex items-baseline gap-1 leading-normal italic">
+                      Updated on{" "}
+                      {latestCommitDiffUrl ? (
+                        <a href={latestCommitDiffUrl} rel="noopener noreferrer" target="_blank">
+                          <FormattedDate date={updatedDate} />
+                        </a>
+                      ) : (
+                        <FormattedDate date={updatedDate} />
+                      )}
+                      {historyUrl && (
+                        <a
+                          aria-label="View file history"
+                          class="link link-hover ml-1 inline-flex items-center self-center"
+                          href={historyUrl}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          <History class="relative top-px size-[1em]" />
+                        </a>
+                      )}
                     </div>
                   )
                 }
