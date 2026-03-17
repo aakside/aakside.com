@@ -1,8 +1,11 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+export const BLOG_FILE_EXTENSIONS = ["md", "mdx"];
+export const PROJECTS_FILE_EXTENSIONS = ["json", "md", "mdx", "toml", "yaml", "yml"];
+
 const blog = defineCollection({
-  loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+  loader: glob({ base: "./src/content/blog", pattern: `**/*.{${BLOG_FILE_EXTENSIONS.join(",")}}` }),
   schema: ({ image }) =>
     z.object({
       description: z.string(),
@@ -16,7 +19,10 @@ const blog = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ base: "./src/content/projects", pattern: "**/*.{json,md,mdx,toml,yaml,yml}" }),
+  loader: glob({
+    base: "./src/content/projects",
+    pattern: `**/*.{${PROJECTS_FILE_EXTENSIONS.join(",")}}`,
+  }),
   schema: ({ image }) =>
     z
       .object({

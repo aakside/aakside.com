@@ -15,15 +15,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout git repository
         uses: actions/checkout@v5
-      - name: Install, build, and upload your site
+        with:
+          fetch-depth: 0
+      - name: Install, build, and upload site
         uses: withastro/action@v5
         with:
           path: web
           node-version: 22
-        # env:
-          # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
 
   deploy:
     needs: build
