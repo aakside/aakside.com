@@ -4,17 +4,17 @@ interface Props {
 }
 
 const { date } = Astro.props;
+const fallbackDateTime = date.toLocaleDateString("en-us", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+  timeZoneName: "short",
+});
 ---
 
-<time datetime={date.toISOString()}>
-  {
-    date.toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "numeric",
-      hour12: false,
-    })
-  }
+<time data-localized-date datetime={date.toISOString()}>
+  {fallbackDateTime}
 </time>
