@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from "astro:content";
+import Project from "../../layouts/Project.astro";
+import { withGitContentDates } from "../../utils/content-meta";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("projects");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+const project = withGitContentDates<"projects">(Astro.props);
+
+const projectComponentModules = import.meta.glob("../../components/projects/*.astro", {
+  eager: true,
+}) as Record<string, { default: any }>;
+
+const componentPath = project.data.component
+  ? `../../components/projects/${project.data.component}`
+  : undefined;
+
+const ProjectComponent = componentPath
+  ? projectComponentModules[componentPath]?.default
+  : undefined;
+
+const hasContentBody = "body" in project && typeof project.body === "string";
+const Content = !ProjectComponent && hasContentBody ? (await render(project)).Content : undefined;
+---
+
+<Project {...project.data}>
+  <section class="sr-only">
+    <h1>{project.data.title}</h1>
+    {project.data.description && <p>{project.data.description}</p>}
+  </section>
+  {
+    ProjectComponent ? (
+      <ProjectComponent project={project.data} />
+    ) : Content ? (
+      <Content />
+    ) : (
+      <p>Error loading project.</p>
+    )
+  }
+</Project>

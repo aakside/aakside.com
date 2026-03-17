@@ -1,0 +1,73 @@
+---
+import { SITE_TITLE } from "../consts";
+import HeaderLink from "./HeaderLink.astro";
+import Search from "astro-pagefind/components/Search";
+import { X } from "@lucide/astro";
+---
+
+<header class="bg-base-200 overflow-visible px-4 shadow-[0_2px_8px_var(--color-base-300)]">
+  <nav class="flex items-center justify-between gap-2 overflow-visible">
+    <div class="m-0 text-2xl"><a class="px-2 py-4 no-underline" href="/">{SITE_TITLE}</a></div>
+    <div class="internal-links [&_a.active]:text-accent">
+      <HeaderLink href="/about">About</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+      <HeaderLink href="/projects">Projects</HeaderLink>
+      <div class="inline md:hidden">
+        <HeaderLink
+          onclick="document.getElementById('site-search-modal')?.showModal()"
+          class="cursor-pointer">Search</HeaderLink
+        >
+      </div>
+    </div>
+    <div
+      class="hidden md:relative md:flex md:min-w-[16rem] md:items-center md:justify-end lg:min-w-88"
+    >
+      <Search
+        id="search-desktop"
+        className="pagefind-ui"
+        uiOptions={{ showImages: true, showSubResults: true }}
+      />
+    </div>
+  </nav>
+
+  <dialog id="site-search-modal" class="modal md:hidden">
+    <div class="modal-box bg-base-200 w-11/12 max-w-lg overflow-visible p-3">
+      <form method="dialog" class="mb-2 flex justify-end">
+        <button
+          class="btn btn-sm btn-square tooltip tooltip-info absolute top-2 right-2 z-20"
+          data-tip="Close search"
+          aria-label="Close search"><X /></button
+        >
+      </form>
+      <Search
+        id="search-modal"
+        className="pagefind-ui"
+        uiOptions={{ autofocus: true, showImages: true, showSubResults: true }}
+      />
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>Close</button>
+    </form>
+  </dialog>
+</header>
+<style>
+  @reference "tailwindcss";
+
+  header {
+    @apply m-0 py-1;
+  }
+
+  nav .internal-links a {
+    @apply px-1 py-0 pt-1 text-lg no-underline;
+  }
+
+  nav .internal-links a.active {
+    @apply border-current;
+  }
+
+  @media (max-width: 720px) {
+    nav .internal-links a {
+      padding-inline: 0.35rem;
+    }
+  }
+</style>

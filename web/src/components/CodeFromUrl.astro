@@ -1,0 +1,76 @@
+---
+import { Code } from "astro-expressive-code/components";
+
+type FetchResult = { ok: true; code: string } | { ok: false; status?: number; statusText?: string };
+
+const CODE_FROM_URL_CACHE_KEY = "__codeFromUrlCache__";
+
+const globalScope = globalThis as typeof globalThis & {
+  [CODE_FROM_URL_CACHE_KEY]?: Map<string, Promise<FetchResult>>;
+};
+
+const sourceCache =
+  globalScope[CODE_FROM_URL_CACHE_KEY] ??
+  (globalScope[CODE_FROM_URL_CACHE_KEY] = new Map<string, Promise<FetchResult>>());
+
+function getCachedSource(url: string): Promise<FetchResult> {
+  const cached = sourceCache.get(url);
+  if (cached) {
+    return cached;
+  }
+
+  const request = (async (): Promise<FetchResult> => {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        return { ok: true, code: await response.text() };
+      }
+      return { ok: false, status: response.status, statusText: response.statusText };
+    } catch {
+      return { ok: false };
+    }
+  })();
+
+  sourceCache.set(url, request);
+  return request;
+}
+
+interface Props {
+  url: string;
+  fallback?: string;
+  cache?: boolean;
+  [key: string]: unknown;
+}
+
+const {
+  url,
+  fallback = "// Unable to load source code from URL.",
+  cache = true,
+  ...codeProps
+}: Props = Astro.props;
+
+let code = fallback;
+
+const source = cache
+  ? await getCachedSource(url)
+  : await (async (): Promise<FetchResult> => {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          return { ok: true, code: await response.text() };
+        }
+        return { ok: false, status: response.status, statusText: response.statusText };
+      } catch {
+        return { ok: false };
+      }
+    })();
+if (source.ok) {
+  code = source.code;
+} else if (source.status !== undefined) {
+  code = `${fallback}\n// HTTP: ${source.status} ${source.statusText ?? ""}\n// URL: ${url}`;
+} else {
+  code = `${fallback}\n// URL: ${url}`;
+}
+---
+
+<Code code={code} {...codeProps} />

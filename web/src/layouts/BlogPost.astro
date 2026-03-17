@@ -1,0 +1,203 @@
+---
+import { History } from "@lucide/astro";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+import { GITHUB_REPO_URL } from "../consts";
+
+type BlogHeading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+
+type Props = CollectionEntry<"blog">["data"] & {
+  headings?: BlogHeading[];
+  latestCommitDiffUrl?: string;
+  sourcePath?: string;
+};
+
+const {
+  title,
+  description,
+  favicon,
+  pubDate,
+  updatedDate,
+  heroAlt,
+  heroImage,
+  headings = [],
+  latestCommitDiffUrl,
+  sourcePath,
+} = Astro.props;
+
+const historyUrl = sourcePath ? `${GITHUB_REPO_URL}/commits/HEAD/${sourcePath}` : undefined;
+const tocHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.text.toLowerCase() !== "toc",
+);
+
+function getTocItemClass(depth: number) {
+  if (depth <= 2) return "my-1";
+  if (depth === 3) return "my-1 ml-3";
+  return "my-1 ml-6";
+}
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      favicon={favicon}
+      heroAlt={heroAlt}
+      image={heroImage}
+    />
+    <meta name="theme-color" content="steelblue" />
+    <script src="../scripts/theme-color.ts"></script>
+    <style>
+      @reference "tailwindcss";
+
+      main {
+        width: calc(100% - 1em);
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero-image {
+        width: 100%;
+      }
+
+      .hero-image img {
+        display: block;
+        margin: 0 auto;
+        @apply rounded-xl;
+      }
+
+      .prose {
+        width: 720px;
+        max-width: calc(100% - 1em);
+        margin: auto;
+        padding: 1em;
+      }
+
+      .post-layout {
+        width: 100%;
+      }
+
+      .post-toc {
+        display: none;
+      }
+
+      .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: center;
+        line-height: 1;
+      }
+
+      .title h1 {
+        margin: 0 0 0.1em 0;
+      }
+
+      :global(img, video) {
+        @apply rounded-xl;
+        max-width: 100%;
+        height: auto;
+      }
+
+      :global(.maplibregl-canvas) {
+        @apply rounded-xl;
+      }
+
+      @media (min-width: 1200px) {
+        .post-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 720px) minmax(220px, 280px);
+          justify-content: center;
+          align-items: start;
+          gap: 1.5rem;
+        }
+
+        .prose {
+          width: 100%;
+          margin: 0;
+        }
+
+        .post-toc {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <article>
+        <div class="hero-image">
+          {heroImage && <Image alt={heroAlt!} height={510} src={heroImage} width={1020} />}
+        </div>
+        <div class="post-layout">
+          <div class="prose">
+            <div class="title">
+              <h1>{title}</h1>
+              <div class="mb-1 flex flex-col items-center">
+                <div>Published on <FormattedDate date={pubDate} /></div>
+                {
+                  updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
+                    <div class="inline-flex items-baseline gap-1 leading-normal italic">
+                      Updated on{" "}
+                      {latestCommitDiffUrl ? (
+                        <a href={latestCommitDiffUrl} rel="noopener noreferrer" target="_blank">
+                          <FormattedDate date={updatedDate} />
+                        </a>
+                      ) : (
+                        <FormattedDate date={updatedDate} />
+                      )}
+                      {historyUrl && (
+                        <a
+                          aria-label="View file history"
+                          class="link link-hover ml-1 inline-flex items-center self-center"
+                          href={historyUrl}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          <History class="relative top-px size-[1em]" />
+                        </a>
+                      )}
+                    </div>
+                  )
+                }
+              </div>
+              <hr />
+            </div>
+            <slot />
+          </div>
+          {
+            tocHeadings.length > 0 && (
+              <aside
+                class="post-toc border-base-300 bg-base-100 mt-5 max-h-[calc(100vh-6rem)] overflow-auto rounded-xl border px-4 py-3 min-[1200px]:sticky min-[1200px]:top-5"
+                aria-label="Table of contents"
+              >
+                <h5 class="mb-2 text-base">On this page</h5>
+                <ul class="m-0 list-none p-0">
+                  {tocHeadings.map((heading) => (
+                    <li class={getTocItemClass(heading.depth)}>
+                      <a
+                        class="text-base-content/70 hover:text-base-content no-underline transition-colors"
+                        href={`#${heading.slug}`}
+                      >
+                        {heading.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )
+          }
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

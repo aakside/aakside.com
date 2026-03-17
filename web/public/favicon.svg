@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="38.992573mm"
+   height="51.374741mm"
+   viewBox="0 0 38.992573 51.374741"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-73.659766,-63.792969)">
+    <g
+       id="text1"
+       style="opacity:1">
+      <path
+         style="font-size:88.1944px;font-family:hammerhead;-inkscape-font-specification:hammerhead;text-align:center;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;fill:#0e3e5d;fill-opacity:1;stroke:none;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 76.664062,63.792969 -1.609375,2.835937 4.025391,6.738281 -0.480469,0.416016 -4.939843,39.423567 2.65039,1.96094 10.759766,-5.02735 1.0625,-1.43359 2.152734,-19.292708 h 6.445313 l -1.992318,17.884768 2.650391,1.95898 10.759768,-5.02734 1.06445,-1.43945 3.43958,-28.486333 -0.58007,-1.630859 -8.9961,-8.378906 -1.27734,-0.501953 z m 3.304688,3.75 h 21.0918 l 7.74218,7.210937 -3.16418,26.511724 -6.703133,3.13085 1.810673,-16.595699 -1.857418,-2.136719 H 88.658203 l -1.855469,1.609375 -2.238672,19.898173 -6.707031,3.13281 4.228906,-34.384498 h 6.261719 l -0.664062,4.652344 1.857422,2.138671 h 10.230468 l 1.855466,-1.605468 0.96875,-6.703125 -0.59765,-1.658203 -1.85157,-1.675782 -1.257808,-0.484375 H 81.785156 Z m 12.394531,6.791015 h 5.802735 l 0.576171,0.519532 -0.59375,4.107421 h -6.445312 z"
+         id="path3" />
+      <path
+         style="font-size:88.1944px;font-family:hammerhead;-inkscape-font-specification:hammerhead;text-align:center;baseline-shift:baseline;text-anchor:middle;display:inline;overflow:visible;vector-effect:none;fill:#ffffff;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 107.35542,102.53254 -10.759716,5.02708 2.293054,-20.02013 h -10.23055 l -2.381248,20.90207 -10.759717,5.02708 4.938886,-39.422892 H 90.51029 l -0.970138,6.790968 h 10.23055 l 0.970138,-6.702774 -1.852082,-1.675693 H 80.720712 L 76.66377,65.66728 h 25.1354 l 8.99583,8.378468 z"
+         id="path4" />
+    </g>
+  </g>
+</svg>

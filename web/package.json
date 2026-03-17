@@ -1,0 +1,48 @@
+{
+  "name": "web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "dev": "astro dev",
+    "format": "prettier --write .",
+    "lint": "eslint 'src/**/*.{js,astro}'",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@aakside/svelte-maplibre-stack": "file:../../svelte-maplibre-stack",
+    "@americana/maplibre-shield-generator": "^0.1.1",
+    "@astrojs/check": "^0.9.7",
+    "@astrojs/mdx": "^4.3.12",
+    "@astrojs/rss": "^4.0.14",
+    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/svelte": "^7.2.5",
+    "@expressive-code/plugin-collapsible-sections": "^0.41.7",
+    "@lucide/astro": "^0.575.0",
+    "@lucide/svelte": "^0.575.0",
+    "@neodrag/svelte": "^3.0.0-next.8",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.4",
+    "astro-expressive-code": "^0.41.7",
+    "astro-pagefind": "^1.8.5",
+    "daisyui": "^5.5.19",
+    "geojson": "^0.5.0",
+    "maplibre-gl": "^5.17.0",
+    "remark-toc": "^9.0.0",
+    "sharp": "^0.34.3",
+    "svelte": "^5.49.1",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "@typescript-eslint/parser": "^8.49.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-astro": "^1.5.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-svelte": "^3.4.1",
+    "prettier-plugin-tailwindcss": "^0.7.2"
+  }
+}

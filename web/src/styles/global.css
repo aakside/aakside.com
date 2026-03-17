@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "dark-custom";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(34.8% 0.074 242.749);
+  --color-base-200: oklch(28.9% 0.06 240.876);
+  --color-base-300: oklch(32.4% 0.072 240.79);
+  --color-base-content: #ffffff;
+  --color-primary: oklch(95% 0.026 236.824);
+  --color-primary-content: oklch(40.124% 0.068 197.603);
+  --color-secondary: oklch(60.682% 0.108 309.782);
+  --color-secondary-content: oklch(96% 0.016 293.756);
+  --color-accent: oklch(87% 0.169 91.605);
+  --color-accent-content: oklch(18.685% 0.02 94.555);
+  --color-neutral: oklch(36.2% 0.065 241.966);
+  --color-neutral-content: oklch(97.9% 0.045 230.8);
+  --color-info: oklch(60% 0.126 221.723);
+  --color-info-content: oklch(93% 0.031 262.88);
+  --color-success: oklch(84% 0.143 164.978);
+  --color-success-content: oklch(12.541% 0.033 149.213);
+  --color-warning: oklch(82% 0.178 80.3);
+  --color-warning-content: oklch(27% 0.077 45.635);
+  --color-error: oklch(74.2% 0.282 25.331);
+  --color-error-content: oklch(14.79% 0.038 27.33);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+:root {
+  --box-shadow:
+    0 2px 6px oklch(from var(--color-base-300) l c h / 0.25),
+    0 8px 24px oklch(from var(--color-base-300) l c h / 0.33),
+    0 16px 32px oklch(from var(--color-base-300) l c h / 0.33);
+}
+
+body {
+  font-family: var(--font-myriad-pro), sans-serif;
+}
+
+main {
+  width: 720px;
+  max-width: calc(100% - 2em);
+  margin: auto;
+  padding: 3em 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3.052em;
+}
+
+h2 {
+  font-size: 2.441em;
+}
+
+h3 {
+  font-size: 1.953em;
+}
+
+h4 {
+  font-size: 1.563em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+.prose p {
+  margin-bottom: 2em;
+}
+
+.prose hr {
+  margin: 0;
+}
+
+mark {
+  background-color: var(--color-accent) !important;
+}
+
+.pagefind-ui {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-border-width: 0;
+
+  form.pagefind-ui__form::before {
+    @apply bg-base-content absolute top-4.5 left-1.75 -translate-y-1/2 mask-no-repeat;
+  }
+
+  input.pagefind-ui__search-input {
+    @apply focus:text-base-content not-placeholder-shown:text-base-content bg-base-100 text-base-300 input m-0 p-2 text-sm font-normal placeholder:italic;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply bg-base-content/50 hover:bg-base-content mt-1.5 mr-1 mb-0 ml-0 w-6 cursor-pointer rounded-l-none rounded-r-md border mask-no-repeat px-2 py-0;
+    font-size: 0;
+    mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>');
+  }
+
+  .pagefind-ui__drawer:not(.pagefind-ui__hidden) {
+    @apply text-base-content/70 mt-4 px-3 py-2 text-sm!;
+    div.pagefind-ui__results-area {
+      @apply m-0;
+
+      p.pagefind-ui__message {
+        @apply py-0 text-sm;
+      }
+
+      ol.pagefind-ui__results {
+        @apply py-0;
+        li.pagefind-ui__result {
+          @apply border-base-content/50 mb-0 border-b py-0!;
+
+          .pagefind-ui__result-nested .pagefind-ui__result-link::before {
+            content: "↳";
+          }
+
+          .pagefind-ui__result-link {
+            @apply text-base-content! text-base;
+          }
+          .pagefind-ui__result-excerpt {
+            @apply text-base-content/70 text-sm!;
+          }
+        }
+
+        li.pagefind-ui__result:first-child {
+          @apply border-base-content/50 mb-0 border-t;
+        }
+
+        li.pagefind-ui__result:last-child {
+          @apply border-b-0;
+        }
+      }
+    }
+  }
+}
+
+header nav .pagefind-ui {
+  input.pagefind-ui__search-input {
+    @apply border-base-300 h-full w-8 rounded-md border transition-[width] not-placeholder-shown:w-sm not-placeholder-shown:pl-7 not-focus:placeholder-shown:pr-0! focus:w-sm focus:pl-7;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply absolute top-0 right-0 h-full;
+  }
+
+  .pagefind-ui__drawer {
+    @apply bg-base-200 shadow-base-300 absolute right-0 z-50 w-full min-w-2xl overflow-auto rounded-lg shadow;
+  }
+}
+
+#site-search-modal .pagefind-ui {
+  input.pagefind-ui__search-input {
+    @apply h-9 w-[calc(100%-2.25rem)] rounded-md border p-2 pl-7;
+  }
+
+  button.pagefind-ui__search-clear {
+    @apply absolute top-0 right-8.75 h-9;
+  }
+
+  .pagefind-ui__drawer {
+    @apply static;
+    max-height: 60vh;
+    overflow: auto;
+  }
+}
+
+.sr-only {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(1px 1px 1px 1px);
+  /* maybe deprecated but we need to support legacy browsers */
+  clip: rect(1px, 1px, 1px, 1px);
+  /* modern browsers, clip-path works inwards from each corner */
+  clip-path: inset(50%);
+  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+  white-space: nowrap;
+}
