@@ -76,7 +76,6 @@
     Map as MapIcon,
     MapPinned,
     MapPlus,
-    Move,
     Pencil,
     Settings,
     Share2,
@@ -112,6 +111,7 @@
       },
     ]),
   );
+  // svelte-ignore state_referenced_locally
   layersMetadata.set(mapState.layers[0].id, new LayerMetadata("Base Map"));
 
   async function importConfig(config: ShareConfig) {
@@ -160,22 +160,20 @@
 
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
-  let expanded = new SvelteSet<string>(["toolbar"]);
+  let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
   let addLayerSelectedResult = $state<NominatimResult | undefined>(undefined);
   let importedConfigJson = $state<string | undefined>(undefined);
 
   $effect(() => {
-    console.log("Americana mapState.layers", mapState.layers);
     mapState.layers.forEach((layer) => {
       if (layer.map && !americanaShieldRenderers.has(layer.map)) {
-        console.log("Americana mapState.layers 2", mapState.layers);
         americanaShieldRenderers.set(layer.map, installAmericanaRuntimeAssets(layer.map));
       }
     });
   });
 
-  function toggleCollapsed(key: string) {
-    expanded.has(key) ? expanded.delete(key) : expanded.add(key);
+  function toggleCollapsed(parent: string, key: string) {
+    expanded.get(parent) === key ? expanded.delete(parent) : expanded.set(parent, key);
   }
 
   function openDialogInParent(event: Event, selector: string) {
@@ -203,16 +201,16 @@
   >
     <div
       class="toolbar-header bg-base-300 md:active:cursor-grabbing"
-      class:md:rounded-lg={!expanded.has("toolbar")}
-      class:md:rounded-t-lg={expanded.has("toolbar")}
+      class:md:rounded-lg={expanded.get("root") !== "toolbar"}
+      class:md:rounded-t-lg={expanded.get("root") === "toolbar"}
     >
       <button
-        aria-pressed={expanded.has("toolbar")}
+        aria-pressed={expanded.get("root") === "toolbar"}
         class="btn btn-square tooltip tooltip-info tooltip-right"
-        data-tip={expanded.has("toolbar") ? "Hide toolbar." : "Show toolbar."}
-        onclick={() => toggleCollapsed("toolbar")}
+        data-tip={expanded.get("root") === "toolbar" ? "Hide toolbar." : "Show toolbar."}
+        onclick={() => toggleCollapsed("root", "toolbar")}
       >
-        {#if expanded.has("toolbar")}
+        {#if expanded.get("root") === "toolbar"}
           <ListChevronsDownUp />
         {:else}
           <ListChevronsUpDown />
@@ -227,7 +225,7 @@
       <InfoDialog />
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
-    {#if expanded.has("toolbar")}
+    {#if expanded.get("root") === "toolbar"}
       <div class="flex flex-col gap-2 px-3 py-2">
         <PlaceSearch
           onResultClick={(result) => {
@@ -245,11 +243,11 @@
           <button
             aria-label="Add Map Layer."
             class="btn btn-square tooltip tooltip-info tooltip-right"
-            class:btn-outline={expanded.has("add-layer")}
-            data-tip={expanded.has("add-layer")
+            class:btn-outline={expanded.get("toolbar") === "add-layer"}
+            data-tip={expanded.get("toolbar") === "add-layer"
               ? "Hide add layer panel."
               : "Add a new overlay layer."}
-            onclick={() => toggleCollapsed("add-layer")}><MapPlus /></button
+            onclick={() => toggleCollapsed("toolbar", "add-layer")}><MapPlus /></button
           >
           <button
             aria-label="Show your location on the map."
@@ -270,32 +268,32 @@
           <button
             aria-label="Import map configuration."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.has("import-config")}
-            data-tip={expanded.has("import-config")
+            class:btn-outline={expanded.get("toolbar") === "import-config"}
+            data-tip={expanded.get("toolbar") === "import-config"
               ? "Hide import configuration panel."
               : "Import map configuration."}
-            onclick={() => toggleCollapsed("import-config")}><Import /></button
+            onclick={() => toggleCollapsed("toolbar", "import-config")}><Import /></button
           >
           <button
             aria-label="Share map configuration."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.has("share-config")}
-            data-tip={expanded.has("share-config")
+            class:btn-outline={expanded.get("toolbar") === "share-config"}
+            data-tip={expanded.get("toolbar") === "share-config"
               ? "Hide share configuration panel."
               : "Copy share link to clipboard."}
-            onclick={() => toggleCollapsed("share-config")}><Share2 /></button
+            onclick={() => toggleCollapsed("toolbar", "share-config")}><Share2 /></button
           >
           <button
             aria-label="Global settings."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.has("global-settings")}
-            data-tip={expanded.has("global-settings")
+            class:btn-outline={expanded.get("toolbar") === "global-settings"}
+            data-tip={expanded.get("toolbar") === "global-settings"
               ? "Hide global settings panel."
               : "Adjust global settings."}
-            onclick={() => toggleCollapsed("global-settings")}><Settings /></button
+            onclick={() => toggleCollapsed("toolbar", "global-settings")}><Settings /></button
           >
         </div>
-        {#if expanded.has("add-layer")}
+        {#if expanded.get("toolbar") === "add-layer"}
           <div class="flex flex-col gap-2 px-1 pt-2">
             <PlaceSearch bind:selectedResult={addLayerSelectedResult} osmTypes={["relation"]} />
             <div class="flex w-full items-center gap-2">
@@ -329,7 +327,7 @@
             </div>
           </div>
         {/if}
-        {#if expanded.has("import-config")}
+        {#if expanded.get("toolbar") === "import-config"}
           <div class="flex flex-col gap-2 px-1 pt-2">
             <ImportConfig bind:configJson={importedConfigJson} />
             <div class="flex w-full items-center gap-2">
@@ -343,10 +341,10 @@
             </div>
           </div>
         {/if}
-        {#if expanded.has("share-config")}
+        {#if expanded.get("toolbar") === "share-config"}
           <Share {mapState} {layersMetadata} />
         {/if}
-        {#if expanded.has("global-settings")}
+        {#if expanded.get("toolbar") === "global-settings"}
           <div class="flex flex-col gap-2 px-1 pt-2">
             <div class="flex w-full items-center gap-2">
               <MapIcon class="size-4 shrink-0" />
@@ -418,13 +416,6 @@
                 <div class="collapse-content button-set text-sm">
                   {#if index !== 0}
                     <button
-                      aria-label="Move layer to new location."
-                      class="btn btn-square tooltip tooltip-info tooltip-right"
-                      data-tip="Move layer to a new position."
-                    >
-                      <Move />
-                    </button>
-                    <button
                       aria-label="Move layer to current location."
                       class="btn btn-square tooltip tooltip-info tooltip-right"
                       data-tip="Move layer to center of current view."
@@ -466,15 +457,15 @@
                   <button
                     aria-label="More settings."
                     class="btn btn-square tooltip tooltip-info"
-                    class:btn-outline={expanded.has(`${layer.id}-settings`)}
-                    data-tip={expanded.has(`${layer.id}-settings`)
+                    class:btn-outline={expanded.get(layer.id) === "settings"}
+                    data-tip={expanded.get(layer.id) === "settings"
                       ? "Hide extra settings."
                       : "Adjust more settings."}
-                    onclick={() => toggleCollapsed(`${layer.id}-settings`)}
+                    onclick={() => toggleCollapsed(layer.id, "settings")}
                     ><SlidersHorizontal /></button
                   >
                 </div>
-                {#if expanded.has(`${layer.id}-settings`)}
+                {#if expanded.get(layer.id) === "settings"}
                   <LayerSettings bind:layer={mapState.layers[index]} />
                 {/if}
               </details>
