@@ -9,6 +9,8 @@ function localizeDateElements() {
           day: "numeric",
           hour: "2-digit",
           minute: "2-digit",
+          hour12: false,
+          timeZoneName: "short",
         }).format(new Date(date));
         $time.dataset.isLocalized = "true";
       } catch (error) {
