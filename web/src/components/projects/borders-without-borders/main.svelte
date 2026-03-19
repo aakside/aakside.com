@@ -87,7 +87,9 @@
     SlidersHorizontal,
     Trash,
   } from "@lucide/svelte";
-  import { SvelteMap, SvelteSet } from "svelte/reactivity";
+  import { onMount } from "svelte";
+  import { SvelteMap } from "svelte/reactivity";
+  import { slide } from "svelte/transition";
   import InfoDialog from "./info-dialog.svelte";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
   import LayerSettings from "./layer-settings.svelte";
@@ -95,7 +97,6 @@
   import ImportConfig from "./import-config.svelte";
   import PlaceSearch, { lookupRelationByOsmId, type NominatimResult } from "./search.svelte";
   import { decodeJsonFromUrl } from "../../../utils/url-codec";
-  import { onMount } from "svelte";
   import { installAmericanaRuntimeAssets } from "./americana";
 
   const americanaShieldRenderers = new WeakMap<maplibregl.Map, URLShieldRenderer>();
@@ -195,7 +196,7 @@
 
 <div class="h-screen w-screen" data-theme="winter" bind:clientWidth={width}>
   <div
-    class="bg-base-100 relative top-0 left-0 z-1 text-base shadow-md max-md:w-full md:absolute md:top-4 md:left-4 md:max-w-sm md:rounded-lg"
+    class={`bg-base-100 relative top-0 left-0 z-1 text-base shadow-md max-md:w-full md:absolute md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
     {@attach draggable(() => [
       bounds(BoundsFrom.viewport()),
       controls({
@@ -232,7 +233,7 @@
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
     {#if expanded.get("root") === "toolbar"}
-      <div class="flex flex-col gap-2 px-3 py-2">
+      <div class="flex flex-col gap-2 px-3 py-2" transition:slide={{ duration: 220 }}>
         <PlaceSearch
           onResultAddLayerClick={(result) => {
             const layerId = mapState.addLayer({

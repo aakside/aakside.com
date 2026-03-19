@@ -148,11 +148,11 @@
   }
 </script>
 
-<div class="input overlay-name-field p-0">
-  <div class="relative overflow-hidden">
+<div class="input overlay-name-field w-full p-0">
+  <div class="relative w-10 shrink-0 cursor-pointer overflow-hidden">
     <Server class="pointer-events-none absolute top-1/2 left-2 z-10 size-4 -translate-y-1/2" />
     <select
-      class="select select-ghost tooltip tooltip-info tooltip-right w-10 border-0 px-7"
+      class="select select-ghost tooltip tooltip-info tooltip-right border-0 pl-7 select-none"
       aria-label="Search API provider"
       bind:value={selectedApi}
       data-tip="Select API provider."
@@ -165,43 +165,50 @@
     </select>
   </div>
   <input
-    type="text"
-    class="input-lg grow"
-    placeholder={placeholder ?? `Place name or OSM ${shortOsmTypes.join("/")} ID`}
     bind:value={query}
+    class="input-lg min-w-0 grow basis-0 transition-[width] duration-200 ease-out"
+    name="Search query"
     onkeydown={(event) => {
       if (event.key === "Enter") {
         event.preventDefault();
         triggerSearch();
       }
     }}
+    placeholder={placeholder ?? `Place name or OSM ${shortOsmTypes.join("/")} ID`}
+    type="text"
   />
-  <div class="join">
-    {#if query.length > 0}
-      <button
-        type="button"
-        class="btn join btn-square btn-ghost tooltip tooltip-info tooltip-left items-center"
-        aria-label="Clear search"
-        data-tip="Clear search"
-        onclick={() => {
-          query = "";
-          results = [];
-          status = undefined;
-        }}
-      >
-        <Eraser class="size-4" />
-      </button>
-    {/if}
+  <div
+    class="join flex shrink-0 items-center [&>button:first-of-type]:rounded-l-none [&>button:last-of-type]:rounded-r-xl"
+  >
     <button
       type="button"
-      class="btn btn-square join btn-ghost tooltip tooltip-info tooltip-left items-center"
+      class="btn btn-square btn-ghost join-item tooltip tooltip-info tooltip-left items-center overflow-hidden border-0 p-0 transition-[width,opacity] duration-200 ease-out"
+      class:opacity-0={query.length === 0}
+      class:opacity-100={query.length > 0}
+      class:pointer-events-none={query.length === 0}
+      class:w-0={query.length === 0}
+      class:w-10={query.length > 0}
+      aria-label="Clear search"
+      data-tip="Clear search"
+      disabled={query.length === 0}
+      onclick={() => {
+        query = "";
+        results = [];
+        status = undefined;
+      }}
+    >
+      <Eraser class="size-5" />
+    </button>
+    <button
+      type="button"
+      class="btn btn-square join-item btn-ghost tooltip tooltip-info tooltip-left items-center"
       disabled={isSearching || query.trim().length === 0}
       aria-label="Search"
       data-tip="Search"
       onclick={triggerSearch}
     >
       {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<Search
-          class="size-4"
+          class="size-5"
         />{/if}
     </button>
   </div>
