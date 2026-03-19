@@ -61,7 +61,13 @@
 </script>
 
 <script lang="ts">
-  import { Map, MapLayer, MapState } from "@aakside/svelte-maplibre-stack";
+  import {
+    Map,
+    MapLayer,
+    MapState,
+    type LayerConfigs,
+    type OverlayLayer,
+  } from "@aakside/svelte-maplibre-stack";
   import { URLShieldRenderer } from "@americana/maplibre-shield-generator";
   import { bounds, BoundsFrom, controls, ControlFrom, disabled, draggable } from "@neodrag/svelte";
   import {
@@ -75,7 +81,6 @@
     LocateFixed,
     Map as MapIcon,
     MapPinned,
-    MapPlus,
     Pencil,
     Settings,
     Share2,
@@ -107,6 +112,7 @@
           lat: 40.76670493441853,
           lng: -74.00622380728765,
         },
+        visible: true,
         zoom: 13,
       },
     ]),
@@ -143,7 +149,7 @@
         return layer;
       }),
     );
-    mapState.update(configWithGeojson.map((layer) => layer.config));
+    mapState.update(configWithGeojson.map((layer) => layer.config) as LayerConfigs);
     configWithGeojson.forEach((layer, i) => {
       layersMetadata.set(
         mapState.layers[i].id,
@@ -161,7 +167,7 @@
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
   let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
-  let addLayerSelectedResult = $state<NominatimResult | undefined>(undefined);
+  // let addLayerSelectedResult = $state<NominatimResult | undefined>(undefined);
   let importedConfigJson = $state<string | undefined>(undefined);
 
   $effect(() => {
@@ -228,7 +234,24 @@
     {#if expanded.get("root") === "toolbar"}
       <div class="flex flex-col gap-2 px-3 py-2">
         <PlaceSearch
-          onResultClick={(result) => {
+          onResultAddLayerClick={(result) => {
+            const layerId = mapState.addLayer({
+              baseMapPosition: $state.snapshot(mapState.center),
+              bearing: 0,
+              center: {
+                lat: Number(result!.lat),
+                lng: Number(result!.lon),
+              },
+              overlayCenter: {
+                lat: Number(result!.lat),
+                lng: Number(result!.lon),
+              },
+              geojson: result?.geojson as OverlayLayer["geojson"],
+              visible: true,
+            });
+            layersMetadata.set(layerId, new LayerMetadata(result!.name, result!.osm_id, result));
+          }}
+          onResultFlyClick={(result) => {
             mapState.layers[0].map?.flyTo({
               center: {
                 lat: Number(result.lat),
@@ -237,18 +260,8 @@
             });
           }}
           osmTypes={["node", "relation"]}
-          placeholder="Fly to a place"
         />
         <div class="layers-header">
-          <button
-            aria-label="Add Map Layer."
-            class="btn btn-square tooltip tooltip-info tooltip-right"
-            class:btn-outline={expanded.get("toolbar") === "add-layer"}
-            data-tip={expanded.get("toolbar") === "add-layer"
-              ? "Hide add layer panel."
-              : "Add a new overlay layer."}
-            onclick={() => toggleCollapsed("toolbar", "add-layer")}><MapPlus /></button
-          >
           <button
             aria-label="Show your location on the map."
             class="btn btn-square tooltip tooltip-info tooltip-right"
@@ -268,7 +281,7 @@
           <button
             aria-label="Import map configuration."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.get("toolbar") === "import-config"}
+            class:border-base-content={expanded.get("toolbar") === "import-config"}
             data-tip={expanded.get("toolbar") === "import-config"
               ? "Hide import configuration panel."
               : "Import map configuration."}
@@ -277,7 +290,7 @@
           <button
             aria-label="Share map configuration."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.get("toolbar") === "share-config"}
+            class:border-base-content={expanded.get("toolbar") === "share-config"}
             data-tip={expanded.get("toolbar") === "share-config"
               ? "Hide share configuration panel."
               : "Copy share link to clipboard."}
@@ -286,47 +299,13 @@
           <button
             aria-label="Global settings."
             class="btn btn-square tooltip tooltip-info"
-            class:btn-outline={expanded.get("toolbar") === "global-settings"}
+            class:border-base-content={expanded.get("toolbar") === "global-settings"}
             data-tip={expanded.get("toolbar") === "global-settings"
               ? "Hide global settings panel."
               : "Adjust global settings."}
             onclick={() => toggleCollapsed("toolbar", "global-settings")}><Settings /></button
           >
         </div>
-        {#if expanded.get("toolbar") === "add-layer"}
-          <div class="flex flex-col gap-2 px-1 pt-2">
-            <PlaceSearch bind:selectedResult={addLayerSelectedResult} osmTypes={["relation"]} />
-            <div class="flex w-full items-center gap-2">
-              {#if addLayerSelectedResult}
-                <button
-                  class="btn"
-                  disabled={!addLayerSelectedResult?.geojson}
-                  onclick={() => {
-                    const layerId = mapState.addLayer({
-                      baseMapPosition: $state.snapshot(mapState.center),
-                      bearing: 0,
-                      center: {
-                        lat: Number(addLayerSelectedResult!.lat),
-                        lng: Number(addLayerSelectedResult!.lon),
-                      },
-                      geojson: addLayerSelectedResult?.geojson,
-                    });
-                    layersMetadata.set(
-                      layerId,
-                      new LayerMetadata(
-                        addLayerSelectedResult!.name,
-                        addLayerSelectedResult!.osm_id,
-                        addLayerSelectedResult,
-                      ),
-                    );
-                    addLayerSelectedResult = undefined;
-                    expanded.delete("add-layer");
-                  }}>Add Layer</button
-                >
-              {/if}
-            </div>
-          </div>
-        {/if}
         {#if expanded.get("toolbar") === "import-config"}
           <div class="flex flex-col gap-2 px-1 pt-2">
             <ImportConfig bind:configJson={importedConfigJson} />
@@ -457,7 +436,7 @@
                   <button
                     aria-label="More settings."
                     class="btn btn-square tooltip tooltip-info"
-                    class:btn-outline={expanded.get(layer.id) === "settings"}
+                    class:border-base-content={expanded.get(layer.id) === "settings"}
                     data-tip={expanded.get(layer.id) === "settings"
                       ? "Hide extra settings."
                       : "Adjust more settings."}

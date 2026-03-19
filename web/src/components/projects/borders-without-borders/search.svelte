@@ -51,17 +51,22 @@
 
 <script lang="ts">
   import { type MultiPolygon, type Polygon } from "geojson";
-  import { Search, Server } from "@lucide/svelte";
+  import { Eraser, Info, Locate, MapPlus, Search, Server } from "@lucide/svelte";
+  import { slide } from "svelte/transition";
+  import LayerInfoDialog from "./layer-info-dialog.svelte";
+  import { LayerMetadata } from "./main.svelte";
 
   interface Props {
-    onResultClick?: (result: NominatimResult) => void;
+    onResultAddLayerClick: (result: NominatimResult) => void;
+    onResultFlyClick: (result: NominatimResult) => void;
     osmTypes?: ("node" | "relation" | "way")[];
     placeholder?: string;
     selectedResult?: NominatimResult;
   }
 
   let {
-    onResultClick,
+    onResultAddLayerClick,
+    onResultFlyClick,
     osmTypes = $bindable(["node", "relation", "way"]),
     placeholder = $bindable(undefined),
     selectedResult = $bindable(undefined),
@@ -85,21 +90,6 @@
 
     const fullResult = await lookupRelationByOsmId(result.osm_id);
     return fullResult ?? result;
-  }
-
-  async function selectAddLayerResult(result: NominatimResult) {
-    query = result.display_name;
-    selectingResultPlaceId = result.place_id;
-    status = undefined;
-
-    try {
-      selectedResult = await hydrateSelectedResult(result);
-    } catch {
-      status = { message: "Could not load full relation geometry for this result.", type: "error" };
-      selectedResult = result;
-    } finally {
-      selectingResultPlaceId = undefined;
-    }
   }
 
   async function searchNominatim(query: string) {
@@ -186,18 +176,35 @@
       }
     }}
   />
-  <button
-    type="button"
-    class="btn btn-square btn-ghost tooltip tooltip-info tooltip-left"
-    disabled={isSearching || query.trim().length === 0}
-    aria-label="Search"
-    data-tip="Search"
-    onclick={triggerSearch}
-  >
-    {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<Search
-        class="size-4"
-      />{/if}
-  </button>
+  <div class="join">
+    {#if query.length > 0}
+      <button
+        type="button"
+        class="btn join btn-square btn-ghost tooltip tooltip-info tooltip-left items-center"
+        aria-label="Clear search"
+        data-tip="Clear search"
+        onclick={() => {
+          query = "";
+          results = [];
+          status = undefined;
+        }}
+      >
+        <Eraser class="size-4" />
+      </button>
+    {/if}
+    <button
+      type="button"
+      class="btn btn-square join btn-ghost tooltip tooltip-info tooltip-left items-center"
+      disabled={isSearching || query.trim().length === 0}
+      aria-label="Search"
+      data-tip="Search"
+      onclick={triggerSearch}
+    >
+      {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<Search
+          class="size-4"
+        />{/if}
+    </button>
+  </div>
 </div>
 {#if status}
   <div
@@ -210,34 +217,72 @@
     {status.message}
   </div>
 {/if}
-{#if query.trim().length > 0 && results.length > 0}
-  <ul class="menu rounded-box w-full flex-col gap-2 p-1">
+{#if results.length > 0}
+  <ul class="flex w-full flex-col gap-y-2 p-1" transition:slide={{ duration: 180 }}>
     {#each results as result (result.place_id)}
-      <li>
+      <li class="m-0 p-0">
         <button
-          class="btn text-left"
-          class:btn-outline={selectedResult?.osm_id === result.osm_id}
+          class="btn h-auto min-h-0 w-full flex-col items-start justify-start py-2 text-left whitespace-normal transition-[border-radius] duration-200"
+          class:border-base-content={selectedResult?.place_id === result.place_id}
+          class:rounded-b-none={selectedResult?.place_id === result.place_id}
+          class:border-b={selectedResult?.place_id === result.place_id}
           disabled={selectingResultPlaceId === result.place_id}
           type="button"
-          onclick={() => {
-            if (onResultClick) {
-              onResultClick(result);
-              query = "";
-              status = undefined;
-            } else {
-              void selectAddLayerResult(result);
-            }
-          }}
+          onclick={() =>
+            (selectedResult = selectedResult?.place_id === result.place_id ? undefined : result)}
         >
-          <div class="text-sm font-medium">{result.display_name}</div>
+          <div class="w-full text-sm font-medium wrap-break-word whitespace-normal">
+            {result.display_name}
+          </div>
           <div class="text-xs opacity-70">
             {result.lat}, {result.lon}
           </div>
         </button>
+        {#if selectedResult?.place_id === result.place_id}
+          {@const metadata: LayerMetadata = {name: result.name, nominatimData: result}}
+          <div
+            class="[&>button]:border-base-content m-0 grid w-full auto-cols-fr grid-flow-col gap-0 overflow-visible rounded-t-none rounded-b-xl border-x border-b p-0 [&>button]:rounded-none [&>button]:border-0 [&>button]:border-r [&>button:first-of-type]:rounded-bl-xl [&>button:last-of-type]:rounded-br-xl [&>button:last-of-type]:border-r-0"
+            transition:slide={{ duration: 180 }}
+          >
+            <button
+              aria-label="Fly to location."
+              class="btn btn-block tooltip tooltip-info"
+              data-tip="Fly to location."
+              onclick={() => {
+                onResultFlyClick(result);
+                selectedResult = undefined;
+              }}><Locate /></button
+            >
+            {#if result.osm_type === "relation"}
+              <button
+                aria-label="Add layer to map."
+                class="btn btn-block tooltip tooltip-info"
+                data-tip="Add layer to map."
+                onclick={async () => {
+                  onResultAddLayerClick(await hydrateSelectedResult(result));
+                  selectedResult = undefined;
+                  results = [];
+                  status = undefined;
+                }}><MapPlus /></button
+              >
+            {/if}
+            <button
+              aria-label="View search result information."
+              class="btn btn-block tooltip tooltip-info"
+              data-tip="View search result information."
+              onclick={(event) => {
+                const trigger = event.currentTarget as HTMLElement | null;
+                trigger?.parentElement
+                  ?.querySelector<HTMLDialogElement>(
+                    `:scope > dialog#result-${result.place_id}-info`,
+                  )
+                  ?.showModal();
+              }}><Info /></button
+            >
+            <LayerInfoDialog id={`result-${result.place_id}`} {metadata} />
+          </div>
+        {/if}
       </li>
     {/each}
   </ul>
 {/if}
-
-<style lang="postcss">
-</style>
