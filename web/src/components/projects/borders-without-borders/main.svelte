@@ -192,6 +192,20 @@
     mapState.layers[index].baseMapPosition.lat = mapState.center.lat;
     mapState.layers[index].baseMapPosition.lng = mapState.center.lng;
   }
+
+  function isLocal() {
+    const hostname = window.location.hostname;
+    return (
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "[::1]" ||
+      hostname.endsWith(".localhost")
+    );
+  }
+
+  function isAccessibleStyle(style: MapStyle) {
+    return style.url && (!style.url.startsWith("https://vector.openstreetmap.org") || isLocal());
+  }
 </script>
 
 <div class="h-screen w-screen" data-theme="winter" bind:clientWidth={width}>
@@ -335,7 +349,9 @@
                 bind:value={mapState.style}
               >
                 {#each mapStyles as style}
-                  {#if style.url !== undefined}<option value={style.url}>{style.name}</option>{/if}
+                  {#if isAccessibleStyle(style)}
+                    <option value={style.url}>{style.name}</option>
+                  {/if}
                 {/each}
               </select>
             </div>
