@@ -102,6 +102,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
   },
+  security: { csp: true },
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],
