@@ -49,8 +49,6 @@ const {
   ...codeProps
 }: Props = Astro.props;
 
-let code = fallback;
-
 const source = cache
   ? await getCachedSource(url)
   : await (async (): Promise<FetchResult> => {
@@ -64,13 +62,12 @@ const source = cache
         return { ok: false };
       }
     })();
-if (source.ok) {
-  code = source.code;
-} else if (source.status !== undefined) {
-  code = `${fallback}\n// HTTP: ${source.status} ${source.statusText ?? ""}\n// URL: ${url}`;
-} else {
-  code = `${fallback}\n// URL: ${url}`;
-}
+
+const code = source.ok
+  ? source.code
+  : source.status !== undefined
+    ? `${fallback}\n// HTTP: ${source.status} ${source.statusText ?? ""}\n// URL: ${url}`
+    : `${fallback}\n// URL: ${url}`;
 ---
 
 <Code code={code} {...codeProps} />

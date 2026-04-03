@@ -84,15 +84,13 @@ function serveBuiltAstroImagesInDev() {
 
 // https://astro.build/config
 export default defineConfig({
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.adobe({ id: "oft2wtu" }),
-        name: "Myriad Pro",
-        cssVariable: "--font-myriad-pro",
-      },
-    ],
-  },
+  fonts: [
+    {
+      provider: fontProviders.adobe({ id: "oft2wtu" }),
+      name: "Myriad Pro",
+      cssVariable: "--font-myriad-pro",
+    },
+  ],
   integrations: [
     expressiveCode(),
     mdx(),
