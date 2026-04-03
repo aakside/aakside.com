@@ -4,7 +4,6 @@ import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import { withGitContentDates } from "../../utils/content-meta";
 
 const posts = (await getCollection("projects"))
@@ -15,7 +14,7 @@ const posts = (await getCollection("projects"))
 <!doctype html>
 <html lang="en" data-theme="aakside-blue">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead sectionTitle="Projects" description="A collection of projects by Alvin Ali Khaled." />
     <style>
       @reference "tailwindcss";
       main {
