@@ -1,7 +1,7 @@
 export type JsonLike = null | boolean | number | string | JsonLike[] | { [key: string]: JsonLike };
 
 /** Encode a JSON value into a compact, URL-friendly string. */
-export async function encodeJsonForUrl(value: JsonLike): Promise<string> {
+export async function encodeJsonForUrl<T = JsonLike>(value: T): Promise<string> {
   const json = JSON.stringify(value);
   return await encodeCompressed(json);
 }
@@ -12,17 +12,17 @@ export async function decodeJsonFromUrl<T = JsonLike>(encoded: string): Promise<
     throw new Error("Encoded value is empty.");
   }
 
-  const prefix = encoded.slice(0, 2);
+  const version = encoded.slice(0, 2);
   const payload = encoded.slice(2);
 
-  switch (prefix) {
+  switch (version) {
     case "00": {
       const json = await decodeCompressed(payload);
       return JSON.parse(json) as T;
     }
 
     default:
-      throw new Error(`Unknown encoding prefix: ${prefix}`);
+      throw new Error(`Unknown codec version: ${version}`);
   }
 }
 

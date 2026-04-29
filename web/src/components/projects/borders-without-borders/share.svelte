@@ -1,9 +1,14 @@
 <script lang="ts" module>
+  export interface FirstLayerShareConfig extends FirstLayer {
+    serdeIndex: number;
+  }
+
   export type ShareConfig = {
     config: FirstLayer | OverlayLayer;
     metadata: {
       name: LayerMetadata["name"];
       osmId?: LayerMetadata["osmId"];
+      style?: number; // serdeIndex of the style in the styles array
       nominatimData?: LayerMetadata["nominatimData"];
     };
   }[];
@@ -11,9 +16,8 @@
 
 <script lang="ts">
   import type { FirstLayer, MapState, OverlayLayer } from "@aakside/svelte-maplibre-stack";
-
   import { Braces, ClipboardCopy, ClipboardType, Link } from "@lucide/svelte";
-  import type { LayerMetadata } from "./main.svelte";
+  import { mapStyles, type LayerMetadata } from "./main.svelte";
   import type { SvelteMap } from "svelte/reactivity";
   import { encodeJsonForUrl } from "../../../utils/url-codec";
   import { untrack } from "svelte";
@@ -36,35 +40,31 @@
     const layersExportData: ShareConfig = untrack(() =>
       layersConfig.map((layerConfig: FirstLayer | OverlayLayer, i: number) => {
         const metadata = layersMetadata.get(mapState.layers[i].id)!;
+        const styleSerdeIndex = layerConfig.style ? mapStyles.find(
+          (style) => style.url === layerConfig.style,
+        )?.serdeIndex : undefined;
         return {
-          config: layerConfig,
+          config: styleSerdeIndex ? { ...layerConfig, style: undefined } : layerConfig,
           metadata: {
             name: metadata.name,
             osmId: metadata.osmId,
+            style: styleSerdeIndex,
           },
         };
       }),
     );
     if (outputType === "URL") {
-      return location.href.split("?")[0] + "?s=" + (await encodeJsonForUrl(layersExportData));
+      return (
+        location.href.split("?")[0] +
+        "?s=" +
+        (await encodeJsonForUrl<ShareConfig>(layersExportData))
+      );
     } else if (outputType === "JSON") {
       return JSON.stringify(layersExportData);
     } else {
       return "";
     }
   }
-  // const original = {
-  //   center: [-73.9857, 40.7484],
-  //   zoom: 11.25,
-  //   filters: ["park", "museum", "cafe"],
-  //   dark: true,
-  // };
-
-  // const encoded = await encodeJsonForUrl(original);
-  // console.log(encoded); // e.g. "c..." or "j..."
-
-  // const decoded = await decodeJsonFromUrl<typeof original>(encoded);
-  // console.log(decoded);
 </script>
 
 <div class="flex flex-col gap-2 px-1 pt-2">

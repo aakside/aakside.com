@@ -13,50 +13,75 @@
 
   export interface MapStyle {
     name: string;
+    serdeIndex: number;
     url?: string;
   }
 
   export const mapStyles: MapStyle[] = [
     {
       name: "Carto Dark Matter",
+      serdeIndex: 1,
       url: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
     },
     {
       name: "Carto Positron",
+      serdeIndex: 2,
       url: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
     },
     {
       name: "Carto Voyager",
+      serdeIndex: 3,
       url: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
     },
-    { name: "MapLibre Demo Tiles", url: "https://demotiles.maplibre.org/style.json" },
-    { name: "OpenFreeMap Bright", url: "https://tiles.openfreemap.org/styles/bright" },
-    { name: "OpenFreeMap Dark", url: "https://tiles.openfreemap.org/styles/dark" },
-    { name: "OpenFreeMap Fiord", url: "https://tiles.openfreemap.org/styles/fiord" },
-    { name: "OpenFreeMap Liberty", url: "https://tiles.openfreemap.org/styles/liberty" },
-    { name: "OpenFreeMap Positron", url: "https://tiles.openfreemap.org/styles/positron" },
-    { name: "OpenStreetMap Americana", url: "https://americanamap.org/style.json" }, // FIXME: requires spritesheet https://github.com/osm-americana/openstreetmap-americana?tab=readme-ov-file#artifacts
+    {
+      name: "MapLibre Demo Tiles",
+      serdeIndex: 4,
+      url: "https://demotiles.maplibre.org/style.json",
+    },
+    {
+      name: "OpenFreeMap Bright",
+      serdeIndex: 5,
+      url: "https://tiles.openfreemap.org/styles/bright",
+    },
+    { name: "OpenFreeMap Dark", serdeIndex: 6, url: "https://tiles.openfreemap.org/styles/dark" },
+    { name: "OpenFreeMap Fiord", serdeIndex: 7, url: "https://tiles.openfreemap.org/styles/fiord" },
+    {
+      name: "OpenFreeMap Liberty",
+      serdeIndex: 8,
+      url: "https://tiles.openfreemap.org/styles/liberty",
+    },
+    {
+      name: "OpenFreeMap Positron",
+      serdeIndex: 9,
+      url: "https://tiles.openfreemap.org/styles/positron",
+    },
+    { name: "OpenStreetMap Americana", serdeIndex: 10, url: "https://americanamap.org/style.json" },
     {
       name: "VersaTiles Colorful",
+      serdeIndex: 11,
       url: "https://vector.openstreetmap.org/styles/shortbread/colorful.json",
     },
     {
       name: "VersaTiles Eclipse",
+      serdeIndex: 12,
       url: "https://vector.openstreetmap.org/styles/shortbread/eclipse.json",
     },
     {
       name: "VersaTiles Graybeard",
+      serdeIndex: 13,
       url: "https://vector.openstreetmap.org/styles/shortbread/graybeard.json",
     },
     {
       name: "VersaTiles Neutrino",
+      serdeIndex: 14,
       url: "https://vector.openstreetmap.org/styles/shortbread/neutrino.json",
     },
     {
       name: "VersaTiles Shadow",
+      serdeIndex: 15,
       url: "https://vector.openstreetmap.org/styles/shortbread/shadow.json",
     },
-    { name: "Unset", url: undefined },
+    { name: "Unset", serdeIndex: 0, url: undefined },
   ];
 </script>
 
@@ -79,10 +104,8 @@
     ListChevronsUpDown,
     Locate,
     LocateFixed,
-    Map as MapIcon,
     MapPinned,
     Pencil,
-    Settings,
     Share2,
     SlidersHorizontal,
     Trash,
@@ -95,7 +118,7 @@
   import LayerSettings from "./layer-settings.svelte";
   import Share, { type ShareConfig } from "./share.svelte";
   import ImportConfig from "./import-config.svelte";
-  import PlaceSearch, { lookupRelationByOsmId, type NominatimResult } from "./search.svelte";
+  import PlaceSearch, { lookupRelationByOsmId } from "./search.svelte";
   import { decodeJsonFromUrl } from "../../../utils/url-codec";
   import { installAmericanaRuntimeAssets } from "./americana";
 
@@ -124,6 +147,7 @@
   async function importConfig(config: ShareConfig) {
     const configWithGeojson = await Promise.all(
       config.map(async (layer, i) => {
+        const style = mapStyles.find((style) => style.serdeIndex === layer.metadata.style)?.url ?? layer.config.style;
         if (layer.metadata.osmId && !layer.config.geojson) {
           if (layer.metadata.nominatimData?.geojson) {
             layer.config.geojson = layer.metadata.nominatimData.geojson;
@@ -131,6 +155,7 @@
               config: {
                 ...layer.config,
                 geojson: layer.metadata.nominatimData.geojson,
+                style,
               },
               metadata: layer.metadata,
             };
@@ -140,6 +165,7 @@
             config: {
               ...layer.config,
               geojson: nominatimData.geojson,
+              style,
             },
             metadata: {
               ...layer.metadata,
@@ -147,7 +173,7 @@
             },
           };
         }
-        return layer;
+        return { ...layer, config: { ...layer.config, style } };
       }),
     );
     mapState.update(configWithGeojson.map((layer) => layer.config) as LayerConfigs);
@@ -311,15 +337,6 @@
               : "Copy share link to clipboard."}
             onclick={() => toggleCollapsed("toolbar", "share-config")}><Share2 /></button
           >
-          <button
-            aria-label="Global settings."
-            class="btn btn-square tooltip tooltip-info"
-            class:border-base-content={expanded.get("toolbar") === "global-settings"}
-            data-tip={expanded.get("toolbar") === "global-settings"
-              ? "Hide global settings panel."
-              : "Adjust global settings."}
-            onclick={() => toggleCollapsed("toolbar", "global-settings")}><Settings /></button
-          >
         </div>
         {#if expanded.get("toolbar") === "import-config"}
           <div class="flex flex-col gap-2 px-1 pt-2">
@@ -337,25 +354,6 @@
         {/if}
         {#if expanded.get("toolbar") === "share-config"}
           <Share {mapState} {layersMetadata} />
-        {/if}
-        {#if expanded.get("toolbar") === "global-settings"}
-          <div class="flex flex-col gap-2 px-1 pt-2">
-            <div class="flex w-full items-center gap-2">
-              <MapIcon class="size-4 shrink-0" />
-              <span class="w-16 text-sm">Style</span>
-              <select
-                class="select select-bordered select-sm grow"
-                aria-label="Map style"
-                bind:value={mapState.style}
-              >
-                {#each mapStyles as style}
-                  {#if isAccessibleStyle(style)}
-                    <option value={style.url}>{style.name}</option>
-                  {/if}
-                {/each}
-              </select>
-            </div>
-          </div>
         {/if}
         <div class="map-layers flex flex-col gap-y-2" class:mt-2={mapState.layers.length > 1}>
           {#if mapState.layers.length > 1}<hr />
