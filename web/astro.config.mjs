@@ -104,8 +104,12 @@ export default defineConfig({
   },
   security: {
     csp: {
+      directives: ["worker-src 'self' blob:"],
       scriptDirective: {
         resources: ["'self'", "'wasm-unsafe-eval'"],
+      },
+      styleDirective: {
+        resources: ["'self'", "'unsafe-inline'"],
       },
     },
   },

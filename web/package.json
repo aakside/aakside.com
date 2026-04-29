@@ -4,11 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "astro": "astro",
-    "build": "astro build",
-    "dev": "astro dev",
+    "build": "npm run sync:maplibre-css && astro build",
+    "dev": "npm run sync:maplibre-css && astro dev",
     "format": "prettier --write .",
     "lint": "eslint 'src/**/*.{js,astro}'",
-    "preview": "astro preview"
+    "preview": "npm run sync:maplibre-css && astro preview",
+    "sync:maplibre-css": "node scripts/sync-maplibre-css.mjs"
   },
   "dependencies": {
     "@aakside/svelte-maplibre-stack": "^0.1.1",

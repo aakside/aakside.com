@@ -196,7 +196,6 @@
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
   let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
-  // let addLayerSelectedResult = $state<NominatimResult | undefined>(undefined);
   let importedConfigJson = $state<string | undefined>(undefined);
 
   $effect(() => {
