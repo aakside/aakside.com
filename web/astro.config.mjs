@@ -102,7 +102,13 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
   },
-  security: { csp: true },
+  security: {
+    csp: {
+      scriptDirective: {
+        resources: ["'self'", "'wasm-unsafe-eval'"],
+      },
+    },
+  },
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],
