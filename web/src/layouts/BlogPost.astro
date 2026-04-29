@@ -136,7 +136,11 @@ function getTocItemClass(depth: number) {
     <main>
       <article>
         <div class="hero-image">
-          {heroImage && <Image alt={heroAlt!} height={510} src={heroImage} width={1020} />}
+          {
+            heroImage && (
+              <Image alt={heroAlt!} height={510} src={heroImage} width={1020} quality="high" />
+            )
+          }
         </div>
         <div class="post-layout">
           <div class="prose">
