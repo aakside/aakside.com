@@ -40,9 +40,9 @@
     const layersExportData: ShareConfig = untrack(() =>
       layersConfig.map((layerConfig: FirstLayer | OverlayLayer, i: number) => {
         const metadata = layersMetadata.get(mapState.layers[i].id)!;
-        const styleSerdeIndex = layerConfig.style ? mapStyles.find(
-          (style) => style.url === layerConfig.style,
-        )?.serdeIndex : undefined;
+        const styleSerdeIndex = layerConfig.style
+          ? mapStyles.find((style) => style.url === layerConfig.style)?.serdeIndex
+          : undefined;
         return {
           config: styleSerdeIndex ? { ...layerConfig, style: undefined } : layerConfig,
           metadata: {

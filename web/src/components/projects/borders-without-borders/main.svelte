@@ -147,7 +147,9 @@
   async function importConfig(config: ShareConfig) {
     const configWithGeojson = await Promise.all(
       config.map(async (layer, i) => {
-        const style = mapStyles.find((style) => style.serdeIndex === layer.metadata.style)?.url ?? layer.config.style;
+        const style =
+          mapStyles.find((style) => style.serdeIndex === layer.metadata.style)?.url ??
+          layer.config.style;
         if (layer.metadata.osmId && !layer.config.geojson) {
           if (layer.metadata.nominatimData?.geojson) {
             layer.config.geojson = layer.metadata.nominatimData.geojson;
