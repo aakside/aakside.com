@@ -33,11 +33,15 @@ const projects = defineCollection({
         heroAlt: z.string().optional(),
         heroImage: image().optional(),
         minimalLayout: z.boolean().optional(),
+        page: z.string().optional(),
         pubDate: z.coerce.date(),
         title: z.string(),
         updatedDate: z.coerce.date().optional(),
       })
       .transform((data) => {
+        const page = data.page?.trim().replace(/^\/+|\/+$/g, "");
+        data.page = page || undefined;
+
         if (!data.updatedDate) {
           data.updatedDate = data.pubDate;
         }

@@ -1,5 +1,6 @@
 {
   "component": "borders-without-borders.astro",
+  "page": "borders-without-borders",
   "description": "An interactive map featuring movable geographic overlays.",
   "favicon": "/projects/borders-without-borders/favicon.png",
   "heroAlt": "Manhattan Island near San Juan, Puerto Rico.",

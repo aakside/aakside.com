@@ -5,9 +5,10 @@ import BaseHead from "../../components/BaseHead.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { withGitContentDates } from "../../utils/content-meta";
+import { getProjectPermalink } from "../../utils/project-page";
 
-const posts = (await getCollection("projects"))
-  .map(withGitContentDates)
+const projects = (await getCollection("projects"))
+  .map((project) => withGitContentDates<"projects">(project))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
@@ -91,21 +92,21 @@ const posts = (await getCollection("projects"))
       <section>
         <ul>
           {
-            posts.map((post) => (
+            projects.map((project) => (
               <li>
-                <a href={`/projects/${post.id}/`}>
-                  {post.data.heroImage && (
+                <a href={getProjectPermalink(project)}>
+                  {project.data.heroImage && (
                     <Image
                       width={1280}
                       height={640}
-                      src={post.data.heroImage}
+                      src={project.data.heroImage}
                       alt=""
                       quality="high"
                     />
                   )}
-                  <h4 class="title">{post.data.title}</h4>
+                  <h4 class="title">{project.data.title}</h4>
                   <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
+                    <FormattedDate date={project.data.pubDate} />
                   </p>
                 </a>
               </li>
