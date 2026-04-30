@@ -102,17 +102,6 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
   },
-  security: {
-    csp: {
-      directives: ["worker-src 'self' blob:"],
-      scriptDirective: {
-        resources: ["'self'", "'wasm-unsafe-eval'"],
-      },
-      styleDirective: {
-        resources: ["'self'", "'unsafe-inline'"],
-      },
-    },
-  },
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],

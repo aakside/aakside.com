@@ -27,6 +27,14 @@ const {
 
 const pageTitle = title ?? `${sectionTitle} - ${SITE_TITLE}`;
 
+const CONTENT_SECURITY_POLICY = [
+  "script-src 'self' 'wasm-unsafe-eval' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+].join("; ");
+
 function getFaviconType(path: string) {
   const extension = path.match(/\.([a-z0-9]+)(?:[?#].*)?$/i)?.[1]?.toLowerCase();
 
@@ -49,6 +57,7 @@ function getFaviconType(path: string) {
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
 <link rel="icon" type={getFaviconType(favicon)} href={favicon} />
 <link rel="stylesheet" href="/maplibre-gl.css" />
 <link rel="sitemap" href="/sitemap-index.xml" />
