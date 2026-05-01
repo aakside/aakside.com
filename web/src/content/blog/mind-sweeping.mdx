@@ -1,0 +1,84 @@
+---
+description: "Inspired by Bill Rankin, I made an interactive map that can overlay and move any geography anywhere. See and move the examples of Manhattan Island juxtaposed with notable areas around the world."
+favicon: "/blog/mind-sweeping/favicon.svg"
+heroAlt: "Lower Manhattan, repeating radially in different styles."
+heroImage: "../../assets/blog/wherever-isle-may-roam/hero.png"
+pubDate: 0
+title: "Mind Sweeping"
+updatedDate: 0
+---
+
+import { Image } from "astro:assets";
+import gnominesBestTimesImage from "../../assets/blog/mind-sweeping/gnomines-best-times.png";
+
+## The Initial Sweep
+
+As a kid, I didn't pay [Microsoft Minesweeper](https://en.wikipedia.org/wiki/Microsoft_Minesweeper) much mind on my Windows 95 computer, so I hadn't figured out the rules through my random clicking. As I browsed job listings in 2013 soon after being laid off from my first fulltime job, I came across a [programming challenge](https://web.archive.org/web/20130123165552/http://www.thumbtack.com/challenges#minesweeper) that ignited my interest in Minesweeper.
+
+<figure>
+  > ### Rules of Minesweeper
+  >
+  > Minesweeper is a grid of tiles, each of which may or may not cover hidden mines. The goal is to click on every tile except those that have mines. When a user clicks a tile, one of two things happens. If the tile was covering a mine, the mine is revealed and the game ends in failure. If the tile was not covering a mine, it instead reveals the number of adjacent (including diagonals) tiles that are covering mines – and, if that number was 0, behaves as if the user has clicked on every cell around it. When the user is confident that all tiles not containing mines have been clicked, the user presses a Validate button (often portrayed as a smiley-face icon) that checks the clicked tiles: if the user is correct, the game ends in victory, if not, the game ends in failure.
+
+  <figcaption>The rules of Minesweeper as explained by [Thumbtack](https://en.wikipedia.org/wiki/Thumbtack_(company)).</figcaption>
+</figure>
+
+Eager to try [Backbone.js](https://backbonejs.org/) and having been a fan of the graphics common in [Chris Sawyer](https://en.wikipedia.org/wiki/Chris_Sawyer) games, [I hacked together an unusual Minesweeper clone](https://github.com/aakside/minesweeper).
+
+<figure>
+  <iframe 
+    src="https://aakside.github.io/minesweeper/"
+    loading="lazy"
+    frameborder="0"
+    style="height: 630px;border:none;overflow:hidden;"
+    >
+  </iframe>
+
+  <figcaption>[My submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
+</figure>
+
+## Swept Away
+
+I became addicted to playing [Mines](https://gitlab.gnome.org/GNOME/gnome-mines) in Ubuntu. I unintentionally memorized patterns of mines and started playing for speed, hovering my fingers over <kbd className="kbd">Ctrl</kbd> + <kbd className="kbd">R</kbd> to reflexively restart the moment I lost a game or found myself thinking too long.
+
+<figure>
+  <a href={gnominesBestTimesImage.src} target="_blank" rel="noopener">
+    <Image src={gnominesBestTimesImage} alt="Gnomine best times for 99 mines on a 30 x 16 board." />
+  </a>
+  <figcaption>My record for finding 99 mines: 1 minute and 15 seconds.</figcaption>
+</figure>
+
+Eventually I felt a pretty bad pain in my right hand, and was diagnosed with [De Quervain tendinopathy](https://en.wikipedia.org/wiki/De_Quervain_tendinopathy). I started wearing a brace and opting usually to play [Klondike](<https://en.wikipedia.org/wiki/Klondike_(solitaire)>) instead of Mines when I needed a quick distraction, but I never stopped thinking about it because...
+
+## Filling the Void
+
+I'm back at it. I'm trying to control myself now, and I'm trying to engage with the concept of the game more than the game itself.
+
+I decided to remake the game again, but with a few twists:
+
+- No square grid
+- No mines, just "voids" (this probably wont get rid of the momentary panic of pressing a wrong tile though)
+- Multiplayer
+
+I know both [multiplayer Minesweeper](https://worldminesweepernetwork.com/) and [Voronoi Minesweeper](https://clark-pan.github.io/voronoi-minesweeper/) have been made, but I wanted to have a go at it myself, while playing with things like [wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), [Threlte](https://threlte.xyz/), [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language), and [Iroh](https://www.iroh.computer/) for fun and practice more than for practicality.
+
+<figure>
+  <video autoplay loop muted controls class="w-full">
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.webm" type="video/webm" />
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.mkv" type="video/x-matroska" />
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.mp4" type="video/mp4" />
+  </video>
+  <figcaption>Experimenting with terrain generation and shaders.</figcaption>
+</figure>
+
+### Svelte and Rust
+
+Originally passed Svelte state from JS to Rust, but it was messy and eventually I found [Readable](https://docs.rs/svelte-store) which came to the rescue!
+
+### Networking
+
+libp2p vs Iroh vs other things.
+
+## Coming up
+
+Litigious company Loco.

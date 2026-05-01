@@ -79,6 +79,16 @@ function getTocItemClass(depth: number) {
         max-width: calc(100% - 1em);
         margin: auto;
         padding: 1em;
+
+        figure {
+          a img {
+            @apply my-0;
+          }
+
+          blockquote p:last-child {
+            @apply mb-0;
+          }
+        }
       }
 
       .post-layout {
@@ -98,6 +108,11 @@ function getTocItemClass(depth: number) {
 
       .title h1 {
         margin: 0 0 0.1em 0;
+      }
+
+      :global(iframe) {
+        @apply rounded-xl;
+        width: 100%;
       }
 
       :global(img, video) {
