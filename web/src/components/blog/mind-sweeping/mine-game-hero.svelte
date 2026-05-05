@@ -1,20 +1,28 @@
 <script lang="ts">
-  import MineGame, { CELL_SIZE, WIDTH_OVERHEAD, HEIGHT_OVERHEAD } from "./mine-game.svelte";
+  import MineGame, {
+    CELL_SIZE,
+    CELL_SIZE_MAX,
+    WIDTH_OVERHEAD,
+    HEIGHT_OVERHEAD,
+    type GameMode,
+  } from "./mine-game.svelte";
 
   const MIN_COLS = 9;
   const MIN_ROWS = 9;
-  const minHeight = MIN_ROWS * CELL_SIZE + HEIGHT_OVERHEAD;
 
   let containerEl: HTMLDivElement | undefined = $state();
   let containerWidth = $state(0);
   let containerHeight = $state(0);
+  let mode = $state<GameMode>("maximized");
 
+  const cellSize = $derived(mode === "maximized" ? CELL_SIZE_MAX : CELL_SIZE);
   const cols = $derived(
-    Math.max(MIN_COLS, Math.floor((containerWidth - WIDTH_OVERHEAD) / CELL_SIZE)),
+    Math.max(MIN_COLS, Math.floor((containerWidth - WIDTH_OVERHEAD) / cellSize)),
   );
   const rows = $derived(
-    Math.max(MIN_ROWS, Math.floor((containerHeight - HEIGHT_OVERHEAD) / CELL_SIZE)),
+    Math.max(MIN_ROWS, Math.floor((containerHeight - HEIGHT_OVERHEAD) / cellSize)),
   );
+  const minHeight = $derived(MIN_ROWS * cellSize + HEIGHT_OVERHEAD);
 
   $effect(() => {
     if (!containerEl) return;
@@ -34,6 +42,6 @@
   bind:this={containerEl}
 >
   {#if containerWidth > 0}
-    <MineGame width={cols} height={rows} />
+    <MineGame width={cols} height={rows} bind:mode />
   {/if}
 </div>

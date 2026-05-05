@@ -1,7 +1,9 @@
 <script module lang="ts">
   export const CELL_SIZE = 24;
+  export const CELL_SIZE_MAX = 32;
+  export type GameMode = "minimized" | "maximized";
   const WINDOW_PADDING = 8;
-  const TITLE_BAR_HEIGHT = 20;
+  const TITLE_BAR_HEIGHT = 24;
   const STATUS_PANEL_HEIGHT = 52;
   const STATUS_PANEL_GAP = 8;
   const BOARD_PANEL_PADDING = 4;
@@ -40,6 +42,7 @@
 
   interface Props {
     height: number;
+    mode?: GameMode;
     numMines?: number;
     width: number;
   }
@@ -59,7 +62,12 @@
     position: Position;
   }
 
-  let { height = 9, numMines, width = 9 }: Props = $props();
+  let {
+    height = 9,
+    mode = $bindable<GameMode>("maximized"),
+    numMines,
+    width = 9,
+  }: Props = $props();
 
   let cols = $state(0);
   let rows = $state(0);
@@ -91,17 +99,25 @@
   const BOARD_PANEL_X = WINDOW_PADDING;
   const STATUS_PANEL_Y = TITLE_BAR_HEIGHT + WINDOW_PADDING;
   const BOARD_PANEL_Y = STATUS_PANEL_Y + STATUS_PANEL_HEIGHT + STATUS_PANEL_GAP;
+  const TITLE_BTN_SIZE = 16;
+  const TITLE_BTN_Y = (TITLE_BAR_HEIGHT - TITLE_BTN_SIZE) / 2 + 1;
 
-  const boardPixelWidth = $derived(cols * CELL_SIZE);
-  const boardPixelHeight = $derived(rows * CELL_SIZE);
+  const cellSize = $derived(mode === "maximized" ? CELL_SIZE_MAX : CELL_SIZE);
+  const boardPixelWidth = $derived(cols * cellSize);
+  const boardPixelHeight = $derived(rows * cellSize);
   const boardPanelWidth = $derived(boardPixelWidth + BOARD_PANEL_PADDING * 2);
   const boardPanelHeight = $derived(boardPixelHeight + BOARD_PANEL_PADDING * 2);
   const viewportWidth = $derived(boardPanelWidth + WINDOW_PADDING * 2);
   const viewportHeight = $derived(BOARD_PANEL_Y + boardPanelHeight + WINDOW_PADDING);
   const resetButtonX = $derived(BOARD_PANEL_X + (boardPanelWidth - RESET_SIZE) / 2);
   const rightCounterX = $derived(BOARD_PANEL_X + boardPanelWidth - COUNTER_WIDTH - 6);
+  const closeBtnX = $derived(viewportWidth - 4 - TITLE_BTN_SIZE);
+  const maximizeBtnX = $derived(closeBtnX - 2 - TITLE_BTN_SIZE);
+  const minimizeBtnX = $derived(maximizeBtnX - 2 - TITLE_BTN_SIZE);
+  let pressedTitleButton = $state<"minimize" | "maximize" | null>(null);
+  let pressedReset = $state(false);
   const ICON_PADDING = 2;
-  const ICON_SIZE = CELL_SIZE - ICON_PADDING * 2;
+  const iconSize = $derived(cellSize - ICON_PADDING * 2);
 
   const beveledPanels = $derived([
     {
@@ -294,6 +310,8 @@
   function clearPressState(): void {
     pressedCellId = null;
     isMouseDownOnBoard = false;
+    pressedTitleButton = null;
+    pressedReset = false;
   }
 
   function revealFlood(startPosition: Position): void {
@@ -528,8 +546,8 @@
 
   function getCellPixel(position: Position): Position {
     return [
-      BOARD_PANEL_X + BOARD_PANEL_PADDING + position[0] * CELL_SIZE,
-      BOARD_PANEL_Y + BOARD_PANEL_PADDING + position[1] * CELL_SIZE,
+      BOARD_PANEL_X + BOARD_PANEL_PADDING + position[0] * cellSize,
+      BOARD_PANEL_Y + BOARD_PANEL_PADDING + position[1] * cellSize,
     ];
   }
 
@@ -562,23 +580,23 @@
         <polygon points={bevelBottomRightPoints(COUNTER_WIDTH, COUNTER_HEIGHT, 2)} fill="#ffffff" />
       </g>
       <g id="cell-bevel-revealed">
-        <polygon points={bevelTopLeftPoints(CELL_SIZE, CELL_SIZE, 1)} fill="#7b7b7b" />
+        <polygon points={bevelTopLeftPoints(cellSize, cellSize, 1)} fill="#7b7b7b" />
       </g>
       <g id="cell-bevel-raised">
-        <polygon points={bevelTopLeftPoints(CELL_SIZE, CELL_SIZE, 2)} fill="#ffffff" />
-        <polygon points={bevelBottomRightPoints(CELL_SIZE, CELL_SIZE, 2)} fill="#808080" />
+        <polygon points={bevelTopLeftPoints(cellSize, cellSize, 2)} fill="#ffffff" />
+        <polygon points={bevelBottomRightPoints(cellSize, cellSize, 2)} fill="#808080" />
       </g>
       <g id="cell-bevel-pressed">
-        <polygon points={bevelTopLeftPoints(CELL_SIZE, CELL_SIZE, 2)} fill="#808080" />
-        <polygon points={bevelBottomRightPoints(CELL_SIZE, CELL_SIZE, 2)} fill="#ffffff" />
+        <polygon points={bevelTopLeftPoints(cellSize, cellSize, 2)} fill="#808080" />
+        <polygon points={bevelBottomRightPoints(cellSize, cellSize, 2)} fill="#ffffff" />
       </g>
       <g id="buoy">
         <image
           href={buoyImage.src}
           x={ICON_PADDING}
           y={ICON_PADDING}
-          width={ICON_SIZE}
-          height={ICON_SIZE}
+          width={iconSize}
+          height={iconSize}
           preserveAspectRatio="xMidYMid meet"
         />
       </g>
@@ -587,8 +605,8 @@
           href={wavesImage.src}
           x={ICON_PADDING}
           y={ICON_PADDING}
-          width={ICON_SIZE}
-          height={ICON_SIZE}
+          width={iconSize}
+          height={iconSize}
           opacity="0.85"
           preserveAspectRatio="xMidYMid slice"
         />
@@ -606,7 +624,195 @@
       height={TITLE_BAR_HEIGHT - 2}
       fill="url(#mine-title-gradient)"
     />
-    <text x="10" y="16" class="fill-white text-[12px] font-bold tracking-wide">Mine!</text>
+    <text x="10" y="18" class="fill-white text-[12px] font-bold tracking-wide">Mine!</text>
+
+    <!-- Minimize button -->
+    <g
+      transform={`translate(${minimizeBtnX}, ${TITLE_BTN_Y})`}
+      role="button"
+      tabindex="0"
+      aria-label="Minimize"
+      aria-disabled={mode === "minimized"}
+      class={mode === "minimized"
+        ? "outline-none focus:outline-none focus-visible:outline-none"
+        : "outline-none focus:outline-none focus-visible:outline-none"}
+      onmousedown={mode === "minimized"
+        ? undefined
+        : () => {
+            pressedTitleButton = "minimize";
+          }}
+      onmouseup={mode === "minimized"
+        ? undefined
+        : () => {
+            pressedTitleButton = null;
+          }}
+      onmouseleave={mode === "minimized"
+        ? undefined
+        : () => {
+            pressedTitleButton = null;
+          }}
+      onclick={mode === "minimized"
+        ? undefined
+        : () => {
+            mode = "minimized";
+            pressedTitleButton = null;
+          }}
+      onkeydown={mode === "minimized"
+        ? undefined
+        : (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              mode = "minimized";
+            }
+          }}
+    >
+      <rect x="0" y="0" width={TITLE_BTN_SIZE} height={TITLE_BTN_SIZE} fill="#bdbdbd" />
+      {#if pressedTitleButton === "minimize"}
+        <polygon
+          points={bevelTopLeftPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#808080"
+          pointer-events="none"
+        />
+        <polygon
+          points={bevelBottomRightPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#ffffff"
+          pointer-events="none"
+        />
+      {:else if mode !== "minimized"}
+        <polygon
+          points={bevelTopLeftPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#ffffff"
+          pointer-events="none"
+        />
+        <polygon
+          points={bevelBottomRightPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#808080"
+          pointer-events="none"
+        />
+      {/if}
+      <rect
+        x={(TITLE_BTN_SIZE - 8) / 2}
+        y={Math.floor(TITLE_BTN_SIZE - 5)}
+        width="8"
+        height="3"
+        fill={mode === "minimized" ? "#808080" : "#000000"}
+        pointer-events="none"
+      />
+    </g>
+
+    <!-- Maximize button -->
+    <g
+      transform={`translate(${maximizeBtnX}, ${TITLE_BTN_Y})`}
+      role="button"
+      tabindex="0"
+      aria-label="Maximize"
+      aria-disabled={mode === "maximized"}
+      class={mode === "maximized"
+        ? "outline-none focus:outline-none focus-visible:outline-none"
+        : "outline-none focus:outline-none focus-visible:outline-none"}
+      onmousedown={mode === "maximized"
+        ? undefined
+        : () => {
+            pressedTitleButton = "maximize";
+          }}
+      onmouseup={mode === "maximized"
+        ? undefined
+        : () => {
+            pressedTitleButton = null;
+          }}
+      onmouseleave={mode === "maximized"
+        ? undefined
+        : () => {
+            pressedTitleButton = null;
+          }}
+      onclick={mode === "maximized"
+        ? undefined
+        : () => {
+            mode = "maximized";
+            pressedTitleButton = null;
+          }}
+      onkeydown={mode === "maximized"
+        ? undefined
+        : (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              mode = "maximized";
+            }
+          }}
+    >
+      <rect x="0" y="0" width={TITLE_BTN_SIZE} height={TITLE_BTN_SIZE} fill="#bdbdbd" />
+      {#if pressedTitleButton === "maximize"}
+        <polygon
+          points={bevelTopLeftPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#808080"
+          pointer-events="none"
+        />
+        <polygon
+          points={bevelBottomRightPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#ffffff"
+          pointer-events="none"
+        />
+      {:else if mode !== "maximized"}
+        <polygon
+          points={bevelTopLeftPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#ffffff"
+          pointer-events="none"
+        />
+        <polygon
+          points={bevelBottomRightPoints(TITLE_BTN_SIZE, TITLE_BTN_SIZE, 1)}
+          fill="#808080"
+          pointer-events="none"
+        />
+      {/if}
+      <rect
+        x={(TITLE_BTN_SIZE - 10) / 2}
+        y={(TITLE_BTN_SIZE - 8) / 2}
+        width="10"
+        height="8"
+        fill="none"
+        stroke={mode === "maximized" ? "#808080" : "#000000"}
+        stroke-width="1"
+        pointer-events="none"
+      />
+      <line
+        x1={(TITLE_BTN_SIZE - 10) / 2}
+        y1={(TITLE_BTN_SIZE - 8) / 2 + 1}
+        x2={(TITLE_BTN_SIZE - 10) / 2 + 10}
+        y2={(TITLE_BTN_SIZE - 8) / 2 + 1}
+        stroke={mode === "maximized" ? "#808080" : "#000000"}
+        stroke-width="1"
+        pointer-events="none"
+      />
+    </g>
+
+    <g
+      transform={`translate(${closeBtnX}, ${TITLE_BTN_Y})`}
+      role="button"
+      tabindex="0"
+      aria-label="Close (disabled)"
+      aria-disabled="true"
+      class="outline-none focus:outline-none focus-visible:outline-none"
+    >
+      <rect x="0" y="0" width={TITLE_BTN_SIZE} height={TITLE_BTN_SIZE} fill="#bdbdbd" />
+      <line
+        x1={(TITLE_BTN_SIZE - 8) / 2}
+        y1={(TITLE_BTN_SIZE - 8) / 2}
+        x2={(TITLE_BTN_SIZE - 8) / 2 + 8}
+        y2={(TITLE_BTN_SIZE - 8) / 2 + 8}
+        stroke="#808080"
+        stroke-width="2"
+        pointer-events="none"
+      />
+      <line
+        x1={(TITLE_BTN_SIZE - 8) / 2 + 8}
+        y1={(TITLE_BTN_SIZE - 8) / 2}
+        x2={(TITLE_BTN_SIZE - 8) / 2}
+        y2={(TITLE_BTN_SIZE - 8) / 2 + 8}
+        stroke="#808080"
+        stroke-width="2"
+        pointer-events="none"
+      />
+    </g>
 
     {#each beveledPanels as panel (panel.id)}
       <g transform={`translate(${panel.x}, ${panel.y})`}>
@@ -637,12 +843,26 @@
       tabindex="0"
       aria-label="New game"
       class="cursor-pointer outline-none focus:outline-none focus-visible:outline-none"
+      onmousedown={() => {
+        pressedReset = true;
+      }}
+      onmouseup={() => {
+        pressedReset = false;
+      }}
+      onmouseleave={() => {
+        pressedReset = false;
+      }}
       onclick={resetGame}
       onkeydown={handleResetKeydown}
     >
       <rect x="0" y="0" width={RESET_SIZE} height={RESET_SIZE} fill="#bdbdbd" />
-      <polygon points={bevelTopLeftPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#ffffff" />
-      <polygon points={bevelBottomRightPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#808080" />
+      {#if pressedReset}
+        <polygon points={bevelTopLeftPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#808080" />
+        <polygon points={bevelBottomRightPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#ffffff" />
+      {:else}
+        <polygon points={bevelTopLeftPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#ffffff" />
+        <polygon points={bevelBottomRightPoints(RESET_SIZE, RESET_SIZE, 2)} fill="#808080" />
+      {/if}
       <image
         href={resetButtonImage.src}
         x="3"
@@ -661,7 +881,7 @@
           transform={`translate(${cellX}, ${cellY})`}
           role="button"
           tabindex="0"
-          class="cursor-pointer outline-none focus:outline-none focus-visible:outline-none"
+          class="outline-none focus:outline-none focus-visible:outline-none"
           aria-label={`Cell ${cell.position[0] + 1}, ${cell.position[1] + 1}`}
           onmousedown={(event) => handleCellMouseDown(event, cell.position)}
           onmouseup={clearPressState}
@@ -672,8 +892,8 @@
           <rect
             x="0"
             y="0"
-            width={CELL_SIZE}
-            height={CELL_SIZE}
+            width={cellSize}
+            height={cellSize}
             fill={cell.caught ? "#ff4b4b" : cell.revealed ? "#bdbdbd" : "#c0c0c0"}
           />
 
@@ -689,27 +909,43 @@
           {#if cell.wrongBuoy}
             <use
               href="#buoy"
-              transform={`rotate(${(Math.random() - 0.5) * 16}, ${ICON_SIZE / 2 + ICON_PADDING}, ${ICON_SIZE})`}
+              transform={`rotate(${(Math.random() - 0.5) * 16}, ${iconSize / 2 + ICON_PADDING}, ${iconSize})`}
             />
             <use href="#waves" />
-            <line x1="4" y1="4" x2="20" y2="20" stroke="#cc0000" stroke-width="2" />
-            <line x1="20" y1="4" x2="4" y2="20" stroke="#cc0000" stroke-width="2" />
+            <line
+              x1={ICON_PADDING}
+              y1={ICON_PADDING}
+              x2={ICON_PADDING + iconSize}
+              y2={ICON_PADDING + iconSize}
+              stroke="#cc0000"
+              stroke-width="2"
+            />
+            <line
+              x1={ICON_PADDING + iconSize}
+              y1={ICON_PADDING}
+              x2={ICON_PADDING}
+              y2={ICON_PADDING + iconSize}
+              stroke="#cc0000"
+              stroke-width="2"
+            />
           {:else if cell.revealed}
             {#if cell.isMine}
               <image
                 href={seagullMineImage.src}
                 x={ICON_PADDING}
                 y={ICON_PADDING}
-                width={ICON_SIZE}
-                height={ICON_SIZE}
+                width={iconSize}
+                height={iconSize}
                 preserveAspectRatio="xMidYMid meet"
               />
             {:else if cell.adjacent > 0}
               <text
-                x="12"
-                y="18"
+                x={cellSize / 2}
+                y={Math.round(cellSize * 0.75)}
                 fill={NUMBER_COLORS[cell.adjacent]}
-                class="text-[16px] font-bold"
+                font-size={Math.round((cellSize * 2) / 3)}
+                font-weight="bold"
+                font-family="sans-serif"
                 text-anchor="middle"
               >
                 {cell.adjacent}
@@ -718,7 +954,7 @@
           {:else if cell.mark === "buoy"}
             <use
               href="#buoy"
-              transform={`rotate(${(Math.random() - 0.5) * 16}, ${ICON_SIZE / 2 + ICON_PADDING}, ${ICON_SIZE})`}
+              transform={`rotate(${(Math.random() - 0.5) * 16}, ${iconSize / 2 + ICON_PADDING}, ${iconSize})`}
             />
             <use href="#waves" />
           {:else if cell.mark === "question"}
@@ -726,10 +962,10 @@
               href={seagullLookingImage.src}
               x={ICON_PADDING}
               y={ICON_PADDING}
-              width={ICON_SIZE}
-              height={ICON_SIZE}
+              width={iconSize}
+              height={iconSize}
               preserveAspectRatio="xMidYMid meet"
-              transform={`rotate(${Math.floor(4 * Math.random()) * 90}, ${ICON_PADDING + ICON_SIZE / 2}, ${ICON_PADDING + ICON_SIZE / 2})`}
+              transform={`rotate(${Math.floor(4 * Math.random()) * 90}, ${ICON_PADDING + iconSize / 2}, ${ICON_PADDING + iconSize / 2})`}
             />
           {/if}
         </g>
