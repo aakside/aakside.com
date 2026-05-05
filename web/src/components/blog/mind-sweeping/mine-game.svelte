@@ -544,7 +544,7 @@
 
 <section class="win98 my-4 w-full overflow-x-auto" aria-label="Windows 98 style Minesweeper clone">
   <svg
-    class="block min-w-fit bg-[#c0c0c0] select-none"
+    class="mx-auto block min-w-fit bg-[#c0c0c0] select-none"
     width={viewportWidth}
     height={viewportHeight}
     viewBox={`0 0 ${viewportWidth} ${viewportHeight}`}

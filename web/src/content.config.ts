@@ -12,6 +12,7 @@ const blog = defineCollection({
       description: z.string(),
       favicon: z.string().optional(),
       heroAlt: z.string().optional(),
+      heroComponent: z.string().optional(),
       heroImage: image().optional(),
       pubDate: z.coerce.date(),
       title: z.string(),
