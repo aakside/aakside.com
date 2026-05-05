@@ -70,6 +70,24 @@
   --noise: 0;
 }
 
+@theme {
+  --color-win98-titlebar-end: #1084d0;
+  --color-win98-titlebar-start: #000080;
+  --color-win98-raised-highlight: #ffffff;
+  --color-win98-raised-shadow: #808080;
+}
+
+@utility prose {
+  blockquote {
+    p {
+      &:first-of-type::before,
+      &:last-of-type::after {
+        content: none;
+      }
+    }
+  }
+}
+
 :root {
   --box-shadow:
     0 2px 6px oklch(from var(--color-base-300) l c h / 0.25),
@@ -223,6 +241,14 @@ header nav .pagefind-ui {
     @apply static;
     max-height: 60vh;
     overflow: auto;
+  }
+}
+
+.win98 {
+  font-family: "Tahoma", "MS Sans Serif", sans-serif;
+
+  .monospace {
+    font-family: "Courier New", "Lucida Console", monospace;
   }
 }
 
