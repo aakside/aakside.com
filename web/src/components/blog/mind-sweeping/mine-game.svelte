@@ -678,9 +678,12 @@
           />
 
           {#if cell.revealed}
-            <use href="#cell-bevel-revealed" />
+            <use href="#cell-bevel-revealed" pointer-events="none" />
           {:else}
-            <use href={isPressed ? "#cell-bevel-pressed" : "#cell-bevel-raised"} />
+            <use
+              href={isPressed ? "#cell-bevel-pressed" : "#cell-bevel-raised"}
+              pointer-events="none"
+            />
           {/if}
 
           {#if cell.wrongBuoy}
