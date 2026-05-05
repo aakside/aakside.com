@@ -13,9 +13,9 @@
   let containerEl: HTMLDivElement | undefined = $state();
   let containerWidth = $state(0);
   let containerHeight = $state(0);
-  let mode = $state<GameMode>("maximized");
+  let mode = $state<GameMode>("minimized");
 
-  const cellSize = $derived(mode === "maximized" ? CELL_SIZE_MAX : CELL_SIZE);
+  const cellSize = $derived(mode === "minimized" ? CELL_SIZE_MAX : CELL_SIZE);
   const cols = $derived(
     Math.max(MIN_COLS, Math.floor((containerWidth - WIDTH_OVERHEAD) / cellSize)),
   );

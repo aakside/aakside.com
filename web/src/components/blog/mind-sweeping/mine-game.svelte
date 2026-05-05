@@ -64,7 +64,7 @@
 
   let {
     height = 9,
-    mode = $bindable<GameMode>("maximized"),
+    mode = $bindable<GameMode>("minimized"),
     numMines,
     width = 9,
   }: Props = $props();
@@ -102,7 +102,7 @@
   const TITLE_BTN_SIZE = 16;
   const TITLE_BTN_Y = (TITLE_BAR_HEIGHT - TITLE_BTN_SIZE) / 2 + 1;
 
-  const cellSize = $derived(mode === "maximized" ? CELL_SIZE_MAX : CELL_SIZE);
+  const cellSize = $derived(mode === "minimized" ? CELL_SIZE_MAX : CELL_SIZE);
   const boardPixelWidth = $derived(cols * cellSize);
   const boardPixelHeight = $derived(rows * cellSize);
   const boardPanelWidth = $derived(boardPixelWidth + BOARD_PANEL_PADDING * 2);
