@@ -1,0 +1,2647 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:block;margin:auto;min-width:fit-content;user-select:none;" role="img" width="936" height="512" viewBox="0 0 936 512">
+  <defs>
+    <linearGradient id="mine-title-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000080"></stop>
+      <stop offset="100%" stop-color="#1084d0"></stop>
+    </linearGradient>
+    <g id="counter-bevel">
+      <polygon fill="#808080" points="0,0 62,0 60,2 2,2 2,32 0,34"></polygon>
+      <polygon fill="#ffffff" points="62,0 62,34 0,34 2,32 60,32 60,2"></polygon>
+    </g>
+    <g id="cell-bevel-revealed">
+      <polygon fill="#7b7b7b" points="0,0 24,0 23,1 1,1 1,23 0,24"></polygon>
+    </g>
+    <g id="cell-bevel-raised">
+      <polygon fill="#ffffff" points="0,0 24,0 22,2 2,2 2,22 0,24"></polygon>
+      <polygon fill="#808080" points="24,0 24,24 0,24 2,22 22,22 22,2"></polygon>
+    </g>
+    <g id="cell-bevel-pressed">
+      <polygon fill="#808080" points="0,0 24,0 22,2 2,2 2,22 0,24"></polygon>
+      <polygon fill="#ffffff" points="24,0 24,24 0,24 2,22 22,22 22,2"></polygon>
+    </g>
+    <g id="buoy">
+      <svg preserveAspectRatio="xMidYMid meet" x="2" y="2" width="20" height="20" viewBox="0 0 16.933334 16.933332" xmlns="http://www.w3.org/2000/svg">
+        <defs id="buoy-defs1">
+          <linearGradient id="buoy-linearGradient16">
+            <stop style="stop-color:#f8f3d3;stop-opacity:1;" offset="0" id="buoy-stop16" />
+            <stop style="stop-color:#ffffff;stop-opacity:1;" offset="1" id="buoy-stop17" />
+          </linearGradient>
+          <linearGradient id="buoy-linearGradient12">
+            <stop style="stop-color:#bd360c;stop-opacity:1;" offset="0" id="buoy-stop12" />
+            <stop style="stop-color:#e46037;stop-opacity:1;" offset="0.79581487" id="buoy-stop13" />
+          </linearGradient>
+          <linearGradient href="#buoy-linearGradient12" id="buoy-linearGradient13" x1="3.6935213" y1="10.034812" x2="13.232577" y2="10.034812" gradientUnits="userSpaceOnUse" />
+          <linearGradient href="#buoy-linearGradient16" id="buoy-linearGradient17" x1="7.3992386" y1="1.8688089" x2="9.538229" y2="1.8688089" gradientUnits="userSpaceOnUse" />
+        </defs>
+        <path style="display:inline;fill:url(#buoy-linearGradient17);fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round" d="M 9.5250002,3.2287104 V 1.5006836 c 0,-1.33121567 -2.1125326,-1.31349122 -2.1125326,0 v 1.7280268 z" id="buoy-path13" />
+        <path id="buoy-path1" style="display:inline;fill:url(#buoy-linearGradient13);fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round" d="M 5.2916667,3.175 V 4.2333334 H 6.3582683 L 6.3500001,6.1598308 4.8885905,12.047273 H 4.1449667 c -0.2404377,0.0421 -0.3623962,0.193306 -0.4382162,0.400029 v 2.190564 c 3.1472865,3.015603 6.3180225,3.00241 9.5120815,0 l 5.16e-4,-2.190564 c -0.05012,-0.221663 -0.175969,-0.371079 -0.424263,-0.400029 H 12.065414 L 10.583333,6.1598308 V 4.2333334 h 1.066602 V 3.175 Z M 7.28431,6.7468751 H 9.6407553 L 9.71827,7.0569337 8.4640829,8.3431601 7.2078288,7.0548666 Z M 6.9980225,7.898226 7.9478354,8.8723267 6.3489665,10.511503 Z M 9.9280763,7.900293 10.578166,10.51047 8.9803305,8.8723267 Z m -1.4639934,1.5012004 2.4680661,2.5305946 0.02584,0.115185 c -1.6558734,0.0046 -3.3269543,-5.53e-4 -4.9883265,0 l 0.026872,-0.115701 z" />
+      </svg>
+    </g>
+    <g id="waves">
+      <svg opacity="0.85" preserveAspectRatio="xMidYMid slice" x="2" y="2" width="20" height="20" viewBox="0 0 16.933334 16.933332" xmlns="http://www.w3.org/2000/svg">
+        <defs id="waves-defs1" />
+        <path style="display:inline;fill:#4ec1f5;fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="M -0.23151042,15.378907 C 1.1454391,14.936768 2.7242103,14.353353 3.4809246,14.345378 c 1.6370765,0.09209 2.8826322,0.779429 4.5028585,1.024444 1.402881,0.212148 2.1539649,0.14777 3.8721809,-0.326741 0.854478,-0.235978 1.776623,-0.876652 3.257356,-0.910914 1.385428,-0.03296 1.808193,0.374127 2.48974,0.709305 l -0.01654,3.117122 c 0,0 -17.97513078,-0.206706 -17.9255214,-0.206706 0.0496094,0 0.10748698,-2.372981 0.10748698,-2.372981 z" id="waves-path21" />
+        <path style="display:inline;fill:#0299e3;fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m -0.1405599,16.048633 c 0.6996002,-0.233872 0.77353881,0.236563 1.8520834,0.248047 0.8779259,-0.06098 2.1485526,-0.630337 3.2990235,-0.65319 0.9258811,-0.0059 1.9980027,0.68175 3.0096355,0.661458 0.9330072,-0.01872 2.2439615,-0.505763 2.9848305,-0.60358 0.87022,-0.02606 1.653382,0.443351 2.926953,0.446484 1.136678,-0.03833 1.991015,-0.738034 3.232878,-0.785482 0,0 0.115755,2.191081 0.08268,2.199349 -0.03307,0.0083 -17.30540361,-0.132291 -17.34674475,-0.165364 -0.04134115,-0.03307 -0.04134115,-1.347722 -0.04134115,-1.347722 z" id="waves-path22" />
+      </svg>
+    </g>
+    <g id="cell-num-1">
+      <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+      <use href="#cell-bevel-revealed"></use>
+      <text x="12" y="18" font-size="16" font-weight="bold" text-anchor="middle" fill="#0000ff">1</text>
+    </g>
+    <g id="cell-num-2">
+      <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+      <use href="#cell-bevel-revealed"></use>
+      <text x="12" y="18" font-size="16" font-weight="bold" text-anchor="middle" fill="#008200">2</text>
+    </g>
+    <g id="cell-num-3">
+      <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+      <use href="#cell-bevel-revealed"></use>
+      <text x="12" y="18" font-size="16" font-weight="bold" text-anchor="middle" fill="#ff0000">3</text>
+    </g>
+    <g id="cell-num-4">
+      <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+      <use href="#cell-bevel-revealed"></use>
+      <text x="12" y="18" font-size="16" font-weight="bold" text-anchor="middle" fill="#000084">4</text>
+    </g>
+  </defs>
+  <rect x="0" y="0" fill="#c0c0c0" width="936" height="512"></rect>
+  <polygon fill="#ffffff" points="0,0 936,0 934,2 2,2 2,510 0,512"></polygon>
+  <polygon fill="#808080" points="936,0 936,512 0,512 2,510 934,510 934,2"></polygon>
+  <rect x="2" y="2" fill="url(#mine-title-gradient)" height="18" width="932"></rect>
+  <text x="10" y="16" fill="white" font-size="12" font-weight="bold" letter-spacing="0.025em">Mine!</text>
+  <g transform="translate(8, 28)">
+    <rect x="0" y="0" width="920" height="52" fill="#bdbdbd"></rect>
+    <polygon fill="#808080" points="0,0 920,0 918,2 2,2 2,50 0,52"></polygon>
+    <polygon fill="#ffffff" points="920,0 920,52 0,52 2,50 918,50 918,2"></polygon>
+  </g>
+  <g transform="translate(8, 88)">
+    <rect x="0" y="0" width="920" height="416" fill="#bdbdbd"></rect>
+    <polygon fill="#808080" points="0,0 920,0 918,2 2,2 2,414 0,416"></polygon>
+    <polygon fill="#ffffff" points="920,0 920,416 0,416 2,414 918,414 918,2"></polygon>
+  </g>
+  <g transform="translate(14, 37)">
+    <rect x="0" y="0" fill="#000000" width="62" height="34"></rect>
+    <use href="#counter-bevel"></use>
+    <text y="27" fill="#ff1f1f" font-family="monospace" font-size="30" font-weight="bold" letter-spacing="1" text-anchor="middle" x="31">083</text>
+  </g>
+  <g transform="translate(860, 37)">
+    <rect x="0" y="0" fill="#000000" width="62" height="34"></rect>
+    <use href="#counter-bevel"></use>
+    <text y="27" fill="#ff1f1f" font-family="monospace" font-size="30" font-weight="bold" letter-spacing="1" text-anchor="middle" x="31">025</text>
+  </g>
+  <g transform="translate(451, 37)">
+    <rect x="0" y="0" fill="#bdbdbd" width="34" height="34"></rect>
+    <polygon fill="#ffffff" points="0,0 34,0 32,2 2,2 2,32 0,34"></polygon>
+    <polygon fill="#808080" points="34,0 34,34 0,34 2,32 32,32 32,2"></polygon>
+    <svg x="3" y="3" preserveAspectRatio="xMidYMid meet" width="28" height="28" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <defs id="smile-defs1" />
+      <g id="smile-layer4" transform="translate(-0.33121197,-0.5790914)">
+        <path style="fill:#f8f239;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 13.634177,43.137483 C 11.445065,42.688867 9.2608924,42.29982 7.1166284,42.966866 c -2.1716543,1.423938 -0.5714935,3.402554 0.1706165,5.254987 2.3068425,1.981751 4.6671781,3.674641 7.2000141,4.436027 z" id="smile-path23" />
+        <path style="fill:#608bda;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 16.091053,52.623757 5.988637,1.126068 -1.910904,-5.698589 -5.914744,-4.620275 z" id="smile-path24" />
+        <path style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 13.941287,43.3081 c -3.645672,-3.439241 0.443602,9.281534 0.443602,9.281534 l 2.38863,0.443602 c -0.258,-2.91426 -2.801345,-9.598218 -1.082661,-8.641471 z" id="smile-path22" />
+        <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 22.21235,53.750207 C 18.775543,53.534133 15.940914,52.966874 13.651519,52.19275 5.7756756,49.529654 4.3524597,44.418403 7.0635629,42.73469 c 0,0 2.9491941,-1.591195 7.1449841,0.517613 1.829162,0.919339 3.895244,2.541877 6.057179,5.306013 z" id="smile-path20" />
+      </g>
+      <g id="smile-g36" style="opacity:1" transform="translate(-0.53083381,-0.5790914)">
+        <path style="fill:#f8f239;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 51.244999,43.137483 c 2.189112,-0.448616 4.373285,-0.837663 6.517549,-0.170617 2.171654,1.423938 0.571493,3.402554 -0.170617,5.254987 -2.306842,1.981751 -4.667178,3.674641 -7.200014,4.436027 z" id="smile-path33" />
+        <path style="fill:#608bda;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 48.788123,52.623757 -5.988637,1.126068 1.910904,-5.698589 5.914744,-4.620275 z" id="smile-path34" />
+        <path style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 50.937889,43.3081 c 3.645672,-3.439241 -0.443602,9.281534 -0.443602,9.281534 l -2.38863,0.443602 c 0.258,-2.91426 2.801345,-9.598218 1.082661,-8.641471 z" id="smile-path35" />
+        <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 42.666826,53.750207 c 3.436807,-0.216074 6.271436,-0.783333 8.560831,-1.557457 7.875843,-2.663096 9.299059,-7.774347 6.587956,-9.45806 0,0 -2.949194,-1.591195 -7.144984,0.517613 -1.829162,0.919339 -3.895244,2.541877 -6.057179,5.306013 z" id="smile-path36" />
+      </g>
+      <g id="smile-layer1">
+        <g id="smile-path11" style="opacity:1" transform="translate(0,-1.6995133)">
+          <path style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#608bda;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers;enable-background:accumulate;stop-color:#000000;stop-opacity:1" d="M 19.702237,48.492461 A 13.991164,27.430193 0 0 1 25.401255,11.366297 13.991164,27.430193 0 0 1 44.344188,22.498962 13.991164,27.430193 0 0 1 38.686461,59.649391 13.991164,27.430193 0 0 1 19.731195,48.597703" id="smile-path31" />
+        </g>
+        <path style="fill:#608bda;fill-opacity:1;stroke:#000000;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 20.73439,14.786031 c 2.071075,-0.478014 3.115733,-0.238646 4.988503,0.765496" id="smile-path25" />
+        <path style="fill:#608bda;fill-opacity:1;stroke:#000000;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 43.422503,14.786031 C 41.351428,14.308017 40.30677,14.547385 38.434,15.551527" id="smile-path26" />
+        <path style="fill:#253249;fill-opacity:1;stroke:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 23.189138,12.071218 c 1.597121,-0.02667 3.08136,-0.221207 5.891118,1.555536 l 1.39184,-7.3584795 c -1.616369,0.6893604 -5.15494,3.4550202 -7.282958,5.8029435 z" id="smile-path27" />
+        <path style="fill:#253249;fill-opacity:1;stroke:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 40.682958,12.10343 c -1.597121,-0.02667 -3.08136,-0.221207 -5.891118,1.555536 L 33.4,6.3004867 c 1.616369,0.6893604 5.15494,3.45502 7.282958,5.8029433 z" id="smile-path27-3" />
+        <path style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1;paint-order:stroke fill markers;enable-background:accumulate;stop-color:#000000;stop-opacity:1" d="m 30.623047,6.0153304 c -1.931089,0.3560061 -3.828547,1.4549222 -5.583985,3.3066403 -3.510874,3.7034373 -5.858718,9.7335723 -6.90039,16.5195323 -1.041673,6.785959 -0.765235,14.335208 1.082031,21.083984 a 0.5,0.5 0 0 0 0.03711,0.04687 0.5,0.5 0 0 0 -0.0078,0.05859 c 1.862362,6.73331 4.936369,11.41397 8.541016,13.515625 1.802323,1.050827 3.749208,1.442343 5.679687,1.078125 1.930479,-0.364218 3.826966,-1.473094 5.580078,-3.332032 3.506224,-3.717875 5.846749,-9.756577 6.88086,-16.546875 C 46.965751,34.955502 46.68099,27.408733 44.826172,20.667674 42.971354,13.926616 39.902362,9.2335237 36.300781,7.116893 34.499991,6.0585778 32.554136,5.6593244 30.623047,6.0153304 Z m 0.18164,0.9824219 c 1.685381,-0.3107084 3.363446,0.024413 4.990235,0.9804688 3.253578,1.9121116 6.25544,6.3714409 8.066406,12.9531249 1.810966,6.581684 2.095366,14.010186 1.082031,20.664063 -1.013334,6.653876 -3.335861,12.528174 -6.621093,16.011719 -1.642617,1.741772 -3.351869,2.715253 -5.03711,3.033203 -1.68524,0.317949 -3.362746,-0.0081 -4.990234,-0.957032 -3.254975,-1.897782 -6.263806,-6.344232 -8.082031,-12.917968 a 0.5,0.5 0 0 0 -0.05078,-0.06641 0.5,0.5 0 0 0 0.02148,-0.03711 c -1.803697,-6.5896 -2.077356,-14.018535 -1.056641,-20.667969 1.020715,-6.649433 3.348146,-12.513479 6.636719,-15.982421 1.644286,-1.7344723 3.355635,-2.7029643 5.041015,-3.0136727 z" id="smile-path30" />
+      </g>
+      <g id="smile-layer5">
+        <path style="fill:#608bda;fill-opacity:1;stroke:#000000;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 30.949822,6.8142471 c 0.654821,0.178989 0.632363,0.7255692 1.043918,0.7221425 C 32.375904,7.5332096 32.397536,6.994291 33.09959,6.814247 33.02433,4.1851714 32.801637,3.0627516 31.888213,2.9412539 30.809548,3.1899305 30.901306,5.3132882 30.949822,6.8142471 Z" id="smile-path32" />
+      </g>
+      <g id="smile-layer2" transform="translate(2)">
+        <path style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" id="smile-path10" d="m 14.784264,25.671078 a 5.0187922,5.0187922 0 0 1 2.044303,-6.792825 5.0187922,5.0187922 0 0 1 6.795049,2.036899 5.0187922,5.0187922 0 0 1 -2.029492,6.797265 5.0187922,5.0187922 0 0 1 -6.799473,-2.022083" />
+        <path style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:4.15152;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" id="smile-path14" d="m 18.199962,24.933401 a 3.3056467,3.3056467 0 0 1 1.346488,-4.47412 3.3056467,3.3056467 0 0 1 4.475585,1.341611 3.3056467,3.3056467 0 0 1 -1.336733,4.477045 3.3056467,3.3056467 0 0 1 -4.478499,-1.331853" />
+      </g>
+      <g id="smile-g16" transform="matrix(-1,0,0,1,62.413028,0)">
+        <path style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" id="smile-path15" d="m 14.784264,25.671078 a 5.0187922,5.0187922 0 0 1 2.044303,-6.792825 5.0187922,5.0187922 0 0 1 6.795049,2.036899 5.0187922,5.0187922 0 0 1 -2.029492,6.797265 5.0187922,5.0187922 0 0 1 -6.799473,-2.022083" />
+        <path style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:4.15152;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" id="smile-path16" d="m 18.199962,24.933401 a 3.3056467,3.3056467 0 0 1 1.346488,-4.47412 3.3056467,3.3056467 0 0 1 4.475585,1.341611 3.3056467,3.3056467 0 0 1 -1.336733,4.477045 3.3056467,3.3056467 0 0 1 -4.478499,-1.331853" />
+      </g>
+      <g id="smile-layer3">
+        <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="m 25.510085,39.57269 c 1.37626,2.752344 3.653609,5.043957 7.031822,5.152617 2.80323,-0.170581 4.739473,-2.355953 6.003274,-5.152617" id="smile-path19" />
+      </g>
+    </svg>
+  </g>
+  <g transform="translate(12, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(36, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(6.800184164128755, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(84, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(108, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 92)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(156, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-2.3813910098960704, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(180, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-7.9311017639023795, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(204, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-2.015500741633165, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(276, 92)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(300, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(324, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 92)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 92)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(36, 116)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(60, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(84, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(108, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 116)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(156, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(4.744029170480436, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(180, 116)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(204, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 116)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(276, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(5.652134181982781, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(300, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(324, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 116)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 116)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-4.148647147076959, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(36, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(84, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(108, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(156, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(180, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(204, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(228, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(252, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(276, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(300, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(324, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 140)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 140)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 164)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(36, 164)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(84, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(108, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(156, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(204, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(228, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(252, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(276, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(300, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(324, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 164)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-2.0266072418636334, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(396, 164)">
+    <use href="#cell-num-4"></use>
+  </g>
+  <g transform="translate(420, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-1.9480691630811169, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(444, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 164)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(36, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(84, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(108, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(156, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(204, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(276, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(300, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(324, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 188)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(396, 188)">
+    <use href="#cell-num-4"></use>
+  </g>
+  <g transform="translate(420, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-7.408713712109323, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(444, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(2.0086691678654507, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(468, 188)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(492, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 188)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 212)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(84, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(108, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(132, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(156, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(204, 212)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 212)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(276, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(300, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(324, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(372, 212)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(396, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(0.5640382843052514, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(420, 212)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(444, 212)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(468, 212)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(492, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 212)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(36, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(84, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(108, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(132, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(156, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(204, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(276, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(300, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(324, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(372, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(396, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(420, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(444, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(468, 236)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(492, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 236)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(36, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(60, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(84, 260)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(108, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(1.926270747605244, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(132, 260)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(156, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(204, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(228, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(252, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(276, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(300, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(324, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(348, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(372, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(396, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(420, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(444, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(468, 260)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(492, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 260)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(36, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(60, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(84, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(108, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(132, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(156, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(180, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(204, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(276, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(300, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(324, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(348, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(372, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(396, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(420, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(444, 284)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(468, 284)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(492, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 284)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 308)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(156, 308)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(180, 308)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(204, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(6.703013345936148, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(228, 308)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 308)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(276, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(-0.7235434651658945, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(300, 308)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(324, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(1.315494149033654, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(348, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+    <use href="#buoy" transform="rotate(7.449000966298033, 12, 20)"></use>
+    <use href="#waves"></use>
+  </g>
+  <g transform="translate(372, 308)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(396, 308)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(420, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 308)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 332)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(228, 332)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(252, 332)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(276, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 332)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(372, 332)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(396, 332)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(420, 332)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(444, 332)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(468, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 332)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 356)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(372, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(396, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(420, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(444, 356)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(468, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 356)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 380)">
+    <use href="#cell-num-3"></use>
+  </g>
+  <g transform="translate(372, 380)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(396, 380)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(420, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#bdbdbd"></rect>
+    <use href="#cell-bevel-revealed"></use>
+  </g>
+  <g transform="translate(444, 380)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(468, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 380)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(372, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 404)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(420, 404)">
+    <use href="#cell-num-1"></use>
+  </g>
+  <g transform="translate(444, 404)">
+    <use href="#cell-num-2"></use>
+  </g>
+  <g transform="translate(468, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 404)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(372, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 428)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(372, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 452)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(12, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(36, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(60, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(84, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(108, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(132, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(156, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(180, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(204, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(228, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(252, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(276, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(300, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(324, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(348, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(372, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(396, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(420, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(444, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(468, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(492, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(516, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(540, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(564, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(588, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(612, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(636, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(660, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(684, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(708, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(732, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(756, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(780, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(804, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(828, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(852, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(876, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+  <g transform="translate(900, 476)">
+    <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
+    <use href="#cell-bevel-raised"></use>
+  </g>
+</svg>

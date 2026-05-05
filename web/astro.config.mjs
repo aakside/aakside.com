@@ -84,6 +84,9 @@ function serveBuiltAstroImagesInDev() {
 
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    svgo: true,
+  },
   fonts: [
     {
       provider: fontProviders.adobe({ id: "oft2wtu" }),
