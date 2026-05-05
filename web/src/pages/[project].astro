@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import Project from "../layouts/Project.astro";
+import ProjectLayout from "../layouts/Project.astro";
 import { withGitContentDates } from "../utils/content-meta";
 import { getProjectPagePath } from "../utils/project-page";
 
@@ -12,36 +12,37 @@ export async function getStaticPaths() {
   }));
 }
 
-const project = withGitContentDates<"projects">(Astro.props);
+const projectEntry = withGitContentDates<"projects">(Astro.props);
 
 const projectComponentModules = import.meta.glob("../components/projects/*.astro", {
   eager: true,
 }) as Record<string, { default: any }>;
 
-const componentPath = project.data.component
-  ? `../components/projects/${project.data.component}`
+const componentPath = projectEntry.data.component
+  ? `../components/projects/${projectEntry.data.component}`
   : undefined;
 
 const ProjectComponent = componentPath
   ? projectComponentModules[componentPath]?.default
   : undefined;
 
-const hasContentBody = "body" in project && typeof project.body === "string";
-const Content = !ProjectComponent && hasContentBody ? (await render(project)).Content : undefined;
+const hasContentBody = "body" in projectEntry && typeof projectEntry.body === "string";
+const Content =
+  !ProjectComponent && hasContentBody ? (await render(projectEntry)).Content : undefined;
 ---
 
-<Project {...project.data}>
+<ProjectLayout {...projectEntry.data}>
   <section class="sr-only">
-    <h1>{project.data.title}</h1>
-    {project.data.description && <p>{project.data.description}</p>}
+    <h1>{projectEntry.data.title}</h1>
+    {projectEntry.data.description && <p>{projectEntry.data.description}</p>}
   </section>
   {
     ProjectComponent ? (
-      <ProjectComponent project={project.data} />
+      <ProjectComponent project={projectEntry.data} />
     ) : Content ? (
       <Content />
     ) : (
       <p>Error loading project.</p>
     )
   }
-</Project>
+</ProjectLayout>
