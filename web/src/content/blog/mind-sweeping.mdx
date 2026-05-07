@@ -14,14 +14,14 @@ import gnominesBestTimesImage from "../../assets/blog/mind-sweeping/gnomines-bes
 
 ## The Initial Sweep
 
-As a kid, I didn't pay [Microsoft Minesweeper](https://en.wikipedia.org/wiki/Microsoft_Minesweeper) much mind on my Windows 95 computer, so I hadn't figured out the rules through my random clicking. As I browsed job listings in 2013 soon after being laid off from my first fulltime job, I came across a [programming challenge](https://web.archive.org/web/20130123165552/http://www.thumbtack.com/challenges#minesweeper) that ignited my interest in Minesweeper.
+As a kid, I didn't pay [Microsoft Minesweeper](https://en.wikipedia.org/wiki/Microsoft_Minesweeper) much mind on my Windows 95 computer, so I hadn't figured out the rules through my random clicking. As I browsed job listings in 2013 soon after being laid off from my first fulltime job, I came across a [programming challenge](https://web.archive.org/web/20130123165552/http://www.thumbtack.com/challenges#minesweeper) from [Thumbtack](https://en.wikipedia.org/wiki/Thumbtack_(company)) that ignited my interest in Minesweeper.
 
 <figure>
   > ### Rules of Minesweeper
   >
   > Minesweeper is a grid of tiles, each of which may or may not cover hidden mines. The goal is to click on every tile except those that have mines. When a user clicks a tile, one of two things happens. If the tile was covering a mine, the mine is revealed and the game ends in failure. If the tile was not covering a mine, it instead reveals the number of adjacent (including diagonals) tiles that are covering mines – and, if that number was 0, behaves as if the user has clicked on every cell around it. When the user is confident that all tiles not containing mines have been clicked, the user presses a Validate button (often portrayed as a smiley-face icon) that checks the clicked tiles: if the user is correct, the game ends in victory, if not, the game ends in failure.
 
-  <figcaption>The rules of Minesweeper as explained by [Thumbtack](https://en.wikipedia.org/wiki/Thumbtack_(company)).</figcaption>
+  <figcaption>The rules of Minesweeper as explained by Thumbtack.</figcaption>
 </figure>
 
 Eager to try [Backbone.js](https://backbonejs.org/) and having been a fan of the graphics common in [Chris Sawyer](https://en.wikipedia.org/wiki/Chris_Sawyer) games, [I hacked together an unusual Minesweeper clone](https://github.com/aakside/minesweeper).
@@ -35,7 +35,7 @@ Eager to try [Backbone.js](https://backbonejs.org/) and having been a fan of the
     >
   </iframe>
 
-  <figcaption>[My submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
+  <figcaption>[My submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge, which might be impossible to play on a touchscreen. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
 </figure>
 
 ## Swept Away
@@ -64,10 +64,10 @@ I decided to remake the game again, but with a few twists:
 I know both [multiplayer Minesweeper](https://worldminesweepernetwork.com/) and [Voronoi Minesweeper](https://clark-pan.github.io/voronoi-minesweeper/) have been made, but I wanted to have a go at it myself, while playing with things like [wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), [Threlte](https://threlte.xyz/), [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language), and [Iroh](https://www.iroh.computer/) for fun and practice more than for practicality.
 
 <figure>
-  <video autoplay loop muted controls class="w-full">
-    <source src="/blog/mind-sweeping/avoidant-terrain-test.webm" type="video/webm" />
-    <source src="/blog/mind-sweeping/avoidant-terrain-test.mkv" type="video/x-matroska" />
-    <source src="/blog/mind-sweeping/avoidant-terrain-test.mp4" type="video/mp4" />
+  <video autoplay loop muted controls class="w-full" loading="lazy">
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.webm" type="video/webm; codecs=vp9" />
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.mkv" type="video/x-matroska; codecs=avc1" />
+    <source src="/blog/mind-sweeping/avoidant-terrain-test.mp4" type="video/mp4; codecs=avc1" />
   </video>
   <figcaption>Experimenting with terrain generation and shaders.</figcaption>
 </figure>
@@ -78,7 +78,17 @@ Originally passed Svelte state from JS to Rust, but it was messy and eventually 
 
 ### Networking
 
-libp2p vs Iroh vs other things.
+libp2p vs Iroh vs matchbox vs other things.
+
+<figure>
+  <video autoplay loop muted class="w-full" loading="lazy">
+    <source src="/blog/mind-sweeping/avoidant-networking-test_av1.mp4" type="video/mp4; codecs=av01" />
+    <source src="/blog/mind-sweeping/avoidant-networking-test_h265.mp4" type="video/mp4; codecs=hvc1" />
+    <source src="/blog/mind-sweeping/avoidant-networking-test.webm" type="video/webm; codecs=vp9" />
+    <source src="/blog/mind-sweeping/avoidant-networking-test_h264.mp4" type="video/mp4; codecs=avc1" />
+  </video>
+  <figcaption>Propagation of terrain cell exploration events across Iroh peers.</figcaption>
+</figure>
 
 ## Coming up
 
