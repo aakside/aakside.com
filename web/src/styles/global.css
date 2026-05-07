@@ -145,13 +145,18 @@ p {
   margin-bottom: 1em;
 }
 
-.prose p {
-  margin-bottom: 2em;
+div.prose {
+  padding: 0 !important;
+
+  p {
+    margin-bottom: 2em;
+  }
+
+  hr {
+    margin: 0;
+  }
 }
 
-.prose hr {
-  margin: 0;
-}
 
 mark {
   background-color: var(--color-accent) !important;
