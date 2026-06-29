@@ -105,7 +105,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkToc({ heading: "toc", maxDepth: 6 })],
+      remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
     }),
   },
   site: "https://aakside.com",
