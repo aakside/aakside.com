@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from "astro:content";
+import ProjectLayout from "../layouts/Project.astro";
+import { withGitContentDates } from "../utils/content-meta";
+import { getProjectPagePath } from "../utils/project-page";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { project: getProjectPagePath(project) },
+    props: project,
+  }));
+}
+
+const projectEntry = withGitContentDates<"projects">(Astro.props);
+
+const projectComponentModules = import.meta.glob("../components/projects/*.astro", {
+  eager: true,
+}) as Record<string, { default: any }>;
+
+const componentPath = projectEntry.data.component
+  ? `../components/projects/${projectEntry.data.component}`
+  : undefined;
+
+const ProjectComponent = componentPath
+  ? projectComponentModules[componentPath]?.default
+  : undefined;
+
+const hasContentBody = "body" in projectEntry && typeof projectEntry.body === "string";
+const Content =
+  !ProjectComponent && hasContentBody ? (await render(projectEntry)).Content : undefined;
+---
+
+<ProjectLayout {...projectEntry.data}>
+  <section class="sr-only">
+    <h1>{projectEntry.data.title}</h1>
+    {projectEntry.data.description && <p>{projectEntry.data.description}</p>}
+  </section>
+  {
+    ProjectComponent ? (
+      <ProjectComponent project={projectEntry.data} />
+    ) : Content ? (
+      <Content />
+    ) : (
+      <p>Error loading project.</p>
+    )
+  }
+</ProjectLayout>

@@ -27,6 +27,7 @@
             lat: 40.7886553,
             lng: -73.9603028,
           },
+          visible: true,
           zoom: 13,
         },
       ],
@@ -62,7 +63,7 @@
               ),
             }
           : layerConfig,
-      ),
+      ) as LayerConfigs,
     );
   });
 </script>

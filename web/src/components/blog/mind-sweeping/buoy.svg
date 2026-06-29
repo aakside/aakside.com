@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64"
+   height="63.999996"
+   viewBox="0 0 16.933334 16.933332"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><linearGradient
+       id="linearGradient16"><stop
+         style="stop-color:#f8f3d3;stop-opacity:1;"
+         offset="0"
+         id="stop16" /><stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop17" /></linearGradient><linearGradient
+       id="linearGradient12"><stop
+         style="stop-color:#bd360c;stop-opacity:1;"
+         offset="0"
+         id="stop12" /><stop
+         style="stop-color:#e46037;stop-opacity:1;"
+         offset="0.79581487"
+         id="stop13" /></linearGradient><linearGradient
+       xlink:href="#linearGradient12"
+       id="linearGradient13"
+       x1="3.6935213"
+       y1="10.034812"
+       x2="13.232577"
+       y2="10.034812"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+       xlink:href="#linearGradient16"
+       id="linearGradient17"
+       x1="7.3992386"
+       y1="1.8688089"
+       x2="9.538229"
+       y2="1.8688089"
+       gradientUnits="userSpaceOnUse" /></defs><path
+     style="display:inline;fill:url(#linearGradient17);fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round"
+     d="M 9.5250002,3.2287104 V 1.5006836 c 0,-1.33121567 -2.1125326,-1.31349122 -2.1125326,0 v 1.7280268 z"
+     id="path13" /><path
+     id="path1"
+     style="display:inline;fill:url(#linearGradient13);fill-opacity:1;stroke:none;stroke-width:0.0264583;stroke-linecap:round;stroke-linejoin:round"
+     d="M 5.2916667,3.175 V 4.2333334 H 6.3582683 L 6.3500001,6.1598308 4.8885905,12.047273 H 4.1449667 c -0.2404377,0.0421 -0.3623962,0.193306 -0.4382162,0.400029 v 2.190564 c 3.1472865,3.015603 6.3180225,3.00241 9.5120815,0 l 5.16e-4,-2.190564 c -0.05012,-0.221663 -0.175969,-0.371079 -0.424263,-0.400029 H 12.065414 L 10.583333,6.1598308 V 4.2333334 h 1.066602 V 3.175 Z M 7.28431,6.7468751 H 9.6407553 L 9.71827,7.0569337 8.4640829,8.3431601 7.2078288,7.0548666 Z M 6.9980225,7.898226 7.9478354,8.8723267 6.3489665,10.511503 Z M 9.9280763,7.900293 10.578166,10.51047 8.9803305,8.8723267 Z m -1.4639934,1.5012004 2.4680661,2.5305946 0.02584,0.115185 c -1.6558734,0.0046 -3.3269543,-5.53e-4 -4.9883265,0 l 0.026872,-0.115701 z" /></svg>
