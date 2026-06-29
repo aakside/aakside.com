@@ -1,5 +1,6 @@
 // @ts-check
 
+import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -103,7 +104,9 @@ export default defineConfig({
     serveBuiltAstroImagesInDev(),
   ],
   markdown: {
-    remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
+    processor: unified({
+      remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
+    }),
   },
   site: "https://aakside.com",
   vite: {
