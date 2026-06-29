@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig, fontProviders, svgoOptimizer } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
@@ -86,7 +86,7 @@ function serveBuiltAstroImagesInDev() {
 // https://astro.build/config
 export default defineConfig({
   experimental: {
-    svgo: true,
+    svgOptimizer: svgoOptimizer(),
   },
   fonts: [
     {
@@ -105,7 +105,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: unified({
-      remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
+      remarkPlugins: [remarkToc({ heading: "toc", maxDepth: 6 })],
     }),
   },
   site: "https://aakside.com",
