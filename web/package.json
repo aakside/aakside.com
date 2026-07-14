@@ -12,7 +12,7 @@
     "sync:maplibre-css": "node scripts/sync-maplibre-css.mjs"
   },
   "dependencies": {
-    "@aakside/svelte-maplibre-stack": "^0.1.1",
+    "@aakside/svelte-maplibre-stack": "^0.1.2",
     "@americana/maplibre-shield-generator": "^0.1.1",
     "@astrojs/check": "^0.9.8",
     "@astrojs/markdown-remark": "^7.2.0",
