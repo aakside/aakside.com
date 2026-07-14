@@ -36,7 +36,7 @@ Eager to try [Backbone.js](https://backbonejs.org/) and having been a fan of the
     >
   </iframe>
 
-  <figcaption>[My subpar submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge, which is might be impossible to play on a touchscreen. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
+  <figcaption>[My subpar submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge, which might be impossible to play on a touchscreen. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
 </figure>
 
 ## Swept Away
@@ -116,12 +116,12 @@ To maintain shared reactive state, I initially passed Svelte state from JS to Ru
 
 ### Networking
 
-While I could have used [matchbox](https://github.com/johanhelsing/matchbox/) (I might one day), I drool at the idea of decentralized peer resolution. I had used [libp2p](https://libp2p.io/) in the context of distributed LLM inference before, and while that was fun to play with, I hesitated to it for this game because I had experienced a lot of latency with peer discovery and a high connection failure rate.
+While I could have used [matchbox](https://github.com/johanhelsing/matchbox/) (I might one day), I drool at the idea of decentralized peer resolution. I had used [libp2p](https://libp2p.io/) in the context of distributed LLM inference before, and while that was fun to play with, I hesitated to use it for this game because I had experienced a lot of latency with peer discovery and a high connection failure rate.
 
 <figure>
   > Critically, we empirically refute the long-held ’tribal knowledge’ of UDP’s superiority for NAT traversal, demonstrating that DCUtR’s high-precision, RTT-based synchronization yields statistically indistinguishable success rates for both TCP and QUIC (∼70%).
 
-  <figcaption>My fears of libp2p having low hole punching rates reaffirmed by [Challenging Tribal Knowledge – Large Scale Measurement Campaign on Decentralized NAT Traversal](https://arxiv.org/html/2510.27500v1).</figcaption>
+  <figcaption>My fears of libp2p having low hole punching rates reaffirmed by [Challenging Tribal Knowledge – Large Scale Measurement Campaign on Decentralized NAT Traversal](https://arxiv.org/abs/2510.27500v1).</figcaption>
 </figure>
 
 I decided to try Iroh, hoping that one day soon it will [support WebRTC](https://docs.iroh.computer/languages/wasm-browser#no-direct-connections) so players on web browsers won't devour bandwidth on my self-hosted [Iroh Relay](https://github.com/n0-computer/iroh/tree/main/iroh-relay) server.
