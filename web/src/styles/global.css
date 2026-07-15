@@ -149,7 +149,7 @@ div.prose {
   width: 720px;
   max-width: calc(100% - 1em);
   margin: auto;
-  padding: 0 !important;
+  padding: 1em;
 
   figure {
     a img {
