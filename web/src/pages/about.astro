@@ -13,6 +13,19 @@ import { SITE_DESCRIPTION } from "../consts";
   </head>
   <body>
     <Header />
+    <div class="prose m-auto w-180">
+      <p>
+        I'm Alvin, a New Yorker with software engineering experience spanning machine learning,
+        distributed systems, and full-stack web development. I've built machine learning pipelines,
+        ad-serving infrastructure, and recommender systems at scale in programmatic advertising, and
+        been founding engineer in fintech, owning real-time data infrastructure; and AI, building a
+        distributed LLM inference platform with verifiable proof-of-work semantics and Rust-based
+        smart contracts. My technical range covers Rust, TypeScript, Python, and C++, from CUDA
+        kernels and streaming data pipelines to GraphQL APIs and product-facing UIs. Contact me if
+        you're interested in working together.
+      </p>
+      <a data-obfuscation="0" href="mailto:aakside@gmail.com">aakside@gmail.com</a>
+    </div>
     <div class="social-links">
       <a href="http://mastodon.social/@aakside" target="_blank">
         <span class="sr-only">Follow me on Mastodon</span>
@@ -47,6 +60,11 @@ import { SITE_DESCRIPTION } from "../consts";
 </html>
 
 <style>
+  @reference "tailwindcss";
+
+  div.prose {
+    @apply mt-4;
+  }
   .social-links {
     display: flex;
     justify-content: center;
