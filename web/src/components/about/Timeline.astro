@@ -1,0 +1,109 @@
+---
+import FormattedDate from "../FormattedDate.astro";
+import type { TimelineCollectionEntry } from "../../types/timeline";
+
+type Props = {
+  collection: TimelineCollectionEntry[];
+  endTimelineAtLastEntry?: boolean;
+  startTimelineAtFirstEntry?: boolean;
+};
+
+const {
+  collection,
+  startTimelineAtFirstEntry = false,
+  endTimelineAtLastEntry = false,
+} = Astro.props;
+---
+
+<div class="@container w-full">
+  <ul class="timeline timeline-snap-icon timeline-vertical">
+    {
+      collection.slice().map((entry, index) => (
+        <li class="group @max-xl:[--timeline-col-start:10rem]">
+          {(index > 0 || startTimelineAtFirstEntry) && (
+            <hr
+              class="bg-primary/25 rounded-none"
+              class:list={[
+                {
+                  "via-primary/25 bg-transparent bg-linear-to-b from-transparent to-transparent bg-size-[1px_6px]":
+                    index === 0,
+                },
+              ]}
+            />
+          )}
+          <div class="timeline-start self-start px-1 text-sm opacity-70">
+            <FormattedDate date={entry.data.startDate} format="date" />
+          </div>
+
+          <div class="timeline-middle" aria-hidden="true">
+            {typeof entry.data.icon === "string" ? (
+              <span class="text-lg leading-none">{entry.data.icon}</span>
+            ) : entry.data.icon ? (
+              <img src={entry.data.icon.src} alt="" class="h-5 w-5 object-contain" loading="lazy" />
+            ) : (
+              <span class="inline-block h-2.5 w-2.5 rounded-full bg-current" />
+            )}
+          </div>
+
+          <div class="timeline-end">
+            <div class="font-semibold">
+              {entry.data.link ? (
+                <a href={entry.data.link}>{entry.data.title}</a>
+              ) : (
+                entry.data.title
+              )}
+            </div>
+            {entry.data.description && (
+              <div class="text-sm opacity-80">{entry.data.description.trim()}</div>
+            )}
+          </div>
+          {(index < collection.length - 1 || endTimelineAtLastEntry) && (
+            <hr
+              class="bg-primary/25 rounded-none"
+              class:list={[
+                {
+                  "via-primary/25 bg-transparent bg-linear-to-b from-transparent to-transparent bg-size-[1px_6px]":
+                    index === collection.length - 1,
+                },
+              ]}
+            />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  @reference "tailwindcss";
+  .timeline {
+    .timeline-start {
+      @apply px-1 pt-1.5;
+      @container (width >= 36rem) {
+        &:is(:where(.group):nth-child(even) *) {
+          grid-column-end: 4 !important;
+          grid-column-start: 3 !important;
+          grid-row-end: 4 !important;
+          grid-row-start: 1 !important;
+          align-self: flex-start !important;
+          justify-self: flex-start !important;
+        }
+      }
+    }
+    .timeline-end {
+      @apply mb-4 px-1 pt-0.5;
+      @container (width >= 36rem) {
+        @apply mb-2 px-1 pt-0.5;
+        &:is(:where(.group):nth-child(even) *) {
+          grid-column-end: 2 !important;
+          grid-column-start: 1 !important;
+          grid-row-end: 4 !important;
+          grid-row-start: 1 !important;
+          align-self: flex-end !important;
+          justify-self: flex-end !important;
+          text-align: end !important;
+        }
+      }
+    }
+  }
+</style>

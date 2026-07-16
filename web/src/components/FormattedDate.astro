@@ -1,10 +1,14 @@
 ---
+import { zip } from "es-toolkit/array";
+
 interface Props {
-  date: Date;
+  date: Date | [Date, Date];
+  format?: "date" | "datetime";
 }
 
-const { date } = Astro.props;
-const fallbackDateTime = date.toLocaleDateString("en-us", {
+const { date, format = "datetime" } = Astro.props;
+
+const dateTimeOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "short",
   day: "numeric",
@@ -12,9 +16,65 @@ const fallbackDateTime = date.toLocaleDateString("en-us", {
   minute: "2-digit",
   hour12: false,
   timeZoneName: "short",
-});
+};
+
+function toLocalYyyyMmDd(value: Date): string {
+  const year = value.getFullYear();
+  const month = String(value.getMonth() + 1).padStart(2, "0");
+  const day = String(value.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getCommonYyyyMmDdPrefix(start: string, end: string): string {
+  return zip(start.split("-"), end.split("-"))
+    .map(([a, b]) => (a === b ? a : false))
+    .filter(Boolean)
+    .join("-");
+}
+
+function toDisplayText(value: Date): string {
+  if (format === "date") {
+    return toLocalYyyyMmDd(value);
+  }
+
+  return value.toLocaleDateString("en-us", dateTimeOptions);
+}
+
+const isDateRange = Array.isArray(date);
+const [lowerBoundDate, upperBoundDate] = isDateRange ? date : [date, date];
+const lowerBound = lowerBoundDate.toISOString();
+const upperBound = upperBoundDate.toISOString();
+const rangeBoundAttrs = { lowerBound, upperBound } as Record<string, string>;
+
+const fallbackDateTime = (() => {
+  if (!isDateRange) {
+    return toDisplayText(lowerBoundDate);
+  }
+
+  if (format === "date") {
+    const start = toLocalYyyyMmDd(lowerBoundDate);
+    const end = toLocalYyyyMmDd(upperBoundDate);
+    const commonPrefix = getCommonYyyyMmDdPrefix(start, end);
+
+    if (commonPrefix.length > 0) {
+      return commonPrefix;
+    }
+
+    return `${start} — ${end}`;
+  }
+
+  return `${toDisplayText(lowerBoundDate)} — ${toDisplayText(upperBoundDate)}`;
+})();
 ---
 
-<time data-localized-date datetime={date.toISOString()}>
-  {fallbackDateTime}
-</time>
+{
+  isDateRange ? (
+    <time data-localized-date data-format={format} {...rangeBoundAttrs}>
+      {fallbackDateTime}
+    </time>
+  ) : (
+    <time data-localized-date data-format={format} datetime={lowerBound}>
+      {fallbackDateTime}
+    </time>
+  )
+}
