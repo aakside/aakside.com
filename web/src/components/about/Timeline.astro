@@ -1,15 +1,18 @@
 ---
 import FormattedDate from "../FormattedDate.astro";
 import type { TimelineCollectionEntry } from "../../types/timeline";
+import { Image } from "astro:assets";
 
 type Props = {
   collection: TimelineCollectionEntry[];
+  detailsUrlPrefix?: string;
   endTimelineAtLastEntry?: boolean;
   startTimelineAtFirstEntry?: boolean;
 };
 
 const {
   collection,
+  detailsUrlPrefix,
   startTimelineAtFirstEntry = false,
   endTimelineAtLastEntry = false,
 } = Astro.props;
@@ -35,11 +38,16 @@ const {
             <FormattedDate date={entry.data.startDate} format="date" />
           </div>
 
-          <div class="timeline-middle" aria-hidden="true">
+          <div class="timeline-middle select-none" aria-hidden="true">
             {typeof entry.data.icon === "string" ? (
               <span class="text-lg leading-none">{entry.data.icon}</span>
             ) : entry.data.icon ? (
-              <img src={entry.data.icon.src} alt="" class="h-5 w-5 object-contain" loading="lazy" />
+              <Image
+                src={entry.data.icon}
+                alt={`Icon for ${entry.data.title}.`}
+                class="h-5 w-5 object-contain"
+                loading="lazy"
+              />
             ) : (
               <span class="inline-block h-2.5 w-2.5 rounded-full bg-current" />
             )}
@@ -49,6 +57,8 @@ const {
             <div class="font-semibold">
               {entry.data.link ? (
                 <a href={entry.data.link}>{entry.data.title}</a>
+              ) : detailsUrlPrefix && entry.body ? (
+                <a href={`${detailsUrlPrefix}${entry.id}/`}>{entry.data.title}</a>
               ) : (
                 entry.data.title
               )}

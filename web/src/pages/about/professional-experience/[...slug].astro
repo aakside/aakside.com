@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from "astro:content";
+import ProfessionalExperience from "../../../layouts/ProfessionalExperience.astro";
+
+export async function getStaticPaths() {
+  const exps = await getCollection("professionalExperience");
+  return exps.map((exp) => ({
+    params: { slug: exp.id },
+    props: { exp },
+  }));
+}
+
+const { exp } = Astro.props;
+const { Content } = await render(exp);
+---
+
+<ProfessionalExperience {...exp.data}>
+  <Content />
+</ProfessionalExperience>

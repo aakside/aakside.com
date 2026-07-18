@@ -22,7 +22,7 @@ const professionalExperience = (await getCollection("professionalExperience")).s
     <div
       class="m-auto flex max-w-6xl flex-col 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_auto] 2xl:items-start"
     >
-      <div class="prose my-0!">
+      <div class="prose my-0! 2xl:box-content">
         <p>
           I'm Alvin, a New Yorker with software engineering experience spanning machine learning,
           distributed systems, and full-stack web development.
@@ -44,6 +44,7 @@ const professionalExperience = (await getCollection("professionalExperience")).s
         <div class="mb-2 w-full text-center font-semibold">Professional Experience (Abridged)</div>
         <Timeline
           collection={professionalExperience}
+          detailsUrlPrefix="/about/professional-experience/"
           startTimelineAtFirstEntry={true}
           endTimelineAtLastEntry={true}
         />
