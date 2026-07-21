@@ -38,7 +38,10 @@ export function defineTimelineCollection(base: string) {
       return z
         .object({
           endDate: z.union([z.coerce.date(), timelineDateRangeSchema]).optional(),
-          description: z.string().optional(),
+          favicon: z.string().optional(),
+          heroAlt: z.string().optional(),
+          heroComponent: z.string().optional(),
+          heroImage: image().optional(),
           icon: z
             .union([
               image(),
@@ -51,8 +54,11 @@ export function defineTimelineCollection(base: string) {
             ])
             .optional(),
           link: z.string().optional(),
+          pubDate: z.coerce.date(),
+          role: z.string().optional(),
           startDate: z.union([z.coerce.date(), timelineDateRangeSchema]),
           title: z.string(),
+          updatedDate: z.coerce.date().optional(),
         })
         .transform((data) => {
           return {

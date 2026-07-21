@@ -3,9 +3,18 @@ import FormattedDate from "../FormattedDate.astro";
 import type { TimelineCollectionEntry } from "../../types/timeline";
 import { Image } from "astro:assets";
 
+type TimelineData = TimelineCollectionEntry["data"];
+type StringFieldKey<T> = T extends unknown
+  ? {
+      [K in keyof T]-?: T[K] extends string | undefined ? K : never;
+    }[keyof T]
+  : never;
+type TimelineStringFieldKey = StringFieldKey<TimelineData>;
+
 type Props = {
   collection: TimelineCollectionEntry[];
   detailsUrlPrefix?: string;
+  eventDescriptionKey?: TimelineStringFieldKey;
   endTimelineAtLastEntry?: boolean;
   startTimelineAtFirstEntry?: boolean;
 };
@@ -13,6 +22,7 @@ type Props = {
 const {
   collection,
   detailsUrlPrefix,
+  eventDescriptionKey = "description" as TimelineStringFieldKey,
   startTimelineAtFirstEntry = false,
   endTimelineAtLastEntry = false,
 } = Astro.props;
@@ -63,8 +73,8 @@ const {
                 entry.data.title
               )}
             </div>
-            {entry.data.description && (
-              <div class="text-sm opacity-80">{entry.data.description.trim()}</div>
+            {entry.data[eventDescriptionKey] && (
+              <div class="text-sm opacity-80">{entry.data[eventDescriptionKey].trim()}</div>
             )}
           </div>
           {(index < collection.length - 1 || endTimelineAtLastEntry) && (

@@ -46,6 +46,7 @@ const professionalExperience = (await getCollection("professionalExperience")).s
         <Timeline
           collection={professionalExperience}
           detailsUrlPrefix="/about/professional-experience/"
+          eventDescriptionKey="role"
           startTimelineAtFirstEntry={true}
           endTimelineAtLastEntry={true}
         />

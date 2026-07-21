@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
+import Article from "../../layouts/Article.astro";
 import {
   getGitHubRepoPathForEntry,
   latestCommitDiffUrlForEntry,
@@ -21,11 +21,11 @@ const sourcePath = getGitHubRepoPathForEntry(post);
 const latestCommitDiffUrl = latestCommitDiffUrlForEntry(post);
 ---
 
-<BlogPost
+<Article
   {...post.data}
   headings={headings}
   sourcePath={sourcePath}
   latestCommitDiffUrl={latestCommitDiffUrl}
 >
   <Content />
-</BlogPost>
+</Article>

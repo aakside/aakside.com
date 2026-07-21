@@ -4,9 +4,14 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { GITHUB_REPO_URL } from "../consts";
-import { BLOG_FILE_EXTENSIONS, PROJECTS_FILE_EXTENSIONS } from "../content.config";
+import {
+  BLOG_FILE_EXTENSIONS,
+  PROJECTS_FILE_EXTENSIONS,
+  TIMELINE_FILE_EXTENSIONS,
+} from "../content.config";
+import { snakeCase } from "es-toolkit";
 
-type SupportedCollection = "blog" | "projects";
+type SupportedCollection = "blog" | "professionalExperience" | "projects";
 type EntryWithDates<C extends SupportedCollection> = CollectionEntry<C> & {
   data: CollectionEntry<C>["data"] & {
     pubDate: Date;
@@ -17,6 +22,7 @@ type EntryWithDates<C extends SupportedCollection> = CollectionEntry<C> & {
 const collectionFileExtensions: Record<SupportedCollection, string[]> = {
   blog: BLOG_FILE_EXTENSIONS,
   projects: PROJECTS_FILE_EXTENSIONS,
+  professionalExperience: TIMELINE_FILE_EXTENSIONS,
 };
 
 const gitTimestampCache = new Map<string, number | undefined>();
@@ -73,7 +79,7 @@ function getContentPath<C extends SupportedCollection>(
   collection: C,
   id: string,
 ): string | undefined {
-  const basePath = path.join("src", "content", collection, id);
+  const basePath = path.join("src", "content", snakeCase(collection).replace(/_/g, "-"), id);
   return collectionFileExtensions[collection]
     .map((extension) => `${basePath}.${extension}`)
     .find((path) => existsSync(path));
