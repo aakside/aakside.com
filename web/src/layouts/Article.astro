@@ -117,7 +117,7 @@ function getTocItemClass(depth: number) {
           <div class="prose">
             <div class="text-center leading-none">
               <h1 class="mx-0 mb-0.5">{title}</h1>
-              <div class="mb-7 flex flex-col items-center">
+              <div class="flex flex-col items-center">
                 <div>Published on <FormattedDate date={pubDate} format="datetime" /></div>
                 {
                   updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
@@ -145,8 +145,8 @@ function getTocItemClass(depth: number) {
                   )
                 }
               </div>
-              <hr />
             </div>
+            <hr class="mt-7! mb-6!" />
             <slot />
           </div>
           {
