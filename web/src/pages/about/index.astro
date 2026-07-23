@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION } from "../consts";
-import Timeline from "../components/about/Timeline.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION } from "../../consts";
+import Timeline from "../../components/about/Timeline.astro";
 
 const professionalExperience = (await getCollection("professionalExperience")).sort(
   (a, b) => b.data.sortDate.getTime() - a.data.sortDate.getTime(),
@@ -15,7 +15,7 @@ const professionalExperience = (await getCollection("professionalExperience")).s
   <head>
     <BaseHead sectionTitle="About" description={SITE_DESCRIPTION} />
     <meta name="theme-color" content="steelblue" />
-    <script src="../scripts/theme-color.ts"></script>
+    <script src="../../scripts/theme-color.ts"></script>
   </head>
   <body>
     <Header />
