@@ -28,11 +28,11 @@ const {
 } = Astro.props;
 ---
 
-<div class="@container w-full">
+<div class="not-prose @container w-full">
   <ul class="timeline timeline-snap-icon timeline-vertical">
     {
       collection.slice().map((entry, index) => (
-        <li class="group @max-xl:[--timeline-col-start:10rem]">
+        <li class="group @max-xl:[--timeline-col-start:5.15rem]">
           {(index > 0 || startTimelineAtFirstEntry) && (
             <hr
               class="bg-primary/25 rounded-none"

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="logo"
+   x="0px"
+   y="0px"
+   width="22"
+   height="27.1"
+   viewBox="0 0 22 27.100001"
+   enable-background="new 0 0 223 51.3"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs17" />
+<g
+   id="g17"
+   transform="translate(-201.1)">
+	
+	<rect
+   x="201.2"
+   y="11.8"
+   fill="#356db6"
+   width="21.799999"
+   height="4.5"
+   id="rect13" />
+	<rect
+   x="201.2"
+   y="6"
+   fill="#4aa2da"
+   width="21.799999"
+   height="4.5"
+   id="rect14" />
+	<path
+   fill="#90d8f5"
+   d="m 219.5,0 h -14.9 c -1.9,0 -3.5,1.6 -3.5,3.6 V 4.8 H 223 V 3.6 C 223,1.6 221.4,0 219.5,0 Z"
+   id="path14" />
+	<path
+   fill="#1f5296"
+   d="m 201.2,17.6 v 1.2 c 0,2 1.5,3.6 3.5,3.6 h 9.3 v 4.7 l 4.6,-4.7 h 1 c 1.9,0 3.5,-1.6 3.5,-3.6 v -1.2 z"
+   id="path15" />
+	<path
+   opacity="0.15"
+   fill="#ffffff"
+   d="m 201.2,17.6 v 1.2 c 0,2 1.5,3.6 3.5,3.6 h 0.6 l 4.6,-4.8 z"
+   id="path16" />
+	<polygon
+   opacity="0.15"
+   fill="#ffffff"
+   points="201.2,10.5 216.7,10.5 221,6 201.2,6 "
+   id="polygon16" />
+	<polygon
+   opacity="0.15"
+   fill="#ffffff"
+   points="201.2,16.3 211.1,16.3 215.4,11.8 201.2,11.8 "
+   id="polygon17" />
+</g>
+</svg>
