@@ -352,6 +352,8 @@
         <a
           class="btn btn-primary h-6 w-6 rounded-md p-0"
           href={`https://listenbrainz.org/user/${username}/stats/?range=all_time`}
+          rel="noopener noreferrer"
+          target="_blank"
           ><img src={ListenBrainzIcon.src} alt="ListenBrainz" class="h-full w-full" /></a
         >
       </div>
