@@ -6,22 +6,33 @@ import HexagonBuildingSketch from "../../assets/about/interests/skyscrapers/2008
 import { Image } from "astro:assets";
 import { MastodonPost, Tweet, Vimeo, YouTube } from "astro-embed";
 
-## Interests
+## Other Interests
 
-If I did write something here...
+Besides programming, I also like...
 
 ### Music
 
-I gravitate toward melodic electronic music, film/game scores, and long-running ambient
-or trance sets for focused work.
+I love listening to trance (vocal from the 2000s and uplifting are my favorites), orchestral music, and many film scores.
 
-The snapshot below is fetched client-side from my public ListenBrainz profile:
+<ListenBrainzTaste
+  client:visible
+  username="aakside"
+  queries={[
+    { range: "quarter", type: "track" },
+    { range: "quarter", type: "artist" },
+    { range: "year", type: "track" },
+    { range: "year", type: "artist" },
+    { range: "all_time", type: "track" },
+    { range: "all_time", type: "artist" },
+  ]}
+  count={8}
+/>
 
-<ListenBrainzTaste client:visible username="aakside" range="all_time" count={8} />
+Occasionally, I will beatbox, sing, or cathartically noodle on a piano.
 
-### Architecture/Urban Planning
+### Architecture, Civil Engineering, and Urban Planning
 
-Oh hello
+I regularly dream about buildings and urban spaces.
 
 #### Skyscrapers
 
@@ -34,7 +45,6 @@ In a [501 Queen streetcar](https://en.wikipedia.org/wiki/501_Queen) during a sch
 >
 - <Image
     alt="2008 sketch of a hexagonal building"
-    class="w-full"
     src={HexagonBuildingSketch}
   />
   2008-01-30: Sketching a hexagonally-based building that I first doodled in 9th grade.

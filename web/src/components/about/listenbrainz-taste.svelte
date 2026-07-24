@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import ListenBrainzIcon from "../../assets/external-links/listenbrainz.svg";
 
   type StatsRange =
     | "this_week"
@@ -12,61 +13,210 @@
     | "half_yearly"
     | "all_time";
 
+  type StatsType = "artist" | "album" | "track";
+
+  type StatsQuery = {
+    range: StatsRange;
+    type: StatsType;
+  };
+
   type TopArtist = {
     artist_name: string;
     listen_count: number;
   };
 
-  type ListenCountResponse = {
-    payload?: {
-      count?: number;
-    };
+  type TopRelease = {
+    artist_name?: string;
+    listen_count: number;
+    release_name?: string;
   };
 
-  type TopArtistsResponse = {
+  type TopRecording = {
+    artist_name?: string;
+    listen_count: number;
+    track_name?: string;
+  };
+
+  type TopItem = {
+    listenCount: number;
+    subtitle?: string;
+    title: string;
+  };
+
+  type TopStatsResponse = {
     payload?: {
       artists?: TopArtist[];
+      recordings?: TopRecording[];
+      releases?: TopRelease[];
       last_updated?: number;
     };
   };
 
   type CachedPayload = {
     cachedAt: number;
-    totalListens?: number;
-    topArtists: TopArtist[];
+    topItems: TopItem[];
     lastUpdated?: number;
+  };
+
+  type QuerySnapshot = {
+    error?: string;
+    lastUpdated?: number;
+    query: StatsQuery;
+    topItems: TopItem[];
   };
 
   interface Props {
     cacheMs?: number;
     count?: number;
-    range?: StatsRange;
+    queries?: StatsQuery[];
     username?: string;
   }
 
   let {
     cacheMs = 1000 * 60 * 30,
     count = 8,
-    range = "all_time",
+    queries = [{ range: "all_time", type: "artist" }],
     username = "aakside",
   }: Props = $props();
 
   const API_ROOT = "https://api.listenbrainz.org/1";
 
   let isLoading = $state(true);
-  let error = $state<string | undefined>(undefined);
-  let totalListens = $state<number | undefined>(undefined);
-  let topArtists = $state<TopArtist[]>([]);
-  let lastUpdated = $state<number | undefined>(undefined);
+  let querySnapshots = $state<QuerySnapshot[]>([]);
 
-  const cacheKey = $derived(`listenbrainz:taste:${username}:${range}:${count}`);
+  const VALID_RANGES = new Set<StatsRange>([
+    "this_week",
+    "this_month",
+    "this_year",
+    "week",
+    "month",
+    "quarter",
+    "year",
+    "half_yearly",
+    "all_time",
+  ]);
 
-  function formatNumber(value: number) {
-    return new Intl.NumberFormat().format(value);
+  const VALID_TYPES = new Set<StatsType>(["artist", "album", "track"]);
+
+  function normalizeRange(value: unknown): StatsRange | null {
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    const normalized = value.trim();
+    if (VALID_RANGES.has(normalized as StatsRange)) {
+      return normalized as StatsRange;
+    }
+
+    return null;
+  }
+
+  function normalizeType(value: unknown): StatsType | null {
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    const normalized = value.trim();
+    if (VALID_TYPES.has(normalized as StatsType)) {
+      return normalized as StatsType;
+    }
+
+    return null;
+  }
+
+  function normalizeQuery(value: unknown): StatsQuery | null {
+    if (!value || typeof value !== "object") {
+      return null;
+    }
+
+    const query = value as { range?: unknown; type?: unknown };
+    const normalizedRange = normalizeRange(query.range);
+    const normalizedType = normalizeType(query.type);
+
+    if (!normalizedRange || !normalizedType) {
+      return null;
+    }
+
+    return {
+      range: normalizedRange,
+      type: normalizedType,
+    };
+  }
+
+  const requestedQueries = $derived.by(() => {
+    const normalized = queries
+      .map((query) => normalizeQuery(query))
+      .filter((query): query is StatsQuery => query !== null);
+
+    if (normalized.length === 0) {
+      return [{ range: "all_time", type: "artist" }] as StatsQuery[];
+    }
+
+    const uniqueQueries = new Map<string, StatsQuery>();
+    for (const query of normalized) {
+      uniqueQueries.set(`${query.type}:${query.range}`, query);
+    }
+
+    return Array.from(uniqueQueries.values());
+  });
+
+  function endpointForType(statsType: StatsType) {
+    if (statsType === "album") {
+      return "releases";
+    }
+
+    if (statsType === "track") {
+      return "recordings";
+    }
+
+    return "artists";
+  }
+
+  function typeLabel(statsType: StatsType) {
+    if (statsType === "album") {
+      return "Albums";
+    }
+
+    if (statsType === "track") {
+      return "Tracks";
+    }
+
+    return "Artists";
+  }
+
+  function normalizeTopItems(statsType: StatsType, payload: TopStatsResponse["payload"]) {
+    if (!payload) {
+      return [] as TopItem[];
+    }
+
+    if (statsType === "album") {
+      return (payload.releases ?? []).map((release) => ({
+        listenCount: release.listen_count,
+        subtitle: release.artist_name,
+        title: release.release_name || "(Untitled album)",
+      }));
+    }
+
+    if (statsType === "track") {
+      return (payload.recordings ?? []).map((recording) => ({
+        listenCount: recording.listen_count,
+        subtitle: recording.artist_name,
+        title: recording.track_name || "(Untitled track)",
+      }));
+    }
+
+    return (payload.artists ?? []).map((artist) => ({
+      listenCount: artist.listen_count,
+      title: artist.artist_name,
+    }));
   }
 
   function formatDate(epochSeconds: number) {
     return new Date(epochSeconds * 1000).toLocaleDateString();
+  }
+
+  function formatRangeLabel(statsRange: StatsRange | string) {
+    return String(statsRange).replace(/_/g, " ");
   }
 
   async function fetchJson<T>(url: string): Promise<T | null> {
@@ -92,72 +242,86 @@
     return JSON.parse(text) as T;
   }
 
-  function readCache() {
+  function cacheKeyFor(query: StatsQuery) {
+    return `listenbrainz:taste:${username}:${query.type}:${query.range}:${count}`;
+  }
+
+  function readCache(query: StatsQuery) {
     if (typeof window === "undefined") {
-      return false;
+      return null;
     }
 
     try {
-      const raw = window.sessionStorage.getItem(cacheKey);
+      const raw = window.sessionStorage.getItem(cacheKeyFor(query));
       if (!raw) {
-        return false;
+        return null;
       }
 
       const cached = JSON.parse(raw) as CachedPayload;
       if (Date.now() - cached.cachedAt > cacheMs) {
-        return false;
+        return null;
       }
 
-      totalListens = cached.totalListens;
-      topArtists = cached.topArtists;
-      lastUpdated = cached.lastUpdated;
-      return true;
+      return cached;
     } catch {
-      return false;
+      return null;
     }
   }
 
-  function writeCache() {
+  function writeCache(query: StatsQuery, payload: CachedPayload) {
     if (typeof window === "undefined") {
       return;
     }
 
-    const payload: CachedPayload = {
-      cachedAt: Date.now(),
-      lastUpdated,
-      topArtists,
-      totalListens,
-    };
+    window.sessionStorage.setItem(cacheKeyFor(query), JSON.stringify(payload));
+  }
 
-    window.sessionStorage.setItem(cacheKey, JSON.stringify(payload));
+  async function loadQuerySnapshot(query: StatsQuery, forceRefresh = false) {
+    const cached = forceRefresh ? null : readCache(query);
+    if (cached) {
+      return {
+        lastUpdated: cached.lastUpdated,
+        query,
+        topItems: cached.topItems,
+      } satisfies QuerySnapshot;
+    }
+
+    try {
+      const endpoint = endpointForType(query.type);
+      const topStatsResponse = await fetchJson<TopStatsResponse>(
+        `${API_ROOT}/stats/user/${encodeURIComponent(username)}/${endpoint}?range=${encodeURIComponent(query.range)}&count=${encodeURIComponent(String(count))}`,
+      );
+
+      const topItems = normalizeTopItems(query.type, topStatsResponse?.payload);
+      const lastUpdated = topStatsResponse?.payload?.last_updated;
+
+      writeCache(query, {
+        cachedAt: Date.now(),
+        lastUpdated,
+        topItems,
+      });
+
+      return {
+        lastUpdated,
+        query,
+        topItems,
+      } satisfies QuerySnapshot;
+    } catch (cause) {
+      const message = cause instanceof Error ? cause.message : "Unknown error";
+      return {
+        error: `Could not load ListenBrainz stats: ${message}`,
+        query,
+        topItems: [],
+      } satisfies QuerySnapshot;
+    }
   }
 
   async function loadMusicTaste(forceRefresh = false) {
     isLoading = true;
-    error = undefined;
-
-    if (!forceRefresh && readCache()) {
-      isLoading = false;
-      return;
-    }
-
     try {
-      const [listenCountResponse, topArtistsResponse] = await Promise.all([
-        fetchJson<ListenCountResponse>(
-          `${API_ROOT}/user/${encodeURIComponent(username)}/listen-count`,
-        ),
-        fetchJson<TopArtistsResponse>(
-          `${API_ROOT}/stats/user/${encodeURIComponent(username)}/artists?range=${encodeURIComponent(range)}&count=${encodeURIComponent(String(count))}`,
-        ),
-      ]);
-
-      totalListens = listenCountResponse?.payload?.count;
-      topArtists = topArtistsResponse?.payload?.artists ?? [];
-      lastUpdated = topArtistsResponse?.payload?.last_updated;
-      writeCache();
-    } catch (cause) {
-      const message = cause instanceof Error ? cause.message : "Unknown error";
-      error = `Could not load ListenBrainz stats: ${message}`;
+      querySnapshots = await Promise.all(
+        requestedQueries.map((query) => loadQuerySnapshot(query, forceRefresh)),
+      );
     } finally {
       isLoading = false;
     }
@@ -168,50 +332,70 @@
   });
 </script>
 
-<section class="not-prose border-base-300/70 bg-base-100/70 my-4 rounded-xl border p-4">
-  <div class="mb-3 flex items-start justify-between gap-3">
-    <p class="m-0 text-sm leading-relaxed opacity-90">
-      Live public data from
-      <a
-        href={`https://listenbrainz.org/user/${username}/`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ListenBrainz
-      </a>
-      for @{username}.
-      {#if totalListens !== undefined}
-        <span class="font-medium"> {formatNumber(totalListens)} total listens.</span>
-      {/if}
-    </p>
-    <button type="button" class="btn btn-xs btn-ghost" onclick={() => void loadMusicTaste(true)}>
-      Refresh
-    </button>
-  </div>
-
+<details class="collapse-arrow bg-base-300 collapse relative space-y-3 overflow-visible rounded-xl">
+  <summary class="collapse-title m-0 font-semibold">Listening stats</summary>
   {#if isLoading}
-    <p class="m-0 text-sm opacity-70">Loading taste snapshot...</p>
-  {:else if error}
-    <p class="text-warning m-0 text-sm">{error}</p>
-  {:else if topArtists.length === 0}
-    <p class="m-0 text-sm opacity-70">No top-artist stats are available yet for this range.</p>
-  {:else}
-    <ol class="m-0 space-y-1 pl-5">
-      {#each topArtists as artist}
-        <li class="flex items-baseline justify-between gap-2">
-          <span class="truncate">{artist.artist_name}</span>
-          <span class="shrink-0 text-xs opacity-70"
-            >{formatNumber(artist.listen_count)} listens</span
-          >
-        </li>
+    <div class="collapse-content flex flex-wrap gap-4">
+      {#each requestedQueries as query}
+        <div class="bg-secondary/5 w-full flex-1 rounded-sm p-3 py-1">
+          <p class="text-sm">
+            Loading {typeLabel(query.type)} for {formatRangeLabel(query.range)}...
+          </p>
+        </div>
       {/each}
-    </ol>
-    {#if lastUpdated}
-      <p class="mt-3 mb-0 text-xs opacity-70">Stats last updated: {formatDate(lastUpdated)}</p>
-    {/if}
-  {/if}
+    </div>
+  {:else}
+    <div
+      class="bg-neutral border-primary/10 absolute right-0 -bottom-3 z-30 flex gap-1 rounded-lg border px-1 pt-0 pb-1"
+    >
+      <div class="tooltip" data-tip="See more stats">
+        <a
+          class="btn btn-primary h-6 w-6 rounded-md p-0"
+          href={`https://listenbrainz.org/user/${username}/stats/?range=all_time`}
+          ><img src={ListenBrainzIcon.src} alt="ListenBrainz" class="h-full w-full" /></a
+        >
+      </div>
+      <div class="tooltip" data-tip="Refresh listening stats">
+        <button
+          type="button"
+          class="btn btn-primary h-6 w-6 rounded-md p-0"
+          onclick={() => void loadMusicTaste(true)}>🗘</button
+        >
+      </div>
+    </div>
+    <div class="collapse-content flex flex-wrap gap-2 p-2">
+      {#each querySnapshots as snapshot}
+        <div class="bg-base-200/25 min-w-2xs flex-1 rounded-sm px-3 py-1">
+          <p class="mt-2! mb-0! text-sm font-bold">
+            Top {typeLabel(snapshot.query.type)} ({formatRangeLabel(snapshot.query.range)}) by
+            listen count
+          </p>
 
-  <p class="mt-3 mb-0 text-xs opacity-60">
-    ListenBrainz documents rate limits and exposes public listen data under CC0.
-  </p>
-</section>
+          {#if snapshot.lastUpdated}
+            <p class="mt-0 text-xs">Last updated: {formatDate(snapshot.lastUpdated)}</p>
+          {/if}
+
+          {#if snapshot.error}
+            <p class="mt-2 text-sm">{snapshot.error}</p>
+          {:else if snapshot.topItems.length === 0}
+            <p class="mt-2 text-sm">
+              No top-{snapshot.query.type} stats are available yet for this range.
+            </p>
+          {:else}
+            <ol class="mt-2 mb-0 list-none space-y-1 pl-0 text-sm marker:text-xs marker:font-bold">
+              {#each snapshot.topItems as item}
+                <li>
+                  <span class="font-mono text-xs">{item.listenCount.toLocaleString()}:</span>
+                  <span class="text-sm font-bold">{item.title}</span>
+                  {#if item.subtitle}
+                    <span class="text-xs opacity-75"> — {item.subtitle}</span>
+                  {/if}
+                </li>
+              {/each}
+            </ol>
+          {/if}
+        </div>
+      {/each}
+    </div>
+  {/if}
+</details>
