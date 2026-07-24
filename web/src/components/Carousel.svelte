@@ -265,7 +265,7 @@
         {#each slides as slide}
           <div
             id={slide.slideId}
-            class="carousel-item relative w-full justify-center *:h-full *:w-full [&_img]:m-0 [&_lite-youtube]:max-w-none"
+            class="carousel-item relative w-full justify-center select-none *:h-full *:w-full [&_img]:m-0 [&_lite-youtube]:max-w-none"
             aria-label={ariaLabel}
           >
             {#if slide.imageHref}
