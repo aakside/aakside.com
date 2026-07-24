@@ -2,7 +2,7 @@
 import type { ImageMetadata } from "astro";
 import type { SvgComponent } from "astro/types";
 import { Image } from "astro:assets";
-import AnitaIcon from "../../assets/external-links/anita.png";
+import AnitaIcon from "../../assets/external-links/me-and-anita.webp";
 import DeviantArtIcon from "../../assets/external-links/deviantart.svg";
 import GitHubIcon from "../../assets/external-links/github.svg";
 import ListenBrainzIcon from "../../assets/external-links/listenbrainz.svg";
@@ -14,14 +14,13 @@ import WikipediaIcon from "../../assets/external-links/wikipedia.svg";
 import YouTubeIcon from "../../assets/external-links/youtube.svg";
 
 type Link = {
-  href: string;
+  href?: string;
   image: Partial<SvgComponent> & ImageMetadata;
   label: string;
 };
 
 const links: Link[] = [
   {
-    href: "https://anitasunshine.com/",
     image: AnitaIcon,
     label: "My wife's heart",
   },
