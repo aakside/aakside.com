@@ -100,7 +100,6 @@ body {
 }
 
 main {
-  width: 720px;
   max-width: calc(100% - 2em);
   margin: auto;
   padding: 1em;
@@ -146,10 +145,7 @@ p {
 }
 
 div.prose {
-  width: 720px;
-  max-width: calc(100% - 1em);
-  margin: auto;
-  padding: 1em;
+  @apply max-w-full p-4;
 
   figure {
     a img {
