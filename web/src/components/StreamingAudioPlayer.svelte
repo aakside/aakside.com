@@ -174,8 +174,7 @@
 <div class={classList}>
   <div class="bg-base-300 rounded-xl p-4 shadow-sm">
     <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-      <h3 class="m-0 text-xl! font-semibold">{title}</h3>
-
+      <h3 class="m-0! font-semibold max-sm:text-sm! sm:text-xl!">{title}</h3>
       {#if normalizedEntries.length > 1}
         <label class="flex items-center gap-2 text-sm">
           <select
