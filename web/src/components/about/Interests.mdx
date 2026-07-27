@@ -1,4 +1,5 @@
 import ListenBrainzTaste from "./listenbrainz-taste.svelte";
+import AudioPlayer from "../StreamingAudioPlayer.svelte";
 import Carousel from "../Carousel.svelte";
 import FosterPartners2WTCModelImage from "../../assets/about/interests/skyscrapers/IMG_1759.jpg";
 import HexagonBuildingRevitImage from "../../assets/about/interests/skyscrapers/revit-hexagonal-building.png";
@@ -11,7 +12,7 @@ Besides programming, I also like...
 
 ### Music
 
-I love listening to trance (especially vocal from the 2000s and uplifting), orchestral music, and many film scores.
+I love listening to trance (especially vocal from the 2000s and uplifting), orchestral music, and many film scores. Occasionally, I will beatbox, sing, or cathartically noodle on a piano.
 
 <ListenBrainzTaste
   client:visible
@@ -27,7 +28,50 @@ I love listening to trance (especially vocal from the 2000s and uplifting), orch
   count={8}
 />
 
-Occasionally, I will beatbox, sing, or cathartically noodle on a piano.
+If I am ever in need of resuscitation, please use the intro to [Martin Roth's remix of The Other Side by Paul van Dyk and Wayne Jackson](https://musicbrainz.org/recording/225f51a8-81ff-4073-bb46-b9abfdcd658c).
+
+<AudioPlayer
+  class="-mt-6 mb-8"
+  client:only="svelte"
+  title="The Other Side (Martin Roth Remix)"
+  entries={[
+    {
+      service: "soundcloud",
+      url: "https://soundcloud.com/paulvandykofficial/the-other-side-martin-roth",
+    },
+    {
+      service: "youtubeMusic",
+      id: "8L5Dg03CtJo",
+    },
+    {
+      service: "qobuz",
+      qobuzSource: "track",
+      id: "141983433",
+    },
+    {
+      service: "tidal",
+      id: "209646705",
+    },
+    {
+      service: "appleMusic",
+      id: "1600960868",
+      appleStorefront: "us",
+      appleSlug: "the-other-side-feat-wayne-jackson-martin-roth-remix",
+    },
+    {
+      service: "deezer",
+      id: "1594746151",
+    },
+    {
+      service: "spotify",
+      id: "1fYWz4YmxLhtZVcot6u51u",
+    },
+    {
+      service: "amazonMusic",
+      id: "B09NRYVP8V",
+    },
+  ]}
+/>
 
 ### Architecture, Civil Engineering, and Urban Planning
 
