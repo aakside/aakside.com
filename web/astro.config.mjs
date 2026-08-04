@@ -114,5 +114,11 @@ export default defineConfig({
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      noExternal: ["@lucide/svelte"],
+    },
+    ssr: {
+      noExternal: ["@lucide/svelte"],
+    },
   },
 });
