@@ -179,7 +179,7 @@
         <label class="flex items-center gap-2 text-sm">
           <select
             bind:value={selectedService}
-            class="select select-sm min-w-40"
+            class="select select-xs sm:select-sm"
             aria-label="Select streaming service"
           >
             {#each normalizedEntries as entry}
