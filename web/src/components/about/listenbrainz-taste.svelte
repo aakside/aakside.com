@@ -348,7 +348,7 @@
     <div
       class="bg-neutral border-primary/10 absolute right-0 -bottom-3 z-30 flex gap-1 rounded-lg border px-1 pt-0 pb-1"
     >
-      <div class="tooltip" data-tip="See more stats">
+      <div class="tooltip tooltip-left lg:tooltip-top" data-tip="See more stats">
         <a
           class="btn btn-primary h-6 w-6 rounded-md p-0"
           href={`https://listenbrainz.org/user/${username}/stats/?range=all_time`}
@@ -357,7 +357,7 @@
           ><img src={ListenBrainzIcon.src} alt="ListenBrainz" class="h-full w-full" /></a
         >
       </div>
-      <div class="tooltip" data-tip="Refresh listening stats">
+      <div class="tooltip tooltip-left lg:tooltip-top" data-tip="Refresh listening stats">
         <button
           type="button"
           class="btn btn-primary h-6 w-6 rounded-md p-0"
@@ -367,7 +367,9 @@
     </div>
     <div class="collapse-content flex flex-wrap gap-2 p-2">
       {#each querySnapshots as snapshot}
-        <div class="bg-base-200/25 min-w-2xs flex-1 rounded-sm px-3 py-1">
+        <div
+          class="bg-base-200/25 w-full min-w-0 rounded-sm px-3 py-1 sm:w-auto sm:min-w-2xs sm:flex-1"
+        >
           <p class="mt-2! mb-0! text-sm font-bold">
             Top {typeLabel(snapshot.query.type)} ({formatRangeLabel(snapshot.query.range)}) by
             listen count
