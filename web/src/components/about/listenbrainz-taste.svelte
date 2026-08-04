@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { RotateCw } from "@lucide/svelte";
   import { onMount } from "svelte";
   import ListenBrainzIcon from "../../assets/external-links/listenbrainz.svg";
 
@@ -361,7 +362,7 @@
         <button
           type="button"
           class="btn btn-primary h-6 w-6 rounded-md p-0"
-          onclick={() => void loadMusicTaste(true)}>🗘</button
+          onclick={() => void loadMusicTaste(true)}><RotateCw class="h-3/4 w-3/4" /></button
         >
       </div>
     </div>
