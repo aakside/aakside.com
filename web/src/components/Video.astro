@@ -1,0 +1,49 @@
+---
+import { mediaManifest } from "../generated/media-manifest";
+
+type VideoSource = {
+  /** Logical media name, e.g. `blog/mind-sweeping/avoidant-terrain-test.webm`. */
+  src: string;
+  /**
+   * Optional codec hint. Browsers pick the first source they can play, so a
+   * precise `codecs=` string lets them skip a variant without downloading it.
+   */
+  type?: string;
+};
+
+type Props = {
+  sources: VideoSource[];
+  class?: string;
+};
+
+const { sources, class: className = "w-full" } = Astro.props;
+
+/**
+ * URLs come from the generated manifest, which points at R2 in a real build and
+ * at the dev server when there are no credentials. A missing entry means the
+ * file is absent from `media/`, which should fail the build rather than ship a
+ * video element with a dead source.
+ */
+const resolvedSources = sources.map(({ src, type }) => {
+  const url = mediaManifest[src];
+  if (!url) {
+    throw new Error(
+      `No media manifest entry for "${src}". Is it under media/, and has ` +
+        `sync:media run? Known entries: ${Object.keys(mediaManifest).join(", ")}`,
+    );
+  }
+  return { type, url };
+});
+---
+
+<!--
+  playsinline keeps iOS from taking muted autoplay clips fullscreen.
+
+  The markup this replaced carried loading="lazy", which does nothing on a
+  <video> — it is an <img>/<iframe> attribute — so it is dropped rather than
+  ported. Deferring an autoplaying clip needs preload="none" plus an
+  IntersectionObserver to start it.
+-->
+<video autoplay class={className} loop muted playsinline ondblclick="this.requestFullscreen()">
+  {resolvedSources.map(({ type, url }) => <source src={url} type={type} />)}
+</video>

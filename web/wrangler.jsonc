@@ -1,13 +1,21 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "compatibility_date": "2026-08-09",
-  "compatibility_flags": ["global_fetch_strictly_public"],
   "name": "aakside-web",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+
+  // Must not outrun the workerd binary pinned by the installed wrangler.
+  "compatibility_date": "2026-08-08",
+
+  // Assets-only: no "main", so there is no Worker code and nothing renders on
+  // demand. Astro prerenders every route in Node at build time and this just
+  // serves the result. Adding "main" back would move prerendering into workerd,
+  // where node builtins and Shiki's WebAssembly highlighter do not work.
   "assets": {
     "directory": "./dist",
-    "binding": "ASSETS",
+    "html_handling": "force-trailing-slash",
+    // Serve the built 404.html instead of a bare Cloudflare error page.
+    "not_found_handling": "404-page",
   },
+
   "observability": {
     "enabled": true,
   },

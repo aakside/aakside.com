@@ -12,6 +12,7 @@ updatedDate: 0
 import { Image } from "astro:assets";
 import gnominesBestTimesImage from "../../assets/blog/mind-sweeping/gnomines-best-times.png";
 import CodeFromUrl from "../../components/CodeFromUrl.astro";
+import Video from "../../components/Video.astro";
 
 ## The Initial Sweep
 
@@ -67,14 +68,12 @@ I decided to remake the game again, but with a few twists:
 Also, I wanted it to work in a web browser, so players won't need to download anything. I know both [multiplayer Minesweeper](https://worldminesweepernetwork.com/) and [Voronoi Minesweeper](https://clark-pan.github.io/voronoi-minesweeper/) have been made, but I wanted to have a go at it myself, while playing with things like [wasm-bindgen](https://wasm-bindgen.github.io/wasm-bindgen/), [Threlte](https://threlte.xyz/), [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language), and [Iroh](https://www.iroh.computer/) for fun and practice more than for practicality.
 
 <figure>
-  <video autoplay loop muted class="w-full" loading="lazy" ondblclick="this.requestFullscreen()">
-    <source src="/blog/mind-sweeping/avoidant-terrain-test.webm" type="video/webm; codecs=vp9" />
-    <source
-      src="/blog/mind-sweeping/avoidant-terrain-test.mkv"
-      type="video/x-matroska; codecs=avc1"
-    />
-    <source src="/blog/mind-sweeping/avoidant-terrain-test.mp4" type="video/mp4; codecs=avc1" />
-  </video>
+  <Video
+    sources={[
+      { src: "blog/mind-sweeping/avoidant-terrain-test.webm", type: "video/webm; codecs=vp9" },
+      { src: "blog/mind-sweeping/avoidant-terrain-test.mp4", type: "video/mp4; codecs=avc1" },
+    ]}
+  />
   <figcaption>Experimenting with map generation and shaders.</figcaption>
 </figure>
 
@@ -127,21 +126,23 @@ While I could have used [matchbox](https://github.com/johanhelsing/matchbox/) (I
 I decided to try Iroh, hoping that one day soon it will [support WebRTC](https://docs.iroh.computer/languages/wasm-browser#no-direct-connections) so players on web browsers won't devour bandwidth on my self-hosted [Iroh Relay](https://github.com/n0-computer/iroh/tree/main/iroh-relay) server.
 
 <figure>
-  <video autoplay loop muted class="w-full" loading="lazy" ondblclick="this.requestFullscreen()">
-    <source
-      src="/blog/mind-sweeping/avoidant-networking-test_av1.mp4"
-      type="video/mp4; codecs=av01"
-    />
-    <source
-      src="/blog/mind-sweeping/avoidant-networking-test_h265.mp4"
-      type="video/mp4; codecs=hvc1"
-    />
-    <source src="/blog/mind-sweeping/avoidant-networking-test.webm" type="video/webm; codecs=vp9" />
-    <source
-      src="/blog/mind-sweeping/avoidant-networking-test_h264.mp4"
-      type="video/mp4; codecs=avc1"
-    />
-  </video>
+  <Video
+    sources={[
+      {
+        src: "blog/mind-sweeping/avoidant-networking-test_av1.mp4",
+        type: "video/mp4; codecs=av01",
+      },
+      {
+        src: "blog/mind-sweeping/avoidant-networking-test_h265.mp4",
+        type: "video/mp4; codecs=hvc1",
+      },
+      { src: "blog/mind-sweeping/avoidant-networking-test.webm", type: "video/webm; codecs=vp9" },
+      {
+        src: "blog/mind-sweeping/avoidant-networking-test_h264.mp4",
+        type: "video/mp4; codecs=avc1",
+      },
+    ]}
+  />
   <figcaption>Propagation of map cell exploration events across Iroh peers.</figcaption>
 </figure>
 
@@ -150,21 +151,14 @@ I decided to try Iroh, hoping that one day soon it will [support WebRTC](https:/
 TODO
 
 <figure>
-  <video autoplay loop muted class="w-full" loading="lazy" ondblclick="this.requestFullscreen()">
-    <source
-      src="/blog/mind-sweeping/avoidant-lighting-test_av1.mp4"
-      type="video/mp4; codecs=av01"
-    />
-    <source
-      src="/blog/mind-sweeping/avoidant-lighting-test_h265.mp4"
-      type="video/mp4; codecs=hvc1"
-    />
-    <source src="/blog/mind-sweeping/avoidant-lighting-test.webm" type="video/webm; codecs=vp9" />
-    <source
-      src="/blog/mind-sweeping/avoidant-lighting-test_h264.mp4"
-      type="video/mp4; codecs=avc1"
-    />
-  </video>
+  <Video
+    sources={[
+      { src: "blog/mind-sweeping/avoidant-lighting-test_av1.mp4", type: "video/mp4; codecs=av01" },
+      { src: "blog/mind-sweeping/avoidant-lighting-test_h265.mp4", type: "video/mp4; codecs=hvc1" },
+      { src: "blog/mind-sweeping/avoidant-lighting-test.webm", type: "video/webm; codecs=vp9" },
+      { src: "blog/mind-sweeping/avoidant-lighting-test_h264.mp4", type: "video/mp4; codecs=avc1" },
+    ]}
+  />
   <figcaption>
     Moving from one Threlte component per cell to a total of 3 meshes to represent the entire map
     let me play on huge maps that I knew would keep me busy for many nights to come after I
@@ -179,9 +173,7 @@ I added a tutorial mode and Bangla translations to help my parents and extended 
 ## Play the Game
 
 <figure>
-  <video autoplay loop muted class="w-full" loading="lazy" ondblclick="this.requestFullscreen()">
-    <source src="/blog/mind-sweeping/avoidant-polyhedra-test.mp4" />
-  </video>
+  <Video sources={[{ src: "blog/mind-sweeping/avoidant-polyhedra-test.mp4" }]} />
   <figcaption>
     Like this blog post, the game is a work in progress, and here's a recent-ish video of unreleased
     support for 3D polyhedral maps.

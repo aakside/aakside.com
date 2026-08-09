@@ -10,6 +10,7 @@ updatedDate: 0
 
 import { Image } from "astro:assets";
 import CodeFromUrl from "../../components/CodeFromUrl.astro";
+import Video from "../../components/Video.astro";
 import { FourwaySplitMap } from "@aakside/svelte-maplibre-stack";
 import dualBasemapMissingLandImage from "../../assets/blog/wherever-isle-may-roam/dual-basemap-missing-land.png";
 import manhattanFigurePlaceholderImage from "../../assets/blog/wherever-isle-may-roam/manhattan-by-chicago.png";
@@ -198,10 +199,12 @@ You can play with it at [Borders Without Borders](/projects/borders-without-bord
 I hadn't used mapping libraries before, so I began by experimenting with GeoJSON layers and masks while playing with [Leaflet](https://leafletjs.com/), [MapLibre GL JS](https://github.com/maplibre/maplibre-gl-js), and [deck.gl](https://deck.gl/).
 
 <figure>
-  <video autoplay loop muted class="w-full">
-    <source src="/blog/wherever-isle-may-roam/overlay-mapper.webm" type="video/webm" />
-    <source src="/blog/wherever-isle-may-roam/overlay-mapper.mp4" type="video/mp4" />
-  </video>
+  <Video
+    sources={[
+      { src: "blog/wherever-isle-may-roam/overlay-mapper.webm", type: "video/webm" },
+      { src: "blog/wherever-isle-may-roam/overlay-mapper.mp4", type: "video/mp4" },
+    ]}
+  />
   <figcaption>
     I tried to vibe code transformations under the Web Mercator projection, but this looks wrong.
   </figcaption>
@@ -232,11 +235,12 @@ I also temporarily chased basemap-over-basemap rendering and forgot that clippin
 To get land to be opaque without resorting to further complicated tile data hackery, I added a land polygons layer with [data from MapTiler](https://docs.maptiler.com/schema/land/), but I disliked the idea of relying on another external service and I still would have had a lot of work to do to get things styled correctly.
 
 <figure>
-  <video autoplay loop muted class="w-full">
-    <source src="/blog/wherever-isle-may-roam/dual-basemap.webm" type="video/webm" />
-    <source src="/blog/wherever-isle-may-roam/dual-basemap.mkv" type="video/x-matroska" />
-    <source src="/blog/wherever-isle-may-roam/dual-basemap.mp4" type="video/mp4" />
-  </video>
+  <Video
+    sources={[
+      { src: "blog/wherever-isle-may-roam/dual-basemap.webm", type: "video/webm" },
+      { src: "blog/wherever-isle-may-roam/dual-basemap.mp4", type: "video/mp4" },
+    ]}
+  />
   <figcaption>Overlay now featuring land, but slowly.</figcaption>
 </figure>
 

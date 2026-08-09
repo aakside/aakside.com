@@ -10,8 +10,6 @@ import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
 
-import cloudflare from "@astrojs/cloudflare";
-
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
  *
@@ -83,6 +81,51 @@ function serveBuiltAstroImagesInDev() {
   };
 }
 
+/**
+ * Dev-only Astro integration serving `/media/*` from the `media/` directory.
+ *
+ * Video lives outside `public/` so Astro never copies it into `dist/`, where
+ * Cloudflare's 25 MiB per-asset limit would reject it. In a real build the
+ * <Video> component resolves URLs to R2, but a dev run without credentials
+ * falls back to `/media/*` paths, and nothing would serve them otherwise.
+ *
+ * @returns {import('astro').AstroIntegration}
+ */
+function serveMediaInDev() {
+  return {
+    name: "serve-media-in-dev",
+    hooks: {
+      "astro:server:setup": ({ server }) => {
+        const mediaDir = path.resolve(server.config.root, "media");
+
+        server.middlewares.use((req, res, next) => {
+          const requestPath = decodeURIComponent(req.url?.split("?")[0] ?? "");
+          if (!requestPath.startsWith("/media/")) {
+            next();
+            return;
+          }
+
+          const absolutePath = path.resolve(mediaDir, requestPath.replace(/^\/media\//, ""));
+          if (!absolutePath.startsWith(mediaDir) || !existsSync(absolutePath)) {
+            next();
+            return;
+          }
+
+          res.setHeader("Content-Type", mediaContentTypes[path.extname(absolutePath)] ?? "");
+          createReadStream(absolutePath).pipe(res);
+        });
+      },
+    },
+  };
+}
+
+/** @type {Record<string, string>} */
+const mediaContentTypes = {
+  ".mkv": "video/x-matroska",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm",
+};
+
 // https://astro.build/config
 export default defineConfig({
   experimental: {
@@ -109,6 +152,7 @@ export default defineConfig({
     svelte(),
     pagefind(),
     serveBuiltAstroImagesInDev(),
+    serveMediaInDev(),
   ],
 
   site: "https://aakside.com",
@@ -122,6 +166,4 @@ export default defineConfig({
       noExternal: ["@lucide/svelte"],
     },
   },
-
-  adapter: cloudflare(),
 });
