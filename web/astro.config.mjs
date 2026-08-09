@@ -93,6 +93,10 @@ export default defineConfig({
       cssVariable: "--font-myriad-pro",
     },
   ],
+  image: {
+    // Link-preview scrapers do not render SVG.
+    dangerouslyProcessSVG: true,
+  },
   integrations: [
     expressiveCode(),
     mdx(),
