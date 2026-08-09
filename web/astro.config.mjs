@@ -1,6 +1,5 @@
 // @ts-check
 
-import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -10,7 +9,6 @@ import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
-import remarkToc from "remark-toc";
 
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
@@ -103,11 +101,6 @@ export default defineConfig({
     pagefind(),
     serveBuiltAstroImagesInDev(),
   ],
-  markdown: {
-    processor: unified({
-      remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
-    }),
-  },
   site: "https://aakside.com",
   vite: {
     plugins: [tailwindcss()],
