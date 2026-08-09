@@ -152,7 +152,7 @@
   <div class="relative w-10 shrink-0 cursor-pointer overflow-hidden">
     <Server class="pointer-events-none absolute top-1/2 left-2 z-10 size-4 -translate-y-1/2" />
     <select
-      class="select select-ghost tooltip tooltip-info tooltip-right border-0 pl-7 select-none"
+      class="select select-ghost tooltip tooltip-info tooltip-right appearance-none border-0 pl-7 select-none"
       aria-label="Search API provider"
       bind:value={selectedApi}
       data-tip="Select API provider."
