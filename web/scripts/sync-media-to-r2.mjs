@@ -28,7 +28,7 @@ const MEDIA_ROOT = "media";
 const OUTPUT_DIRECTORY = path.join("src", "generated");
 const OUTPUT_PATH = path.join(OUTPUT_DIRECTORY, "media-manifest.ts");
 
-const BUCKET = process.env.R2_BUCKET ?? "aakside-media";
+const BUCKET = "media";
 const PUBLIC_BASE_URL = (process.env.MEDIA_BASE_URL ?? "https://media.aakside.com").replace(
   /\/$/,
   "",
