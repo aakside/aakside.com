@@ -12,8 +12,6 @@ import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
 import remarkToc from "remark-toc";
 
-import mailObfuscation from "astro-mail-obfuscation";
-
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
  *
@@ -104,7 +102,6 @@ export default defineConfig({
     svelte(),
     pagefind(),
     serveBuiltAstroImagesInDev(),
-    mailObfuscation(),
   ],
   markdown: {
     processor: unified({

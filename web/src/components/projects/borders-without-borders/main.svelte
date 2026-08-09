@@ -94,7 +94,7 @@
     type OverlayLayer,
   } from "@aakside/svelte-maplibre-stack";
   import { URLShieldRenderer } from "@americana/maplibre-shield-generator";
-  import { bounds, BoundsFrom, controls, ControlFrom, disabled, draggable } from "@neodrag/svelte";
+  import { Draggable } from "@neodrag/svelte";
   import {
     Eye,
     EyeOff,
@@ -195,6 +195,12 @@
 
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
+  let toolbarDrag = new Draggable({
+    bounds: "viewport",
+    get disabled() {
+      return isSmallWidth;
+    },
+  });
   let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
   let importedConfigJson = $state<string | undefined>(undefined);
 
@@ -238,25 +244,20 @@
 <div class="h-screen w-screen" data-theme="winter" bind:clientWidth={width}>
   <div
     class={`bg-base-100 relative top-0 left-0 z-1 text-base shadow-md max-md:w-full md:absolute md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
-    {@attach draggable(() => [
-      bounds(BoundsFrom.viewport()),
-      controls({
-        allow: ControlFrom.selector(".toolbar-header"),
-        block: ControlFrom.selector("button"),
-      }),
-      ...(isSmallWidth ? [disabled(true)] : []),
-    ])}
+    {...toolbarDrag.attach}
   >
     <div
       class="toolbar-header bg-base-300 md:active:cursor-grabbing"
       class:md:rounded-lg={expanded.get("root") !== "toolbar"}
       class:md:rounded-t-lg={expanded.get("root") === "toolbar"}
+      {...toolbarDrag.handle()}
     >
       <button
         aria-pressed={expanded.get("root") === "toolbar"}
         class="btn btn-square tooltip tooltip-info tooltip-right"
         data-tip={expanded.get("root") === "toolbar" ? "Hide toolbar." : "Show toolbar."}
         onclick={() => toggleCollapsed("root", "toolbar")}
+        {...toolbarDrag.cancel()}
       >
         {#if expanded.get("root") === "toolbar"}
           <ListChevronsDownUp />
@@ -268,9 +269,9 @@
         class="btn btn-square tooltip tooltip-info tooltip-right size-6"
         data-tip="Learn more about this app."
         onclick={(event) => openDialogInParent(event, ":scope > dialog#app-info")}
-        ><Info class="size-6" /></button
+        {...toolbarDrag.cancel()}><Info class="size-6" /></button
       >
-      <InfoDialog />
+      <InfoDialog {...toolbarDrag.cancel()} />
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
     {#if expanded.get("root") === "toolbar"}

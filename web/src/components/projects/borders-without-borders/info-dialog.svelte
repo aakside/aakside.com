@@ -1,8 +1,11 @@
 <script lang="ts">
   import { X } from "@lucide/svelte";
+
+  // The dialog has to stay a direct child of `.toolbar-header` (see `openDialogInParent`), which makes it a descendant of the toolbar's drag handle. Forwarding rest props lets the parent mark it as a neodrag cancel zone so dragging inside the modal doesn't move the toolbar.
+  let { ...rest }: Record<string | symbol, unknown> = $props();
 </script>
 
-<dialog id="app-info" class="modal">
+<dialog id="app-info" class="modal" {...rest}>
   <div class="modal-box overflow-visible">
     <form method="dialog">
       <button

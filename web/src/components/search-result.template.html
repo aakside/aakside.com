@@ -1,0 +1,47 @@
+<div class="pf-searchbox-group" role="group" aria-label="{{ meta.title | default('Untitled') }}">
+  <a
+    class="pf-searchbox-result"
+    id="{{ aria.result_id }}"
+    href="{{ meta.url | default(url) | safeUrl }}"
+    role="option"
+    aria-selected="false"
+    aria-labelledby="{{ aria.title_id }}"
+    aria-describedby="{{ aria.excerpt_id }}"
+  >
+    <div class="flex items-center gap-2.5">
+      {{#if meta.image}}<img
+        class="bg-base-200 h-12 w-16 shrink-0 rounded-sm object-cover"
+        src="{{ meta.image | resolveUrl(meta.url | default(url)) }}"
+        alt="{{ meta.image_alt | default('') }}"
+        loading="lazy"
+        decoding="async"
+      />{{/if}}
+      <div class="min-w-0 flex-1">
+        <p class="pf-searchbox-result-title" id="{{ aria.title_id }}">
+          {{ meta.title | default("Untitled") }}
+        </p>
+        {{#if excerpt}}
+        <p class="pf-searchbox-result-excerpt" id="{{ aria.excerpt_id }}">{{+ excerpt +}}</p>
+        {{/if}}
+      </div>
+    </div>
+  </a>
+  {{#each sub_results as sub}}
+  <a
+    class="pf-searchbox-result pf-searchbox-subresult"
+    id="{{ sub.aria.result_id }}"
+    href="{{ sub.url | safeUrl }}"
+    role="option"
+    aria-selected="false"
+    aria-labelledby="{{ sub.aria.title_id }}"
+    aria-describedby="{{ sub.aria.excerpt_id }}"
+  >
+    <p class="pf-searchbox-result-title" id="{{ sub.aria.title_id }}">
+      {{ sub.title | default("Section") }}
+    </p>
+    {{#if sub.excerpt}}
+    <p class="pf-searchbox-result-excerpt" id="{{ sub.aria.excerpt_id }}">{{+ sub.excerpt +}}</p>
+    {{/if}}
+  </a>
+  {{/each}}
+</div>
