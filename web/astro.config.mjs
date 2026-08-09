@@ -10,6 +10,8 @@ import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
 
+import cloudflare from "@astrojs/cloudflare";
+
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
  *
@@ -86,6 +88,7 @@ export default defineConfig({
   experimental: {
     svgOptimizer: svgoOptimizer(),
   },
+
   fonts: [
     {
       provider: fontProviders.adobe({ id: "oft2wtu" }),
@@ -93,10 +96,12 @@ export default defineConfig({
       cssVariable: "--font-myriad-pro",
     },
   ],
+
   image: {
     // Link-preview scrapers do not render SVG.
     dangerouslyProcessSVG: true,
   },
+
   integrations: [
     expressiveCode(),
     mdx(),
@@ -105,7 +110,9 @@ export default defineConfig({
     pagefind(),
     serveBuiltAstroImagesInDev(),
   ],
+
   site: "https://aakside.com",
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -115,4 +122,6 @@ export default defineConfig({
       noExternal: ["@lucide/svelte"],
     },
   },
+
+  adapter: cloudflare(),
 });

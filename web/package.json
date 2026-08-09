@@ -9,12 +9,14 @@
     "format": "prettier --write .",
     "lint": "eslint 'src/**/*.{js,astro}'",
     "preview": "npm run sync:maplibre-css && astro preview",
-    "sync:maplibre-css": "node scripts/sync-maplibre-css.mjs"
+    "sync:maplibre-css": "node scripts/sync-maplibre-css.mjs",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "@aakside/svelte-maplibre-stack": "^0.1.2",
     "@americana/maplibre-shield-generator": "^0.1.1",
     "@astrojs/check": "^0.9.10",
+    "@astrojs/cloudflare": "^14.2.0",
     "@astrojs/mdx": "^7.0.5",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
@@ -34,7 +36,8 @@
     "sharp": "^0.35.3",
     "svelte": "^5.56.8",
     "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.120.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
