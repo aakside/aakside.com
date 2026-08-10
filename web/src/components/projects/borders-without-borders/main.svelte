@@ -136,17 +136,21 @@
   let layersMetadata = new SvelteMap<MapLayer["id"], LayerMetadata>();
 
   let mapState = $state(
-    new MapState([
-      {
-        bearing: 0,
-        center: {
-          lat: 40.76670493441853,
-          lng: -74.00622380728765,
+    new MapState(
+      [
+        {
+          bearing: 0,
+          center: {
+            lat: 40.76670493441853,
+            lng: -74.00622380728765,
+          },
+          visible: true,
+          zoom: 13,
         },
-        visible: true,
-        zoom: 13,
-      },
-    ]),
+      ],
+      0,
+      0,
+    ),
   );
   // svelte-ignore state_referenced_locally
   layersMetadata.set(mapState.layers[0].id, new LayerMetadata("Base Map"));
@@ -482,7 +486,11 @@
                   >
                 </div>
                 {#if expanded.get(layer.id) === "settings"}
-                  <LayerSettings bind:layer={mapState.layers[index]} />
+                  <LayerSettings
+                    isBaseMap={index === 0}
+                    bind:layer={mapState.layers[index]}
+                    bind:mapState
+                  />
                 {/if}
               </details>
             </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Blend, MapIcon, SquareDashedTopSolid } from "@lucide/svelte";
-  import { MapLayer } from "@aakside/svelte-maplibre-stack";
+  import { Blend, Lock, LockOpen, MapIcon, SquareDashedTopSolid } from "@lucide/svelte";
+  import { MapLayer, MapState } from "@aakside/svelte-maplibre-stack";
   import { mapStyles } from "./main.svelte";
 
   export interface LayerSettings {
@@ -9,10 +9,16 @@
   }
 
   interface Props {
+    isBaseMap?: boolean;
     layer: MapLayer;
+    mapState: MapState;
   }
 
-  let { layer = $bindable() }: Props = $props();
+  let { isBaseMap = false, layer = $bindable(), mapState = $bindable() }: Props = $props();
+
+  let isPitchLocked = $derived(
+    mapState.minPitch !== undefined && mapState.minPitch === mapState.maxPitch,
+  );
 </script>
 
 <div class="flex flex-col gap-2 px-1 pt-2">
@@ -41,6 +47,34 @@
       class="range range-sm grow"
     />
   </div>
+  {#if isBaseMap}
+    <div class="flex w-full items-center gap-2">
+      {#if isPitchLocked}
+        <Lock class="size-4 shrink-0" />
+      {:else}
+        <LockOpen class="size-4 shrink-0" />
+      {/if}
+      <span class="grow text-sm">Lock pitch</span>
+      <input
+        aria-label="Lock pitch"
+        bind:checked={
+          () => isPitchLocked,
+          (locked: boolean) => {
+            if (locked) {
+              const lockedPitch = layer.map?.getPitch() ?? mapState.pitch ?? 0;
+              mapState.maxPitch = lockedPitch;
+              mapState.minPitch = lockedPitch;
+            } else {
+              mapState.maxPitch = undefined;
+              mapState.minPitch = undefined;
+            }
+          }
+        }
+        class="toggle toggle-sm"
+        type="checkbox"
+      />
+    </div>
+  {/if}
   {#if layer.clipPath}
     <div class="flex w-full items-center gap-2">
       <SquareDashedTopSolid class="size-4 shrink-0" />
