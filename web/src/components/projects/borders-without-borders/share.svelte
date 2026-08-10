@@ -8,6 +8,7 @@
     metadata: {
       name: LayerMetadata["name"];
       osmId?: LayerMetadata["osmId"];
+      osmType?: LayerMetadata["osmType"];
       style?: number; // serdeIndex of the style in the styles array
       nominatimData?: LayerMetadata["nominatimData"];
     };
@@ -48,6 +49,7 @@
           metadata: {
             name: metadata.name,
             osmId: metadata.osmId,
+            osmType: metadata.osmType,
             style: styleSerdeIndex,
           },
         };

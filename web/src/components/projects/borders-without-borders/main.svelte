@@ -2,11 +2,18 @@
   export class LayerMetadata {
     name: string;
     osmId?: number;
+    osmType?: "node" | "relation" | "way";
     nominatimData?: any;
 
-    constructor(name: string, osmId?: number, nominatimData?: any) {
+    constructor(
+      name: string,
+      osmId?: number,
+      osmType?: "node" | "relation" | "way",
+      nominatimData?: any,
+    ) {
       this.name = $state(name);
       this.osmId = osmId;
+      this.osmType = osmType;
       this.nominatimData = nominatimData;
     }
   }
@@ -118,7 +125,7 @@
   import LayerSettings from "./layer-settings.svelte";
   import Share, { type ShareConfig } from "./share.svelte";
   import ImportConfig from "./import-config.svelte";
-  import PlaceSearch, { lookupRelationByOsmId } from "./search.svelte";
+  import PlaceSearch, { lookupByOsmId } from "./search.svelte";
   import { decodeJsonFromUrl } from "../../../utils/url-codec";
   import { installAmericanaRuntimeAssets } from "./americana";
 
@@ -162,7 +169,11 @@
               metadata: layer.metadata,
             };
           }
-          const nominatimData = await lookupRelationByOsmId(layer.metadata.osmId!);
+          // Share links created before osmType was recorded only ever held relations.
+          const nominatimData = await lookupByOsmId(
+            layer.metadata.osmType ?? "relation",
+            layer.metadata.osmId!,
+          );
           return {
             config: {
               ...layer.config,
@@ -171,6 +182,7 @@
             },
             metadata: {
               ...layer.metadata,
+              osmType: layer.metadata.osmType ?? nominatimData?.osm_type,
               nominatimData,
             },
           };
@@ -182,7 +194,12 @@
     configWithGeojson.forEach((layer, i) => {
       layersMetadata.set(
         mapState.layers[i].id,
-        new LayerMetadata(layer.metadata.name, layer.metadata.osmId, layer.metadata.nominatimData),
+        new LayerMetadata(
+          layer.metadata.name,
+          layer.metadata.osmId,
+          layer.metadata.osmType,
+          layer.metadata.nominatimData,
+        ),
       );
     });
   }
@@ -292,7 +309,10 @@
               geojson: result?.geojson as OverlayLayer["geojson"],
               visible: true,
             });
-            layersMetadata.set(layerId, new LayerMetadata(result!.name, result!.osm_id, result));
+            layersMetadata.set(
+              layerId,
+              new LayerMetadata(result!.name, result!.osm_id, result!.osm_type, result),
+            );
           }}
           onResultFlyClick={(result) => {
             mapState.layers[0].map?.flyTo({
@@ -302,7 +322,7 @@
               },
             });
           }}
-          osmTypes={["node", "relation"]}
+          osmTypes={["node", "relation", "way"]}
         />
         <div class="layers-header">
           <button

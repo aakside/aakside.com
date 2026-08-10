@@ -2,7 +2,9 @@
   export interface NominatimResult {
     class: string;
     display_name: string;
-    geojson?: Polygon | MultiPolygon;
+    // Nominatim returns Point/LineString geometry for features that are not areas,
+    // so this is not necessarily something we can draw as an overlay.
+    geojson?: Geometry;
     lat: string;
     lon: string;
     name: string;
@@ -10,6 +12,12 @@
     osm_type: "node" | "relation" | "way";
     place_id: number;
     type: string;
+  }
+
+  export function hasAreaGeometry(
+    result: NominatimResult,
+  ): result is NominatimResult & { geojson: MultiPolygon | Polygon } {
+    return result.geojson?.type === "MultiPolygon" || result.geojson?.type === "Polygon";
   }
 
   interface ApiConfig {
@@ -34,8 +42,13 @@
     },
   ];
 
-  export async function lookupRelationByOsmId(osmId: number): Promise<NominatimResult> {
-    const endpoint = `https://nominatim.openstreetmap.org/lookup?osm_ids=R${encodeURIComponent(String(osmId))}&format=json&polygon_geojson=1`;
+  const OSM_TYPE_PREFIXES = { node: "N", relation: "R", way: "W" } as const;
+
+  export async function lookupByOsmId(
+    osmType: NominatimResult["osm_type"],
+    osmId: number,
+  ): Promise<NominatimResult> {
+    const endpoint = `https://nominatim.openstreetmap.org/lookup?osm_ids=${OSM_TYPE_PREFIXES[osmType]}${encodeURIComponent(String(osmId))}&format=json&polygon_geojson=1`;
     const response = await fetch(endpoint, {
       headers: { Accept: "application/json" },
     });
@@ -50,7 +63,7 @@
 </script>
 
 <script lang="ts">
-  import { type MultiPolygon, type Polygon } from "geojson";
+  import { type Geometry, type MultiPolygon, type Polygon } from "geojson";
   import { Eraser, Info, Locate, MapPlus, Search, Server } from "@lucide/svelte";
   import { slide } from "svelte/transition";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
@@ -88,7 +101,7 @@
       return result;
     }
 
-    const fullResult = await lookupRelationByOsmId(result.osm_id);
+    const fullResult = await lookupByOsmId(result.osm_type, result.osm_id);
     return fullResult ?? result;
   }
 
@@ -103,7 +116,7 @@
       const isOsmIdSearch = osmIdPattern.test(query);
       let endpoint = isOsmIdSearch
         ? `https://nominatim.openstreetmap.org/lookup?osm_ids=${shortOsmTypes.map((t) => `${t}${encodeURIComponent(query)}`).join(",")}&format=json&polygon_geojson=1`
-        : `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&q=${encodeURIComponent(query)}`;
+        : `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&polygon_geojson=1&q=${encodeURIComponent(query)}`;
 
       const response = await fetch(endpoint, {
         headers: { Accept: "application/json" },
@@ -260,7 +273,7 @@
                 selectedResult = undefined;
               }}><Locate /></button
             >
-            {#if result.osm_type === "relation"}
+            {#if hasAreaGeometry(result)}
               <button
                 aria-label="Add layer to map."
                 class="btn btn-block tooltip tooltip-info"
