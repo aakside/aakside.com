@@ -3,24 +3,42 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import { theme as defaultTheme, themes } from "virtual:theme";
 
 type Props = CollectionEntry<"projects">["data"];
 
+const DEFAULT_THEME_COLOR_PROPERTY = "--color-base-200";
+
 const { title, description, favicon, pubDate, updatedDate, heroAlt, heroImage } = Astro.props;
-const { minimalLayout = false } = Astro.props;
+const { minimalLayout = false, theme, themeColorProperty } = Astro.props;
+
+let themeColor: string | undefined;
+if (theme || themeColorProperty) {
+  const projectTheme = theme ? themes[theme] : defaultTheme;
+  if (!projectTheme) {
+    throw new Error(`Project "${title}" sets unknown theme "${theme}" (see global.css).`);
+  }
+
+  const property = themeColorProperty ?? DEFAULT_THEME_COLOR_PROPERTY;
+  themeColor = projectTheme[property];
+  if (!themeColor) {
+    throw new Error(
+      `Project "${title}" sets themeColorProperty "${property}", which theme "${theme ?? "the site default"}" does not define (see global.css).`,
+    );
+  }
+}
 ---
 
 <html lang="en" data-theme="aakside-blue">
   <head>
     <BaseHead
-      title={title}
       description={description}
       favicon={favicon}
       heroAlt={heroAlt}
       image={heroImage}
+      themeColor={themeColor}
+      title={title}
     />
-    <meta name="theme-color" content="steelblue" />
-    <script src="../scripts/theme-color.ts"></script>
   </head>
 
   <body>

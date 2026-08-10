@@ -1,5 +1,7 @@
 // @ts-check
 
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -9,6 +11,60 @@ import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
+
+const themeCss = new URL("./src/styles/global.css", import.meta.url);
+
+/**
+ * Exposes the custom properties of the daisyUI theme blocks in global.css as a `virtual:theme` module, so values like --color-base-200 can be read from component frontmatter. Themes are keyed by the `data-theme` name they are selected with; `theme` is the one marked `default: true`. The CSS is parsed at build time; the bundle only ever contains the resulting literals.
+ *
+ * @returns {import("vite").Plugin}
+ */
+function themeTokens() {
+  const virtualId = "virtual:theme";
+  const resolvedId = "\0" + virtualId;
+
+  return {
+    name: "theme-tokens",
+    resolveId: (id) => (id === virtualId ? resolvedId : null),
+    async load(id) {
+      if (id !== resolvedId) return null;
+
+      this.addWatchFile(fileURLToPath(themeCss));
+      const css = await readFile(themeCss, "utf8");
+      const blocks = [...css.matchAll(/@plugin\s+"daisyui\/theme"\s*\{([^}]*)\}/g)];
+      if (blocks.length === 0)
+        throw new Error(`No daisyui/theme block found in ${themeCss.pathname}`);
+
+      let defaultName;
+      const themes = Object.fromEntries(
+        blocks.map(([, body]) => {
+          const name = body.match(/name:\s*"([^"]+)"/)?.[1];
+          if (!name) throw new Error(`Unnamed daisyui/theme block in ${themeCss.pathname}`);
+          if (/default:\s*true/.test(body)) defaultName = name;
+
+          const tokens = Object.fromEntries(
+            [...body.matchAll(/(--[\w-]+):\s*([^;]+);/g)].map(([, property, value]) => [
+              property,
+              value.trim(),
+            ]),
+          );
+          return [name, tokens];
+        }),
+      );
+      defaultName ??= Object.keys(themes)[0];
+
+      return [
+        `export const themes = ${JSON.stringify(themes, null, 2)};`,
+        `export const theme = themes[${JSON.stringify(defaultName)}];`,
+      ].join("\n");
+    },
+    handleHotUpdate({ file, server }) {
+      if (file !== fileURLToPath(themeCss)) return;
+      const mod = server.moduleGraph.getModuleById(resolvedId);
+      if (mod) server.moduleGraph.invalidateModule(mod);
+    },
+  };
+}
 
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
@@ -158,7 +214,7 @@ export default defineConfig({
   site: "https://aakside.com",
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), themeTokens()],
     resolve: {
       noExternal: ["@lucide/svelte"],
     },

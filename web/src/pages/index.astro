@@ -2,6 +2,9 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { theme } from "virtual:theme";
+
+const themeColor = theme["--color-base-200"];
 
 return Astro.redirect("/about", 307);
 ---
@@ -10,8 +13,7 @@ return Astro.redirect("/about", 307);
 <html lang="en" data-theme="aakside-blue">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <meta name="theme-color" content="steelblue" />
-    <script src="../scripts/theme-color.ts"></script>
+    <meta name="theme-color" content={themeColor} />
   </head>
   <body>
     <Header />

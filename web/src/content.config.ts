@@ -105,6 +105,8 @@ const projects = defineCollection({
         minimalLayout: z.boolean().optional(),
         page: z.string().optional(),
         pubDate: z.coerce.date(),
+        theme: z.string().optional(),
+        themeColorProperty: z.string().startsWith("--").optional(),
         title: z.string(),
         updatedDate: z.coerce.date().optional(),
       })

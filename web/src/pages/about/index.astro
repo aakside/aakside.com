@@ -6,6 +6,9 @@ import { SITE_DESCRIPTION } from "../../consts";
 import Timeline from "../../components/about/Timeline.astro";
 import Interests from "../../components/about/Interests.mdx";
 import PresenceElsewhere from "../../components/about/presence-elsewhere.astro";
+import { theme } from "virtual:theme";
+
+const themeColor = theme["--color-base-200"];
 
 const professionalExperience = (await getCollection("professionalExperience")).sort(
   (a, b) => b.data.sortDate.getTime() - a.data.sortDate.getTime(),
@@ -16,8 +19,7 @@ const professionalExperience = (await getCollection("professionalExperience")).s
 <html lang="en" data-theme="aakside-blue">
   <head>
     <BaseHead sectionTitle="About" description={SITE_DESCRIPTION} />
-    <meta name="theme-color" content="steelblue" />
-    <script src="../../scripts/theme-color.ts"></script>
+    <meta name="theme-color" content={themeColor} />
   </head>
   <body>
     <Header />

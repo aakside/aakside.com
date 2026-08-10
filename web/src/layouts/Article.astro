@@ -6,6 +6,7 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import HeroSection from "../components/HeroSection.astro";
 import { GITHUB_REPO_URL } from "../consts";
+import { theme } from "virtual:theme";
 
 type Heading = {
   depth: number;
@@ -57,6 +58,8 @@ const HeroComponent = heroComponentPath
   ? blogComponentModules[heroComponentPath]?.default
   : undefined;
 
+const themeColor = theme["--color-base-200"];
+
 function getTocItemClass(depth: number) {
   if (depth <= 2) return "my-1";
   if (depth === 3) return "my-1 ml-3";
@@ -76,8 +79,7 @@ function getTocItemClass(depth: number) {
       publishedDate={pubDate}
       modifiedDate={updatedDate}
     />
-    <meta name="theme-color" content="steelblue" />
-    <script src="../scripts/theme-color.ts"></script>
+    <meta name="theme-color" content={themeColor} />
     <style>
       @reference "tailwindcss";
 

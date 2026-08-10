@@ -1,5 +1,10 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import App from "./borders-without-borders/main.svelte";
+
+type Props = { project: CollectionEntry<"projects">["data"] };
+
+const { project } = Astro.props;
 ---
 
-<App client:only="svelte" />
+<App client:only="svelte" theme={project.theme} />
