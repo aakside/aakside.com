@@ -218,10 +218,17 @@
 
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
+  let toolbarPosition = $state({ x: 0, y: 0 });
   let toolbarDrag = new Draggable({
     bounds: "viewport",
     get disabled() {
       return isSmallWidth;
+    },
+    get position() {
+      return toolbarPosition;
+    },
+    set position(value) {
+      toolbarPosition = value;
     },
   });
   let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
@@ -233,6 +240,12 @@
         americanaShieldRenderers.set(layer.map, installAmericanaRuntimeAssets(layer.map));
       }
     });
+  });
+
+  $effect(() => {
+    if (isSmallWidth) {
+      toolbarPosition = { x: 0, y: 0 };
+    }
   });
 
   function toggleCollapsed(parent: string, key: string) {
@@ -266,7 +279,7 @@
 
 <div class="h-screen w-screen" data-theme={theme} bind:clientWidth={width}>
   <div
-    class={`bg-base-100 relative top-0 left-0 z-1 text-base shadow-md max-md:w-full md:absolute md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
+    class={`bg-base-100 absolute top-0 left-0 z-1 text-base shadow-md max-md:w-full md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
     {...toolbarDrag.attach}
   >
     <div
