@@ -83,7 +83,7 @@
       {/if}
 
       <select
-        class="select select-ghost tooltip tooltip-info tooltip-right w-10 border-0 px-7"
+        class="select select-ghost tooltip tooltip-info tooltip-right w-10 appearance-none border-0 px-7"
         aria-label="Choose output format."
         bind:value={outputType}
         data-tip="Select output format."
