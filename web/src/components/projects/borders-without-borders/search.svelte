@@ -238,7 +238,7 @@
   </div>
 {/if}
 {#if results.length > 0}
-  <ul class="flex w-full flex-col gap-y-2 p-1" transition:slide={{ duration: 180 }}>
+  <ul class="flex w-full flex-col gap-y-2 p-1" transition:slide={{ duration: 100 }}>
     {#each results as result (result.place_id)}
       <li class="m-0 p-0">
         <button
@@ -262,7 +262,7 @@
           {@const metadata: LayerMetadata = {name: result.name, nominatimData: result}}
           <div
             class="[&>button]:border-base-content m-0 grid w-full auto-cols-fr grid-flow-col gap-0 overflow-visible rounded-t-none rounded-b-xl border-x border-b p-0 [&>button]:rounded-none [&>button]:border-0 [&>button]:border-r [&>button:first-of-type]:rounded-bl-xl [&>button:last-of-type]:rounded-br-xl [&>button:last-of-type]:border-r-0"
-            transition:slide={{ duration: 180 }}
+            transition:slide={{ duration: 100 }}
           >
             <button
               aria-label="Fly to location."
