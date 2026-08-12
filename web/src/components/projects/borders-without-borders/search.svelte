@@ -238,7 +238,11 @@
   </div>
 {/if}
 {#if results.length > 0}
-  <ul class="flex w-full flex-col gap-y-2 p-1" transition:slide={{ duration: 100 }}>
+  <ul
+    class="flex w-full flex-col gap-y-2 p-1"
+    data-place-results
+    transition:slide={{ duration: 100 }}
+  >
     {#each results as result (result.place_id)}
       <li class="m-0 p-0">
         <button

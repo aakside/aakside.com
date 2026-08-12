@@ -39,6 +39,7 @@
     <Blend class="size-4 shrink-0" />
     <span class="w-16 text-sm">Opacity</span>
     <input
+      aria-label="Layer opacity"
       type="range"
       min={0}
       max={1}
@@ -80,13 +81,14 @@
       <SquareDashedTopSolid class="size-4 shrink-0" />
       <span class="w-16 text-sm">Border</span>
       <input
-        type="range"
-        defaultValue={0}
-        min={0}
-        max={15}
-        step={0.5}
-        bind:value={layer.pathBorderWidth}
+        aria-label="Layer border width"
         class="range range-sm grow"
+        defaultValue={0}
+        max={15}
+        min={0}
+        step={0.5}
+        type="range"
+        bind:value={layer.pathBorderWidth}
       />
     </div>
   {/if}
