@@ -279,7 +279,7 @@
 
 <div class="h-screen w-screen" data-theme={theme} bind:clientWidth={width}>
   <div
-    class={`bg-base-100 absolute top-0 left-0 z-1 text-base shadow-md max-md:w-full md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
+    class={`bg-base-100 absolute top-0 left-0 z-1 text-base shadow-md max-md:w-full md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-100 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
     {...toolbarDrag.attach}
   >
     <div
@@ -289,6 +289,7 @@
       {...toolbarDrag.handle()}
     >
       <button
+        aria-label={expanded.get("root") === "toolbar" ? "Minimize toolbar." : "Maximize toolbar."}
         aria-pressed={expanded.get("root") === "toolbar"}
         class="btn btn-square tooltip tooltip-info tooltip-right"
         data-tip={expanded.get("root") === "toolbar" ? "Hide toolbar." : "Show toolbar."}
@@ -311,7 +312,7 @@
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
     {#if expanded.get("root") === "toolbar"}
-      <div class="flex flex-col gap-2 px-3 py-2" transition:slide={{ duration: 220 }}>
+      <div class="flex flex-col gap-2 px-3 py-2" transition:slide={{ duration: 100 }}>
         <PlaceSearch
           onResultAddLayerClick={(result) => {
             const layerId = mapState.addLayer({

@@ -179,7 +179,7 @@
   </div>
   <input
     bind:value={query}
-    class="input-lg min-w-0 grow basis-0 transition-[width] duration-200 ease-out"
+    class="input-lg min-w-0 grow basis-0 transition-[width] duration-100 ease-out"
     name="Search query"
     onkeydown={(event) => {
       if (event.key === "Enter") {
@@ -195,7 +195,7 @@
   >
     <button
       type="button"
-      class="btn btn-square btn-ghost join-item tooltip tooltip-info tooltip-left items-center overflow-hidden border-0 p-0 transition-[width,opacity] duration-200 ease-out"
+      class="btn btn-square btn-ghost join-item tooltip tooltip-info tooltip-left items-center overflow-hidden border-0 p-0 transition-[width,opacity] duration-100 ease-out"
       class:opacity-0={query.length === 0}
       class:opacity-100={query.length > 0}
       class:pointer-events-none={query.length === 0}
@@ -242,7 +242,7 @@
     {#each results as result (result.place_id)}
       <li class="m-0 p-0">
         <button
-          class="btn h-auto min-h-0 w-full flex-col items-start justify-start py-2 text-left whitespace-normal transition-[border-radius] duration-200"
+          class="btn h-auto min-h-0 w-full flex-col items-start justify-start py-2 text-left whitespace-normal transition-[border-radius] duration-100"
           class:border-base-content={selectedResult?.place_id === result.place_id}
           class:rounded-b-none={selectedResult?.place_id === result.place_id}
           class:border-b={selectedResult?.place_id === result.place_id}
