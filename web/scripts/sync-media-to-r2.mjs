@@ -86,15 +86,49 @@ function keyForFile(filePath, contents) {
   };
 }
 
-/** @returns {Promise<boolean>} Whether the object is already public at this key. */
+/**
+ * Wrangler has no `r2 object head`, so existence is probed over the public
+ * domain. That doubles as a check that the URL the site will reference actually
+ * resolves.
+ *
+ * Only a 404 counts as absent. Anything else refusing the request — a zone
+ * security feature challenging non-browser clients, say — would otherwise look
+ * like "missing" and silently re-upload every file on every build. Fail loudly
+ * instead, naming the mitigation so the cause is readable from the CI log.
+ *
+ * @returns {Promise<boolean>} Whether the object is already public at this key.
+ */
 async function objectExists(key) {
+  let response;
+
   try {
-    const response = await fetch(`${PUBLIC_BASE_URL}/${key}`, { method: "HEAD" });
-    return response.ok;
+    response = await fetch(`${PUBLIC_BASE_URL}/${key}`, { method: "HEAD" });
   } catch {
     // Network trouble is not proof of absence; let the upload decide.
     return false;
   }
+
+  if (response.ok) {
+    return true;
+  }
+
+  if (response.status === 404) {
+    return false;
+  }
+
+  const mitigation = response.headers.get("cf-mitigated");
+  const ray = response.headers.get("cf-ray");
+
+  throw new Error(
+    `HEAD ${PUBLIC_BASE_URL}/${key} returned ${response.status}` +
+      `${mitigation ? ` (cf-mitigated: ${mitigation})` : ""}` +
+      `${ray ? ` [cf-ray: ${ray}]` : ""}, so whether the object exists cannot be ` +
+      `determined. A "challenge" mitigation means a zone security feature is ` +
+      `challenging non-browser clients on this hostname; look the cf-ray up in ` +
+      `Security Events to find the rule. Readers are affected too — a <video> ` +
+      `source is a subresource and cannot solve a challenge. Otherwise, check ` +
+      `that the bucket allows public access on this domain.`,
+  );
 }
 
 function upload(filePath, key) {
