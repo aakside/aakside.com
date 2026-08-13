@@ -1,10 +1,240 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { SITE_AUTHOR } from "../../consts";
 import App from "./borders-without-borders/main.svelte";
 
 type Props = { project: CollectionEntry<"projects">["data"] };
 
 const { project } = Astro.props;
+
+const canonicalURL = new URL("/borders-without-borders/", Astro.site).href;
+const heroURL = project.heroImage ? new URL(project.heroImage.src, Astro.site).href : undefined;
+
+const faqs = [
+  {
+    question: "Can I compare countries, states, and cities?",
+    answer:
+      "Yes. Search OpenStreetMap by place name or OSM ID. Any result with an area boundary—such as a country, state, province, county, city, island, or park—can become a movable overlay.",
+  },
+  {
+    question: "Is Borders Without Borders free?",
+    answer:
+      "Yes. The map overlay tool is free to use in a modern web browser, with no account or sign-up required.",
+  },
+  {
+    question: "Can I share a geographic comparison?",
+    answer:
+      "Yes. Use the Share control to copy a link that recreates your map layers, or export the configuration as JSON for later use.",
+  },
+  {
+    question: "Is this map suitable for surveying or legal boundary work?",
+    answer:
+      "No. Borders Without Borders is an exploratory visualization tool. Boundaries come from OpenStreetMap, and all interactive maps are affected by projection and rendering limits—especially near the poles.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${canonicalURL}#application`,
+      name: project.title,
+      alternateName: "Interactive Map Overlay Tool",
+      url: canonicalURL,
+      description: project.description,
+      applicationCategory: "EducationalApplication",
+      applicationSubCategory: "Interactive mapping and geographic comparison",
+      operatingSystem: "Any",
+      browserRequirements: "Requires JavaScript and a modern web browser",
+      isAccessibleForFree: true,
+      image: heroURL,
+      author: {
+        "@type": "Person",
+        name: SITE_AUTHOR,
+        url: new URL("/about/", Astro.site).href,
+      },
+      featureList: [
+        "Search OpenStreetMap places and boundaries",
+        "Overlay countries, states, cities, islands, parks, and other areas",
+        "Move and rotate geographic overlays",
+        "Adjust map style, opacity, bearing, zoom, and border width",
+        "Share map comparisons by URL or JSON configuration",
+      ],
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#breadcrumbs`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Projects",
+          item: new URL("/projects/", Astro.site).href,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: project.title,
+          item: canonicalURL,
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalURL}#faq`,
+      mainEntity: faqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ],
+};
 ---
 
-<App client:only="svelte" theme={project.theme} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+<section
+  id="interactive-map"
+  class="relative"
+  aria-label="Interactive geographic overlay map"
+  data-theme={project.theme}
+>
+  <App client:only="svelte" theme={project.theme} />
+</section>
+
+<article
+  id="about-borders-without-borders"
+  class="bg-base-100 text-base-content"
+  data-theme={project.theme}
+>
+  <div class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+    <header class="mx-auto max-w-3xl text-center">
+      <p class="text-primary mb-3 text-sm font-bold tracking-widest uppercase">
+        Free interactive map overlay tool
+      </p>
+      <h1 class="text-4xl font-bold tracking-tight md:text-6xl">Borders Without Borders</h1>
+      <p class="mt-5 text-xl leading-relaxed md:text-2xl">
+        Compare the geographic scale of countries, states, cities, islands, parks, and other places
+        by moving one map directly over another.
+      </p>
+      <a class="btn btn-primary mt-6" href="#interactive-map">Open the interactive map ↑</a>
+    </header>
+
+    {
+      project.heroImage && (
+        <figure class="my-12">
+          <Image
+            class="w-full rounded-2xl shadow-xl"
+            src={project.heroImage}
+            alt={project.heroAlt ?? "A geographic overlay moved onto a second map"}
+            width={1200}
+            height={630}
+            loading="lazy"
+          />
+          <figcaption class="text-base-content/70 mt-3 text-center text-sm">
+            Move a familiar place anywhere in the world to see geography from a new perspective.
+          </figcaption>
+        </figure>
+      )
+    }
+
+    <div class="grid gap-10 md:grid-cols-2 md:gap-14">
+      <section>
+        <h2 class="text-3xl font-bold">Compare places on the same map</h2>
+        <p>
+          Borders Without Borders is a browser-based map comparison tool inspired by William
+          Rankin’s <em>The Errant Isle</em>. Search for a real-world area, add its boundary as an
+          overlay, and move that layer to the center of your current view. The result makes
+          otherwise abstract size and shape differences easier to understand.
+        </p>
+        <p>
+          Try Manhattan over Chicago, one country over another, Central Park over Golden Gate Park,
+          or your home city over a place you plan to visit. Unlike a static country-size comparison
+          image, every map remains interactive.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-3xl font-bold">What you can do</h2>
+        <ul class="list-disc space-y-2 pl-6">
+          <li>Search by place name or OpenStreetMap ID.</li>
+          <li>Add multiple geographic boundaries as independent map layers.</li>
+          <li>Move an overlay to any location while preserving its source geography.</li>
+          <li>Rotate layers and adjust style, opacity, zoom, bearing, and border width.</li>
+          <li>Hide, reorder, rename, or remove layers as you experiment.</li>
+          <li>Share the finished comparison with a URL or exported JSON configuration.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="bg-base-200 my-14 rounded-2xl p-6 md:p-10">
+      <h2 class="text-3xl font-bold">How to compare geographic sizes</h2>
+      <ol class="mt-5 grid gap-5 md:grid-cols-3">
+        <li class="bg-base-100 rounded-xl p-5 shadow-sm">
+          <strong class="text-primary block text-sm tracking-wider uppercase"
+            >1. Find a place</strong
+          >
+          Search for a country, state, province, city, county, island, park, or another mapped area.
+        </li>
+        <li class="bg-base-100 rounded-xl p-5 shadow-sm">
+          <strong class="text-primary block text-sm tracking-wider uppercase"
+            >2. Add and move it</strong
+          >
+          Add the result as a layer, navigate the base map, then move the overlay to the current view.
+        </li>
+        <li class="bg-base-100 rounded-xl p-5 shadow-sm">
+          <strong class="text-primary block text-sm tracking-wider uppercase"
+            >3. Refine and share</strong
+          >
+          Rotate and style the layers until the comparison is clear, then copy a shareable link.
+        </li>
+      </ol>
+    </section>
+
+    <section class="mx-auto max-w-3xl">
+      <h2 class="text-3xl font-bold">A note about "true size" maps</h2>
+      <p>
+        People often search for a true-size map when they want to compare countries or regions
+        without relying on memory. This tool helps with that visual question by keeping each place
+        tied to its source map while you reposition the overlay. It is still an exploratory
+        visualization: digital maps use projections, source boundaries vary, and behavior near the
+        poles can be unstable. Do not use it for surveying, navigation, or legal boundary decisions.
+      </p>
+    </section>
+
+    <section class="mx-auto mt-14 max-w-3xl">
+      <h2 class="text-3xl font-bold">Frequently asked questions</h2>
+      <div class="mt-5 space-y-3">
+        {
+          faqs.map(({ question, answer }) => (
+            <details class="bg-base-200 rounded-xl p-5">
+              <summary class="cursor-pointer text-lg font-bold">{question}</summary>
+              <p class="mb-0 pt-3">{answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <footer class="border-base-300 mt-14 border-t pt-8 text-center">
+      <p>
+        Curious how it was built? Read{" "}
+        <a class="link link-primary" href="/blog/wherever-isle-may-roam/">
+          Wherever Isle May Roam
+        </a>
+        {" "}for the story behind the map, or browse more <a class="link" href="/projects/"
+          >projects</a
+        >.
+      </p>
+      <a class="btn btn-primary" href="#interactive-map">Start comparing places ↑</a>
+    </footer>
+  </div>
+</article>

@@ -204,7 +204,19 @@ export default defineConfig({
   integrations: [
     expressiveCode(),
     mdx(),
-    sitemap(),
+    sitemap({
+      // Redirect targets should be indexed, not the URLs that redirect to them.
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return pathname !== "/" && !/^\/projects\/[^/]+\/$/.test(pathname);
+      },
+      serialize: (item) => {
+        if (new URL(item.url).pathname === "/borders-without-borders/") {
+          return { ...item, priority: 1 };
+        }
+        return item;
+      },
+    }),
     svelte(),
     pagefind(),
     serveBuiltAstroImagesInDev(),

@@ -9,8 +9,13 @@ type Props = CollectionEntry<"projects">["data"];
 
 const DEFAULT_THEME_COLOR_PROPERTY = "--color-base-200";
 
-const { title, description, favicon, pubDate, updatedDate, heroAlt, heroImage } = Astro.props;
-const { minimalLayout = false, theme, themeColorProperty } = Astro.props;
+const { title, seoTitle, description, favicon, pubDate, updatedDate, heroAlt, heroImage } =
+  Astro.props;
+const { hideScrollbar = false, minimalLayout = false, theme, themeColorProperty } = Astro.props;
+
+const scrollbarClasses = hideScrollbar
+  ? "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  : undefined;
 
 let themeColor: string | undefined;
 if (theme || themeColorProperty) {
@@ -29,19 +34,20 @@ if (theme || themeColorProperty) {
 }
 ---
 
-<html lang="en" data-theme="aakside-blue">
+<html lang="en" data-theme="aakside-blue" class={scrollbarClasses}>
   <head>
     <BaseHead
       description={description}
       favicon={favicon}
       heroAlt={heroAlt}
       image={heroImage}
+      pagefindTitle={title}
       themeColor={themeColor}
-      title={title}
+      title={seoTitle ?? title}
     />
   </head>
 
-  <body>
+  <body class={scrollbarClasses}>
     {
       !minimalLayout && (
         <>

@@ -32,10 +32,14 @@ const Content =
 ---
 
 <ProjectLayout {...projectEntry.data}>
-  <section class="sr-only">
-    <h1>{projectEntry.data.title}</h1>
-    {projectEntry.data.description && <p>{projectEntry.data.description}</p>}
-  </section>
+  {
+    !ProjectComponent && (
+      <section class="sr-only">
+        <h1>{projectEntry.data.title}</h1>
+        {projectEntry.data.description && <p>{projectEntry.data.description}</p>}
+      </section>
+    )
+  }
   {
     ProjectComponent ? (
       <ProjectComponent project={projectEntry.data} />

@@ -120,7 +120,6 @@
   import { onMount } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
   import { slide } from "svelte/transition";
-  import InfoDialog from "./info-dialog.svelte";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
   import LayerSettings from "./layer-settings.svelte";
   import Share, { type ShareConfig } from "./share.svelte";
@@ -257,6 +256,13 @@
     trigger?.parentElement?.querySelector<HTMLDialogElement>(selector)?.showModal();
   }
 
+  function scrollToAbout() {
+    document.getElementById("about-borders-without-borders")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+  }
+
   function moveLayerToCurrentView(index: number) {
     mapState.layers[index].baseMapPosition.lat = mapState.center.lat;
     mapState.layers[index].baseMapPosition.lng = mapState.center.lng;
@@ -277,7 +283,7 @@
   }
 </script>
 
-<div class="h-screen w-screen" data-theme={theme} bind:clientWidth={width}>
+<div class="h-screen w-full" data-theme={theme} bind:clientWidth={width}>
   <div
     class={`bg-base-100 absolute top-0 left-0 z-1 text-base shadow-md max-md:w-full md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-100 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
     {...toolbarDrag.attach}
@@ -303,12 +309,13 @@
         {/if}</button
       >
       <button
+        type="button"
+        aria-label="Learn more about Borders Without Borders."
         class="btn btn-square tooltip tooltip-info tooltip-right size-6"
         data-tip="Learn more about this app."
-        onclick={(event) => openDialogInParent(event, ":scope > dialog#app-info")}
+        onclick={scrollToAbout}
         {...toolbarDrag.cancel()}><Info class="size-6" /></button
       >
-      <InfoDialog {...toolbarDrag.cancel()} />
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
     {#if expanded.get("root") === "toolbar"}
