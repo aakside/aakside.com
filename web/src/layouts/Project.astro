@@ -9,8 +9,7 @@ type Props = CollectionEntry<"projects">["data"];
 
 const DEFAULT_THEME_COLOR_PROPERTY = "--color-base-200";
 
-const { title, seoTitle, description, favicon, pubDate, updatedDate, heroAlt, heroImage } =
-  Astro.props;
+const { title, description, favicon, pubDate, updatedDate, heroAlt, heroImage } = Astro.props;
 const { hideScrollbar = false, minimalLayout = false, theme, themeColorProperty } = Astro.props;
 
 const scrollbarClasses = hideScrollbar
@@ -43,7 +42,7 @@ if (theme || themeColorProperty) {
       image={heroImage}
       pagefindTitle={title}
       themeColor={themeColor}
-      title={seoTitle ?? title}
+      title={title}
     />
   </head>
 
