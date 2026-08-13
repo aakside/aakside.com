@@ -509,11 +509,7 @@
                   >
                 </div>
                 {#if expanded.get(layer.id) === "settings"}
-                  <LayerSettings
-                    isBaseMap={index === 0}
-                    bind:layer={mapState.layers[index]}
-                    bind:mapState
-                  />
+                  <LayerSettings {index} bind:layer={mapState.layers[index]} bind:mapState />
                 {/if}
               </details>
             </div>
