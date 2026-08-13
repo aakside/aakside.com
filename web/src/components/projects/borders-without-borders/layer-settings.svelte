@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Blend, Lock, LockOpen, MapIcon, SquareDashedTopSolid } from "@lucide/svelte";
+  import { Angle, Blend, Lock, LockOpen, MapIcon, SquareDashedTopSolid } from "@lucide/svelte";
   import { MapLayer, MapState } from "@aakside/svelte-maplibre-stack";
   import { mapStyles } from "./main.svelte";
 
@@ -73,6 +73,19 @@
         }
         class="toggle toggle-sm"
         type="checkbox"
+      />
+    </div>
+    <div class="flex w-full items-center gap-2">
+      <Angle class="size-4 shrink-0" />
+      <span class="grow text-sm">Bearing</span>
+      <input
+        aria-label="Bearing"
+        bind:value={layer.bearing}
+        class="range range-sm grow"
+        type="range"
+        min={-180}
+        max={180}
+        step={1}
       />
     </div>
   {/if}
