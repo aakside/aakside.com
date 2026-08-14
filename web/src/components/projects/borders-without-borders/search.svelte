@@ -64,7 +64,7 @@
 
 <script lang="ts">
   import { type Geometry, type MultiPolygon, type Polygon } from "geojson";
-  import { Eraser, Info, Locate, MapPlus, Search, Server } from "@lucide/svelte";
+  import { Eraser, Info, Locate, MapPinSearch, MapPlus, Server } from "@lucide/svelte";
   import { slide } from "svelte/transition";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
   import { LayerMetadata } from "./main.svelte";
@@ -220,7 +220,7 @@
       data-tip="Search"
       onclick={triggerSearch}
     >
-      {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<Search
+      {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<MapPinSearch
           class="size-5"
         />{/if}
     </button>
