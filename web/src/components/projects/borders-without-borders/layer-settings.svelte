@@ -61,6 +61,31 @@
       bind:value={layer.opacity}
       class="range range-sm range-primary grow"
     />
+    {#if editingValue === "opacity"}
+      <input
+        aria-label="Opacity value"
+        class="input input-ghost input-xs h-6 min-h-0 w-16 rounded px-1 text-right text-xs font-semibold tabular-nums"
+        type="number"
+        bind:value={() => layer.opacity * 100, (value) => (layer.opacity = value / 100)}
+        max={100}
+        min={0}
+        step={1}
+        onblur={() => {
+          editingValue = null;
+        }}
+        autofocus
+      />
+    {:else}
+      <button
+        type="button"
+        class="btn btn-ghost btn-xs h-6 min-h-0 min-w-12 rounded px-1 text-right text-xs font-semibold tabular-nums"
+        onclick={() => {
+          editingValue = "opacity";
+        }}
+      >
+        {(Number(layer.opacity ?? 0) * 100).toFixed(0)}%
+      </button>
+    {/if}
   </div>
 
   <div class="bg-base-200/70 flex w-full items-center gap-2 rounded-lg px-2 py-1.5">
