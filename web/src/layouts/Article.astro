@@ -1,6 +1,7 @@
 ---
 import { RotateCcwClock } from "@lucide/astro";
 import type { ImageMetadata } from "astro";
+import type { Article as ArticleSchema } from "schema-dts";
 import BaseHead from "../components/BaseHead.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
@@ -15,6 +16,7 @@ type Heading = {
 };
 
 export type Props = {
+  articleType?: ArticleSchema["@type"];
   description: string;
   favicon?: string;
   heroAlt?: string;
@@ -29,6 +31,7 @@ export type Props = {
 };
 
 const {
+  articleType,
   description,
   favicon,
   headings = [],
@@ -70,6 +73,7 @@ function getTocItemClass(depth: number) {
 <html lang="en" data-theme="aakside-blue">
   <head>
     <BaseHead
+      articleType={articleType}
       title={title}
       description={description}
       favicon={favicon}

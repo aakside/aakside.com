@@ -9,9 +9,9 @@ import SearchModal from "./SearchModal.astro";
   <nav class="flex items-center justify-between gap-2 overflow-visible">
     <div class="m-0 text-2xl"><a class="px-2 py-4 no-underline" href="/">{SITE_TITLE}</a></div>
     <div class="internal-links [&_a.active]:text-accent space-x-1">
-      <HeaderLink href="/about">About</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="/projects">Projects</HeaderLink>
+      <HeaderLink href="/about/">About</HeaderLink>
+      <HeaderLink href="/blog/">Blog</HeaderLink>
+      <HeaderLink href="/projects/">Projects</HeaderLink>
       {
         // The desktop <pagefind-searchbox> already claims the keyboard shortcut. There is no "no shortcut" option, so `shortcut="+"` gets split on `+` into empty parts, giving a binding whose key is `""`. It also keeps the derived `aria-keyshortcuts` empty (ARIA reads that as undefined).
       }

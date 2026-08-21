@@ -1,0 +1,105 @@
+---
+import type { Article, Graph, IdReference, Person, WebPage, WebSite } from "schema-dts";
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_SAME_AS, SITE_TITLE } from "../consts";
+
+interface Props {
+  articleType?: Article["@type"];
+  canonicalURL: URL;
+  description: string;
+  imageURL?: URL;
+  modifiedDate?: Date;
+  pageType?: WebPage["@type"];
+  publishedDate?: Date;
+  title: string;
+}
+
+const {
+  articleType,
+  canonicalURL,
+  description,
+  imageURL,
+  modifiedDate,
+  pageType = "WebPage",
+  publishedDate,
+  title,
+} = Astro.props;
+
+// Stable, site-wide @ids let every page's graph point at one Person and one WebSite instead of
+// minting a fresh entity per page.
+const personId = new URL("#person", Astro.site).href;
+const websiteId = new URL("#website", Astro.site).href;
+const webPageId = `${canonicalURL.href}#webpage`;
+const person: IdReference = { "@id": personId };
+const website: IdReference = { "@id": websiteId };
+const webPage: IdReference = { "@id": webPageId };
+
+const dates = {
+  ...(publishedDate && { datePublished: publishedDate.toISOString() }),
+  ...(modifiedDate && { dateModified: modifiedDate.toISOString() }),
+};
+
+const author: Person = {
+  "@type": "Person",
+  "@id": personId,
+  name: SITE_AUTHOR,
+  alternateName: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: new URL("/about/", Astro.site).href,
+  sameAs: SITE_SAME_AS,
+};
+
+const site: WebSite = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: new URL("/", Astro.site).href,
+  inLanguage: "en-US",
+  author: person,
+  publisher: person,
+};
+
+const page = {
+  "@type": pageType,
+  "@id": webPageId,
+  name: title,
+  description,
+  url: canonicalURL.href,
+  inLanguage: "en-US",
+  isPartOf: website,
+  ...(imageURL && {
+    primaryImageOfPage: { "@type": "ImageObject", url: imageURL.href },
+  }),
+  ...(pageType === "ProfilePage" && { mainEntity: person }),
+  ...dates,
+} satisfies WebPage;
+
+// The Article is the content; the WebPage is the document that carries it. Keeping them as
+// separate nodes lets `mainEntityOfPage` state which is which.
+const article = articleType
+  ? ({
+      "@type": articleType,
+      "@id": `${canonicalURL.href}#article`,
+      headline: title,
+      description,
+      url: canonicalURL.href,
+      inLanguage: "en-US",
+      author: person,
+      publisher: person,
+      isPartOf: webPage,
+      mainEntityOfPage: webPage,
+      ...(imageURL && { image: imageURL.href }),
+      ...dates,
+    } satisfies Article)
+  : undefined;
+
+const structuredData: Graph = {
+  "@context": "https://schema.org",
+  "@graph": article ? [author, site, page, article] : [author, site, page],
+};
+
+// `set:html` does not escape, so neutralise any `<` that could close the script element early.
+const json = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+---
+
+<script is:inline type="application/ld+json" set:html={json} />

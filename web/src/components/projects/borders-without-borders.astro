@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { SITE_AUTHOR } from "../../consts";
+import type { Graph } from "schema-dts";
 import App from "./borders-without-borders/main.svelte";
 
 type Props = { project: CollectionEntry<"projects">["data"] };
@@ -34,7 +34,7 @@ const faqs = [
   },
 ];
 
-const structuredData = {
+const structuredData: Graph = {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -50,11 +50,7 @@ const structuredData = {
       browserRequirements: "Requires JavaScript and a modern web browser",
       isAccessibleForFree: true,
       image: heroURL,
-      author: {
-        "@type": "Person",
-        name: SITE_AUTHOR,
-        url: new URL("/about/", Astro.site).href,
-      },
+      author: { "@id": new URL("#person", Astro.site).href },
       featureList: [
         "Search OpenStreetMap places and boundaries",
         "Overlay countries, states, cities, islands, parks, and other areas",

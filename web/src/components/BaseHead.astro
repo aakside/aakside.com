@@ -1,18 +1,22 @@
 ---
 import "../styles/global.css";
 import type { ImageMetadata } from "astro";
+import type { Article, WebPage } from "schema-dts";
 import { Font, getImage } from "astro:assets";
 import FallbackImage from "../assets/blog/placeholder-hero.svg";
+import StructuredData from "./StructuredData.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../consts";
 import { theme } from "virtual:theme";
 
 interface Props {
+  articleType?: Article["@type"];
   description: string;
   favicon?: string;
   heroAlt?: string;
   image?: ImageMetadata;
   modifiedDate?: Date;
   pagefindTitle?: string;
+  pageType?: WebPage["@type"];
   publishedDate?: Date;
   sectionTitle?: string;
   themeColor?: string;
@@ -23,12 +27,14 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
+  articleType,
   description,
   favicon = "/favicon.svg",
   heroAlt,
   image = FallbackImage,
   modifiedDate,
   pagefindTitle,
+  pageType,
   publishedDate,
   sectionTitle,
   themeColor = theme["--color-base-200"],
@@ -155,6 +161,18 @@ function getFaviconType(path: string) {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageURL} />
 <meta name="twitter:image:alt" content={ogImageAlt} />
+
+<!-- Structured Data -->
+<StructuredData
+  articleType={articleType}
+  canonicalURL={canonicalURL}
+  description={description}
+  imageURL={ogImageURL}
+  modifiedDate={modifiedDate}
+  pageType={pageType}
+  publishedDate={publishedDate}
+  title={pageTitle}
+/>
 
 <!-- Pagefind-specific Metadata -->
 <meta
