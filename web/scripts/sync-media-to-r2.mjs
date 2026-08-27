@@ -1,17 +1,22 @@
 /**
- * Uploads everything under `media/` to R2 and writes the manifest the <Video>
- * component resolves URLs through.
+ * Uploads everything under `media/` to R2 and writes the manifest that
+ * `src/utils/media.ts` resolves URLs through.
  *
  * Video lives in `media/` rather than `public/` on purpose. Astro copies
  * `public/` verbatim into `dist/`, and Cloudflare rejects any single asset over
- * 25 MiB, so large clips cannot ship as site assets at all. Serving them from
- * R2 sidesteps the limit and keeps the deployed bundle small.
+ * 25 MiB, so the larger clips cannot ship as site assets at all. Serving them
+ * from R2 sidesteps the limit and keeps the deployed bundle small.
  *
  * Keys embed a hash of the file contents, which buys three things: uploads are
  * skippable when the object already exists, re-encoding a clip produces a new
  * URL without a cache bust, and the objects can be cached immutably forever.
  *
- * Runs from the `web/` directory; paths below are relative to it.
+ * Uploads go over R2's S3-compatible API rather than through `wrangler r2
+ * object put`. wrangler talks to the Cloudflare REST API, which only accepts
+ * account-scoped tokens that can administer every bucket in the account —
+ * far more authority than a deploy needs. The S3 endpoint accepts an R2
+ * "Object Read & Write" credential scoped to this one bucket, and skips a
+ * subprocess per file.
  *
  * Usage:
  *   node scripts/sync-media-to-r2.mjs                  upload, then write the manifest
@@ -19,7 +24,7 @@
  *                                                      server when credentials are absent
  */
 
-import { execFileSync } from "node:child_process";
+import { AwsClient } from "aws4fetch";
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -33,6 +38,9 @@ const PUBLIC_BASE_URL = (process.env.MEDIA_BASE_URL ?? "https://media.aakside.co
   /\/$/,
   "",
 );
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
+const SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 
 /** Objects are immutable because their key contains a content hash. */
 const CACHE_CONTROL = "public, max-age=31536000, immutable";
@@ -44,7 +52,7 @@ const CONTENT_TYPES = {
 };
 
 const allowLocalFallback = process.argv.includes("--local-fallback");
-const hasCredentials = Boolean(process.env.CLOUDFLARE_API_TOKEN);
+const hasCredentials = Boolean(ACCESS_KEY_ID && SECRET_ACCESS_KEY && ACCOUNT_ID);
 
 /** @returns {string[]} Every file under `directory`, as paths relative to cwd. */
 function listFilesRecursively(directory) {
@@ -59,6 +67,11 @@ function listFilesRecursively(directory) {
   }
 
   for (const entry of entries) {
+    if (entry.name.startsWith(".")) {
+      // Bookkeeping such as media/.encode-state.json is not site content.
+      continue;
+    }
+
     const entryPath = path.join(directory, entry.name);
     if (entry.isDirectory()) {
       files.push(...listFilesRecursively(entryPath));
@@ -70,12 +83,7 @@ function listFilesRecursively(directory) {
   return files;
 }
 
-/**
- * `media/blog/foo/bar.webm` -> `blog/foo/bar.<hash>.webm`
- *
- * The logical name (`blog/foo/bar.webm`) is what content authors reference; the
- * hash is an implementation detail of the URL.
- */
+/** `media/foo/bar.webm` -> logical name `foo/bar.webm`, key `foo/bar.<hash>.webm`. */
 function keyForFile(filePath, contents) {
   const logicalName = path.relative(MEDIA_ROOT, filePath).split(path.sep).join("/");
   const extension = path.extname(logicalName);
@@ -84,78 +92,6 @@ function keyForFile(filePath, contents) {
     logicalName,
     key: `${logicalName.slice(0, -extension.length)}.${hash}${extension}`,
   };
-}
-
-/**
- * Wrangler has no `r2 object head`, so existence is probed over the public
- * domain. That doubles as a check that the URL the site will reference actually
- * resolves.
- *
- * Only a 404 counts as absent. Anything else refusing the request — a zone
- * security feature challenging non-browser clients, say — would otherwise look
- * like "missing" and silently re-upload every file on every build. Fail loudly
- * instead, naming the mitigation so the cause is readable from the CI log.
- *
- * @returns {Promise<boolean>} Whether the object is already public at this key.
- */
-async function objectExists(key) {
-  let response;
-
-  try {
-    response = await fetch(`${PUBLIC_BASE_URL}/${key}`, { method: "HEAD" });
-  } catch {
-    // Network trouble is not proof of absence; let the upload decide.
-    return false;
-  }
-
-  if (response.ok) {
-    return true;
-  }
-
-  if (response.status === 404) {
-    return false;
-  }
-
-  const mitigation = response.headers.get("cf-mitigated");
-  const ray = response.headers.get("cf-ray");
-
-  throw new Error(
-    `HEAD ${PUBLIC_BASE_URL}/${key} returned ${response.status}` +
-      `${mitigation ? ` (cf-mitigated: ${mitigation})` : ""}` +
-      `${ray ? ` [cf-ray: ${ray}]` : ""}, so whether the object exists cannot be ` +
-      `determined. A "challenge" mitigation means a zone security feature is ` +
-      `challenging non-browser clients on this hostname; look the cf-ray up in ` +
-      `Security Events to find the rule. Readers are affected too — a <video> ` +
-      `source is a subresource and cannot solve a challenge. Otherwise, check ` +
-      `that the bucket allows public access on this domain.`,
-  );
-}
-
-function upload(filePath, key) {
-  const contentType = CONTENT_TYPES[path.extname(filePath)];
-  if (!contentType) {
-    throw new Error(`No content type mapped for ${filePath}. Add one to CONTENT_TYPES.`);
-  }
-
-  execFileSync(
-    "npx",
-    [
-      "wrangler",
-      "r2",
-      "object",
-      "put",
-      `${BUCKET}/${key}`,
-      "--file",
-      filePath,
-      "--content-type",
-      contentType,
-      "--cache-control",
-      CACHE_CONTROL,
-      // Without this wrangler writes to the local simulator, not the bucket.
-      "--remote",
-    ],
-    { stdio: ["ignore", "ignore", "inherit"] },
-  );
 }
 
 function writeManifest(entries) {
@@ -179,9 +115,20 @@ if (files.length === 0) {
 
 if (!hasCredentials) {
   if (!allowLocalFallback) {
+    const missing = [
+      ["R2_ACCESS_KEY_ID", ACCESS_KEY_ID],
+      ["R2_SECRET_ACCESS_KEY", SECRET_ACCESS_KEY],
+      ["CLOUDFLARE_ACCOUNT_ID", ACCOUNT_ID],
+    ]
+      .filter(([, value]) => !value)
+      .map(([name]) => name);
+
     throw new Error(
-      "CLOUDFLARE_API_TOKEN is not set, so media cannot be uploaded to R2. Set it, " +
-        "or run with --local-fallback to build against locally served files.",
+      `Missing ${missing.join(", ")}, so media cannot be uploaded to R2. The key ` +
+        `and secret come from an R2 "Object Read & Write" token (R2 -> Manage ` +
+        `R2 API Tokens), which is all this needs — it does not use the account ` +
+        `API token the deploy step uses. Or run with --local-fallback to build ` +
+        `against locally served files.`,
     );
   }
 
@@ -198,6 +145,72 @@ if (!hasCredentials) {
   process.exit(0);
 }
 
+const client = new AwsClient({
+  accessKeyId: ACCESS_KEY_ID,
+  secretAccessKey: SECRET_ACCESS_KEY,
+  // R2 ignores the region but SigV4 requires one in the signature.
+  region: "auto",
+  service: "s3",
+});
+
+/** R2 uses path-style addressing: <account>.r2.cloudflarestorage.com/<bucket>/<key>. */
+function objectUrl(key) {
+  const encodedKey = key.split("/").map(encodeURIComponent).join("/");
+  return `https://${ACCOUNT_ID}.r2.cloudflarestorage.com/${BUCKET}/${encodedKey}`;
+}
+
+async function describeFailure(response) {
+  const body = await response.text().catch(() => "");
+  // R2 returns an XML <Message> on error; surface just that when present.
+  const message = body.match(/<Message>([^<]*)<\/Message>/)?.[1] ?? body.slice(0, 200);
+  return `${response.status} ${response.statusText}${message ? ` — ${message}` : ""}`;
+}
+
+/**
+ * Asks R2 directly rather than probing the public domain, so the answer does
+ * not depend on public access being enabled or on a WAF rule that challenges
+ * non-browser clients.
+ *
+ * @returns {Promise<boolean>} Whether the object already exists at this key.
+ */
+async function objectExists(key) {
+  const response = await client.fetch(objectUrl(key), { method: "HEAD" });
+
+  if (response.ok) {
+    return true;
+  }
+
+  if (response.status === 404) {
+    return false;
+  }
+
+  throw new Error(
+    `HEAD ${BUCKET}/${key} failed: ${await describeFailure(response)}\n` +
+      `A 403 here means the credential cannot read this bucket — check that the ` +
+      `R2 token is scoped to "${BUCKET}".`,
+  );
+}
+
+async function upload(key, contents, filePath) {
+  const contentType = CONTENT_TYPES[path.extname(filePath)];
+  if (!contentType) {
+    throw new Error(`No content type mapped for ${filePath}. Add one to CONTENT_TYPES.`);
+  }
+
+  const response = await client.fetch(objectUrl(key), {
+    method: "PUT",
+    body: contents,
+    headers: {
+      "Cache-Control": CACHE_CONTROL,
+      "Content-Type": contentType,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`PUT ${BUCKET}/${key} failed: ${await describeFailure(response)}`);
+  }
+}
+
 /** @type {Record<string, string>} */
 const manifest = {};
 let uploaded = 0;
@@ -206,18 +219,47 @@ for (const filePath of files) {
   const contents = readFileSync(filePath);
   const { logicalName, key } = keyForFile(filePath, contents);
 
-  if (await objectExists(key)) {
-    manifest[logicalName] = `${PUBLIC_BASE_URL}/${key}`;
-    continue;
+  if (!(await objectExists(key))) {
+    console.log(`Uploading ${logicalName} -> ${key}`);
+    await upload(key, contents, filePath);
+    uploaded += 1;
   }
 
-  console.log(`Uploading ${logicalName} -> ${key}`);
-  upload(filePath, key);
   manifest[logicalName] = `${PUBLIC_BASE_URL}/${key}`;
-  uploaded += 1;
 }
 
 writeManifest(manifest);
 console.log(
   `Synced ${files.length} media files to R2 (${uploaded} uploaded, ${files.length - uploaded} already present).`,
 );
+
+// The upload path no longer touches the public domain, so nothing else would
+// notice if it stopped serving. One request is enough to catch that, and it is
+// a warning rather than a failure because the objects themselves are fine.
+const [sampleName] = Object.keys(manifest);
+const sampleUrl = manifest[sampleName];
+const publicCheck = await fetch(sampleUrl, { method: "HEAD" }).catch(() => undefined);
+
+if (publicCheck?.ok) {
+  // aws4fetch leaves Content-Type out of the signature, so it is worth
+  // confirming R2 stored the one we sent — a video served as
+  // application/octet-stream will not play in some browsers.
+  const expected = CONTENT_TYPES[path.extname(sampleName)];
+  const stored = publicCheck.headers.get("content-type");
+
+  if (stored !== expected) {
+    console.warn(`\nWarning: ${sampleUrl} is served as "${stored}", expected "${expected}".`);
+  }
+}
+
+if (!publicCheck?.ok) {
+  const detail = publicCheck
+    ? `HTTP ${publicCheck.status}${publicCheck.headers.get("cf-mitigated") ? ` (cf-mitigated: ${publicCheck.headers.get("cf-mitigated")})` : ""}`
+    : "the request failed outright";
+  console.warn(
+    `\nWarning: ${sampleUrl} did not serve — ${detail}.\n` +
+      `The objects uploaded fine, but readers load video from this origin, so ` +
+      `check the bucket's public access and any rule challenging non-browser ` +
+      `clients on this hostname.`,
+  );
+}
