@@ -21,7 +21,7 @@ const json = (value: unknown, status = 200) =>
     "Content-Type": "application/json",
   });
 
-  function qr(text: string) {
+function qr(text: string) {
   const { modules } = QRCode.create(text, { errorCorrectionLevel: "M" });
   let path = "";
   for (let y = 0; y < modules.size; y++)
