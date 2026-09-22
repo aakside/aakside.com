@@ -1,0 +1,17 @@
+# Cache-Control for Cloudflare. GitHub Pages set these for us; Cloudflare
+# doesn't, so the long-lived rules have to be declared explicitly.
+#
+# Only content-hashed paths are listed. Everything else changes in place under a
+# stable URL and must keep revalidating.
+
+# Astro hashes every emitted asset, fonts included.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Pagefind hashes its payloads too, but not the entry scripts
+# (pagefind.js, pagefind-entry.json), so those are deliberately not listed.
+/pagefind/fragment/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/pagefind/index/*
+  Cache-Control: public, max-age=31536000, immutable

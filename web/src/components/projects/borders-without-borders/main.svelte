@@ -2,11 +2,18 @@
   export class LayerMetadata {
     name: string;
     osmId?: number;
+    osmType?: "node" | "relation" | "way";
     nominatimData?: any;
 
-    constructor(name: string, osmId?: number, nominatimData?: any) {
+    constructor(
+      name: string,
+      osmId?: number,
+      osmType?: "node" | "relation" | "way",
+      nominatimData?: any,
+    ) {
       this.name = $state(name);
       this.osmId = osmId;
+      this.osmType = osmType;
       this.nominatimData = nominatimData;
     }
   }
@@ -94,7 +101,7 @@
     type OverlayLayer,
   } from "@aakside/svelte-maplibre-stack";
   import { URLShieldRenderer } from "@americana/maplibre-shield-generator";
-  import { bounds, BoundsFrom, controls, ControlFrom, disabled, draggable } from "@neodrag/svelte";
+  import { Draggable } from "@neodrag/svelte";
   import {
     Eye,
     EyeOff,
@@ -113,14 +120,15 @@
   import { onMount } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
   import { slide } from "svelte/transition";
-  import InfoDialog from "./info-dialog.svelte";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
   import LayerSettings from "./layer-settings.svelte";
   import Share, { type ShareConfig } from "./share.svelte";
   import ImportConfig from "./import-config.svelte";
-  import PlaceSearch, { lookupRelationByOsmId } from "./search.svelte";
+  import PlaceSearch, { lookupByOsmId } from "./search.svelte";
   import { decodeJsonFromUrl } from "../../../utils/url-codec";
   import { installAmericanaRuntimeAssets } from "./americana";
+
+  const { theme }: { theme?: string } = $props();
 
   const americanaShieldRenderers = new WeakMap<maplibregl.Map, URLShieldRenderer>();
 
@@ -129,17 +137,21 @@
   let layersMetadata = new SvelteMap<MapLayer["id"], LayerMetadata>();
 
   let mapState = $state(
-    new MapState([
-      {
-        bearing: 0,
-        center: {
-          lat: 40.76670493441853,
-          lng: -74.00622380728765,
+    new MapState(
+      [
+        {
+          bearing: 0,
+          center: {
+            lat: 40.76670493441853,
+            lng: -74.00622380728765,
+          },
+          visible: true,
+          zoom: 13,
         },
-        visible: true,
-        zoom: 13,
-      },
-    ]),
+      ],
+      0,
+      0,
+    ),
   );
   // svelte-ignore state_referenced_locally
   layersMetadata.set(mapState.layers[0].id, new LayerMetadata("Base Map"));
@@ -162,7 +174,11 @@
               metadata: layer.metadata,
             };
           }
-          const nominatimData = await lookupRelationByOsmId(layer.metadata.osmId!);
+          // Share links created before osmType was recorded only ever held relations.
+          const nominatimData = await lookupByOsmId(
+            layer.metadata.osmType ?? "relation",
+            layer.metadata.osmId!,
+          );
           return {
             config: {
               ...layer.config,
@@ -171,6 +187,7 @@
             },
             metadata: {
               ...layer.metadata,
+              osmType: layer.metadata.osmType ?? nominatimData?.osm_type,
               nominatimData,
             },
           };
@@ -182,7 +199,12 @@
     configWithGeojson.forEach((layer, i) => {
       layersMetadata.set(
         mapState.layers[i].id,
-        new LayerMetadata(layer.metadata.name, layer.metadata.osmId, layer.metadata.nominatimData),
+        new LayerMetadata(
+          layer.metadata.name,
+          layer.metadata.osmId,
+          layer.metadata.osmType,
+          layer.metadata.nominatimData,
+        ),
       );
     });
   }
@@ -195,6 +217,19 @@
 
   let width = $state<number>();
   let isSmallWidth = $derived(width !== undefined && width < 768);
+  let toolbarPosition = $state({ x: 0, y: 0 });
+  let toolbarDrag = new Draggable({
+    bounds: "viewport",
+    get disabled() {
+      return isSmallWidth;
+    },
+    get position() {
+      return toolbarPosition;
+    },
+    set position(value) {
+      toolbarPosition = value;
+    },
+  });
   let expanded = new SvelteMap<string, string>([["root", "toolbar"]]);
   let importedConfigJson = $state<string | undefined>(undefined);
 
@@ -206,6 +241,12 @@
     });
   });
 
+  $effect(() => {
+    if (isSmallWidth) {
+      toolbarPosition = { x: 0, y: 0 };
+    }
+  });
+
   function toggleCollapsed(parent: string, key: string) {
     expanded.get(parent) === key ? expanded.delete(parent) : expanded.set(parent, key);
   }
@@ -213,6 +254,13 @@
   function openDialogInParent(event: Event, selector: string) {
     const trigger = event.currentTarget as HTMLElement | null;
     trigger?.parentElement?.querySelector<HTMLDialogElement>(selector)?.showModal();
+  }
+
+  function scrollToAbout() {
+    document.getElementById("about-borders-without-borders")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
   }
 
   function moveLayerToCurrentView(index: number) {
@@ -235,28 +283,24 @@
   }
 </script>
 
-<div class="h-screen w-screen" data-theme="winter" bind:clientWidth={width}>
+<div class="h-screen w-full" data-theme={theme} bind:clientWidth={width}>
   <div
-    class={`bg-base-100 relative top-0 left-0 z-1 text-base shadow-md max-md:w-full md:absolute md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-200 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
-    {@attach draggable(() => [
-      bounds(BoundsFrom.viewport()),
-      controls({
-        allow: ControlFrom.selector(".toolbar-header"),
-        block: ControlFrom.selector("button"),
-      }),
-      ...(isSmallWidth ? [disabled(true)] : []),
-    ])}
+    class={`bg-base-100 absolute top-0 left-0 z-1 text-base shadow-md max-md:w-full md:top-4 md:left-4 md:rounded-lg md:transition-[width] md:duration-100 md:ease-out ${expanded.get("root") === "toolbar" ? "md:w-[24rem]" : "md:w-[18rem]"}`}
+    {...toolbarDrag.attach}
   >
     <div
       class="toolbar-header bg-base-300 md:active:cursor-grabbing"
       class:md:rounded-lg={expanded.get("root") !== "toolbar"}
       class:md:rounded-t-lg={expanded.get("root") === "toolbar"}
+      {...toolbarDrag.handle()}
     >
       <button
+        aria-label={expanded.get("root") === "toolbar" ? "Minimize toolbar." : "Maximize toolbar."}
         aria-pressed={expanded.get("root") === "toolbar"}
         class="btn btn-square tooltip tooltip-info tooltip-right"
         data-tip={expanded.get("root") === "toolbar" ? "Hide toolbar." : "Show toolbar."}
         onclick={() => toggleCollapsed("root", "toolbar")}
+        {...toolbarDrag.cancel()}
       >
         {#if expanded.get("root") === "toolbar"}
           <ListChevronsDownUp />
@@ -265,16 +309,17 @@
         {/if}</button
       >
       <button
+        type="button"
+        aria-label="Learn more about Borders Without Borders."
         class="btn btn-square tooltip tooltip-info tooltip-right size-6"
         data-tip="Learn more about this app."
-        onclick={(event) => openDialogInParent(event, ":scope > dialog#app-info")}
-        ><Info class="size-6" /></button
+        onclick={scrollToAbout}
+        {...toolbarDrag.cancel()}><Info class="size-6" /></button
       >
-      <InfoDialog />
       <div class="grow text-lg font-bold">Borders Without Borders</div>
     </div>
     {#if expanded.get("root") === "toolbar"}
-      <div class="flex flex-col gap-2 px-3 py-2" transition:slide={{ duration: 220 }}>
+      <div class="flex flex-col gap-2 px-3 py-2" transition:slide={{ duration: 100 }}>
         <PlaceSearch
           onResultAddLayerClick={(result) => {
             const layerId = mapState.addLayer({
@@ -291,7 +336,10 @@
               geojson: result?.geojson as OverlayLayer["geojson"],
               visible: true,
             });
-            layersMetadata.set(layerId, new LayerMetadata(result!.name, result!.osm_id, result));
+            layersMetadata.set(
+              layerId,
+              new LayerMetadata(result!.name, result!.osm_id, result!.osm_type, result),
+            );
           }}
           onResultFlyClick={(result) => {
             mapState.layers[0].map?.flyTo({
@@ -301,7 +349,7 @@
               },
             });
           }}
-          osmTypes={["node", "relation"]}
+          osmTypes={["node", "relation", "way"]}
         />
         <div class="layers-header">
           <button
@@ -461,7 +509,7 @@
                   >
                 </div>
                 {#if expanded.get(layer.id) === "settings"}
-                  <LayerSettings bind:layer={mapState.layers[index]} />
+                  <LayerSettings {index} bind:layer={mapState.layers[index]} bind:mapState />
                 {/if}
               </details>
             </div>

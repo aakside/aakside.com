@@ -2,7 +2,9 @@
   export interface NominatimResult {
     class: string;
     display_name: string;
-    geojson?: Polygon | MultiPolygon;
+    // Nominatim returns Point/LineString geometry for features that are not areas,
+    // so this is not necessarily something we can draw as an overlay.
+    geojson?: Geometry;
     lat: string;
     lon: string;
     name: string;
@@ -10,6 +12,12 @@
     osm_type: "node" | "relation" | "way";
     place_id: number;
     type: string;
+  }
+
+  export function hasAreaGeometry(
+    result: NominatimResult,
+  ): result is NominatimResult & { geojson: MultiPolygon | Polygon } {
+    return result.geojson?.type === "MultiPolygon" || result.geojson?.type === "Polygon";
   }
 
   interface ApiConfig {
@@ -34,8 +42,13 @@
     },
   ];
 
-  export async function lookupRelationByOsmId(osmId: number): Promise<NominatimResult> {
-    const endpoint = `https://nominatim.openstreetmap.org/lookup?osm_ids=R${encodeURIComponent(String(osmId))}&format=json&polygon_geojson=1`;
+  const OSM_TYPE_PREFIXES = { node: "N", relation: "R", way: "W" } as const;
+
+  export async function lookupByOsmId(
+    osmType: NominatimResult["osm_type"],
+    osmId: number,
+  ): Promise<NominatimResult> {
+    const endpoint = `https://nominatim.openstreetmap.org/lookup?osm_ids=${OSM_TYPE_PREFIXES[osmType]}${encodeURIComponent(String(osmId))}&format=json&polygon_geojson=1`;
     const response = await fetch(endpoint, {
       headers: { Accept: "application/json" },
     });
@@ -50,8 +63,8 @@
 </script>
 
 <script lang="ts">
-  import { type MultiPolygon, type Polygon } from "geojson";
-  import { Eraser, Info, Locate, MapPlus, Search, Server } from "@lucide/svelte";
+  import { type Geometry, type MultiPolygon, type Polygon } from "geojson";
+  import { Eraser, Info, Locate, MapPinSearch, MapPlus, Server } from "@lucide/svelte";
   import { slide } from "svelte/transition";
   import LayerInfoDialog from "./layer-info-dialog.svelte";
   import { LayerMetadata } from "./main.svelte";
@@ -88,7 +101,7 @@
       return result;
     }
 
-    const fullResult = await lookupRelationByOsmId(result.osm_id);
+    const fullResult = await lookupByOsmId(result.osm_type, result.osm_id);
     return fullResult ?? result;
   }
 
@@ -103,7 +116,7 @@
       const isOsmIdSearch = osmIdPattern.test(query);
       let endpoint = isOsmIdSearch
         ? `https://nominatim.openstreetmap.org/lookup?osm_ids=${shortOsmTypes.map((t) => `${t}${encodeURIComponent(query)}`).join(",")}&format=json&polygon_geojson=1`
-        : `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&q=${encodeURIComponent(query)}`;
+        : `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&polygon_geojson=1&q=${encodeURIComponent(query)}`;
 
       const response = await fetch(endpoint, {
         headers: { Accept: "application/json" },
@@ -152,7 +165,7 @@
   <div class="relative w-10 shrink-0 cursor-pointer overflow-hidden">
     <Server class="pointer-events-none absolute top-1/2 left-2 z-10 size-4 -translate-y-1/2" />
     <select
-      class="select select-ghost tooltip tooltip-info tooltip-right border-0 pl-7 select-none"
+      class="select select-ghost tooltip tooltip-info tooltip-right appearance-none border-0 pl-7 select-none"
       aria-label="Search API provider"
       bind:value={selectedApi}
       data-tip="Select API provider."
@@ -166,7 +179,7 @@
   </div>
   <input
     bind:value={query}
-    class="input-lg min-w-0 grow basis-0 transition-[width] duration-200 ease-out"
+    class="input-lg min-w-0 grow basis-0 transition-[width] duration-100 ease-out"
     name="Search query"
     onkeydown={(event) => {
       if (event.key === "Enter") {
@@ -182,7 +195,7 @@
   >
     <button
       type="button"
-      class="btn btn-square btn-ghost join-item tooltip tooltip-info tooltip-left items-center overflow-hidden border-0 p-0 transition-[width,opacity] duration-200 ease-out"
+      class="btn btn-square btn-ghost join-item tooltip tooltip-info tooltip-left items-center overflow-hidden border-0 p-0 transition-[width,opacity] duration-100 ease-out"
       class:opacity-0={query.length === 0}
       class:opacity-100={query.length > 0}
       class:pointer-events-none={query.length === 0}
@@ -207,7 +220,7 @@
       data-tip="Search"
       onclick={triggerSearch}
     >
-      {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<Search
+      {#if isSearching}<span class="loading loading-spinner loading-xs"></span>{:else}<MapPinSearch
           class="size-5"
         />{/if}
     </button>
@@ -225,11 +238,15 @@
   </div>
 {/if}
 {#if results.length > 0}
-  <ul class="flex w-full flex-col gap-y-2 p-1" transition:slide={{ duration: 180 }}>
+  <ul
+    class="flex w-full flex-col gap-y-2 p-1"
+    data-place-results
+    transition:slide={{ duration: 100 }}
+  >
     {#each results as result (result.place_id)}
       <li class="m-0 p-0">
         <button
-          class="btn h-auto min-h-0 w-full flex-col items-start justify-start py-2 text-left whitespace-normal transition-[border-radius] duration-200"
+          class="btn h-auto min-h-0 w-full flex-col items-start justify-start py-2 text-left whitespace-normal transition-[border-radius] duration-100"
           class:border-base-content={selectedResult?.place_id === result.place_id}
           class:rounded-b-none={selectedResult?.place_id === result.place_id}
           class:border-b={selectedResult?.place_id === result.place_id}
@@ -249,7 +266,7 @@
           {@const metadata: LayerMetadata = {name: result.name, nominatimData: result}}
           <div
             class="[&>button]:border-base-content m-0 grid w-full auto-cols-fr grid-flow-col gap-0 overflow-visible rounded-t-none rounded-b-xl border-x border-b p-0 [&>button]:rounded-none [&>button]:border-0 [&>button]:border-r [&>button:first-of-type]:rounded-bl-xl [&>button:last-of-type]:rounded-br-xl [&>button:last-of-type]:border-r-0"
-            transition:slide={{ duration: 180 }}
+            transition:slide={{ duration: 100 }}
           >
             <button
               aria-label="Fly to location."
@@ -260,7 +277,7 @@
                 selectedResult = undefined;
               }}><Locate /></button
             >
-            {#if result.osm_type === "relation"}
+            {#if hasAreaGeometry(result)}
               <button
                 aria-label="Add layer to map."
                 class="btn btn-block tooltip tooltip-info"

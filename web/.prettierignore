@@ -1,1 +1,16 @@
 public/maplibre-gl.css
+public/**/*.avi
+public/**/*.mp4
+public/**/*.webm
+public/**/*.ogg
+public/**/*.jpg
+public/**/*.jpeg
+public/**/*.png
+public/**/*.gif
+public/**/*.svg
+public/**/*.ico
+public/**/*.bmp
+public/**/*.tiff
+public/**/*.avif
+public/**/*.heic
+public/**/*.pdf

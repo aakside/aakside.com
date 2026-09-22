@@ -1,6 +1,7 @@
 // @ts-check
 
-import { unified } from "@astrojs/markdown-remark";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -10,7 +11,60 @@ import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
-import remarkToc from "remark-toc";
+
+const themeCss = new URL("./src/styles/global.css", import.meta.url);
+
+/**
+ * Exposes the custom properties of the daisyUI theme blocks in global.css as a `virtual:theme` module, so values like --color-base-200 can be read from component frontmatter. Themes are keyed by the `data-theme` name they are selected with; `theme` is the one marked `default: true`. The CSS is parsed at build time; the bundle only ever contains the resulting literals.
+ *
+ * @returns {import("vite").Plugin}
+ */
+function themeTokens() {
+  const virtualId = "virtual:theme";
+  const resolvedId = "\0" + virtualId;
+
+  return {
+    name: "theme-tokens",
+    resolveId: (id) => (id === virtualId ? resolvedId : null),
+    async load(id) {
+      if (id !== resolvedId) return null;
+
+      this.addWatchFile(fileURLToPath(themeCss));
+      const css = await readFile(themeCss, "utf8");
+      const blocks = [...css.matchAll(/@plugin\s+"daisyui\/theme"\s*\{([^}]*)\}/g)];
+      if (blocks.length === 0)
+        throw new Error(`No daisyui/theme block found in ${themeCss.pathname}`);
+
+      let defaultName;
+      const themes = Object.fromEntries(
+        blocks.map(([, body]) => {
+          const name = body.match(/name:\s*"([^"]+)"/)?.[1];
+          if (!name) throw new Error(`Unnamed daisyui/theme block in ${themeCss.pathname}`);
+          if (/default:\s*true/.test(body)) defaultName = name;
+
+          const tokens = Object.fromEntries(
+            [...body.matchAll(/(--[\w-]+):\s*([^;]+);/g)].map(([, property, value]) => [
+              property,
+              value.trim(),
+            ]),
+          );
+          return [name, tokens];
+        }),
+      );
+      defaultName ??= Object.keys(themes)[0];
+
+      return [
+        `export const themes = ${JSON.stringify(themes, null, 2)};`,
+        `export const theme = themes[${JSON.stringify(defaultName)}];`,
+      ].join("\n");
+    },
+    handleHotUpdate({ file, server }) {
+      if (file !== fileURLToPath(themeCss)) return;
+      const mod = server.moduleGraph.getModuleById(resolvedId);
+      if (mod) server.moduleGraph.invalidateModule(mod);
+    },
+  };
+}
 
 /**
  * Dev-only Astro integration to make Pagefind UI image previews work during `astro dev`.
@@ -83,11 +137,57 @@ function serveBuiltAstroImagesInDev() {
   };
 }
 
+/**
+ * Dev-only Astro integration serving `/media/*` from the `media/` directory.
+ *
+ * Video lives outside `public/` so Astro never copies it into `dist/`, where
+ * Cloudflare's 25 MiB per-asset limit would reject it. In a real build the
+ * <Video> component resolves URLs to R2, but a dev run without credentials
+ * falls back to `/media/*` paths, and nothing would serve them otherwise.
+ *
+ * @returns {import('astro').AstroIntegration}
+ */
+function serveMediaInDev() {
+  return {
+    name: "serve-media-in-dev",
+    hooks: {
+      "astro:server:setup": ({ server }) => {
+        const mediaDir = path.resolve(server.config.root, "media");
+
+        server.middlewares.use((req, res, next) => {
+          const requestPath = decodeURIComponent(req.url?.split("?")[0] ?? "");
+          if (!requestPath.startsWith("/media/")) {
+            next();
+            return;
+          }
+
+          const absolutePath = path.resolve(mediaDir, requestPath.replace(/^\/media\//, ""));
+          if (!absolutePath.startsWith(mediaDir) || !existsSync(absolutePath)) {
+            next();
+            return;
+          }
+
+          res.setHeader("Content-Type", mediaContentTypes[path.extname(absolutePath)] ?? "");
+          createReadStream(absolutePath).pipe(res);
+        });
+      },
+    },
+  };
+}
+
+/** @type {Record<string, string>} */
+const mediaContentTypes = {
+  ".mkv": "video/x-matroska",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm",
+};
+
 // https://astro.build/config
 export default defineConfig({
   experimental: {
     svgOptimizer: svgoOptimizer(),
   },
+
   fonts: [
     {
       provider: fontProviders.adobe({ id: "oft2wtu" }),
@@ -95,21 +195,43 @@ export default defineConfig({
       cssVariable: "--font-myriad-pro",
     },
   ],
+
+  image: {
+    // Link-preview scrapers do not render SVG.
+    dangerouslyProcessSVG: true,
+  },
+
   integrations: [
     expressiveCode(),
     mdx(),
-    sitemap(),
+    sitemap({
+      // Redirect targets should be indexed, not the URLs that redirect to them.
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return pathname !== "/" && !/^\/projects\/[^/]+\/$/.test(pathname);
+      },
+      serialize: (item) => {
+        if (new URL(item.url).pathname === "/borders-without-borders/") {
+          return { ...item, priority: 1 };
+        }
+        return item;
+      },
+    }),
     svelte(),
     pagefind(),
     serveBuiltAstroImagesInDev(),
+    serveMediaInDev(),
   ],
-  markdown: {
-    processor: unified({
-      remarkPlugins: [[remarkToc, { heading: "toc", maxDepth: 6 }]],
-    }),
-  },
+
   site: "https://aakside.com",
+
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), themeTokens()],
+    resolve: {
+      noExternal: ["@lucide/svelte"],
+    },
+    ssr: {
+      noExternal: ["@lucide/svelte"],
+    },
   },
 });

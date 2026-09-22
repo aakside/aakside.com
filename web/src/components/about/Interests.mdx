@@ -1,0 +1,121 @@
+import ListenBrainzTaste from "./listenbrainz-taste.svelte";
+import AudioPlayer from "../StreamingAudioPlayer.svelte";
+import Carousel from "../Carousel.svelte";
+import FosterPartners2WTCModelImage from "../../assets/about/interests/skyscrapers/IMG_1759.jpg";
+import HexagonBuildingRevitImage from "../../assets/about/interests/skyscrapers/revit-hexagonal-building.png";
+import HexagonBuildingSketch from "../../assets/about/interests/skyscrapers/2008-01-30.jpg";
+import { Image } from "astro:assets";
+
+## Other Interests
+
+Besides programming, I also like...
+
+### Music
+
+I love listening to trance (especially vocal from the 2000s and uplifting), orchestral music, and many film scores. Occasionally, I will beatbox, sing, or cathartically noodle on a piano.
+
+<ListenBrainzTaste
+  client:visible
+  username="aakside"
+  queries={[
+    { range: "quarter", type: "track" },
+    { range: "quarter", type: "artist" },
+    { range: "year", type: "track" },
+    { range: "year", type: "artist" },
+    { range: "all_time", type: "track" },
+    { range: "all_time", type: "artist" },
+  ]}
+  count={8}
+/>
+
+If I am ever in need of resuscitation, please use the intro to [Martin Roth's remix of The Other Side by Paul van Dyk and Wayne Jackson](https://musicbrainz.org/recording/225f51a8-81ff-4073-bb46-b9abfdcd658c).
+
+<AudioPlayer
+  class="-mt-6 mb-8"
+  client:only="svelte"
+  title="The Other Side (Martin Roth Remix)"
+  entries={[
+    {
+      service: "soundcloud",
+      url: "https://soundcloud.com/paulvandykofficial/the-other-side-martin-roth",
+    },
+    {
+      service: "youtubeMusic",
+      id: "8L5Dg03CtJo",
+    },
+    {
+      service: "qobuz",
+      qobuzSource: "track",
+      id: "141983433",
+    },
+    {
+      service: "tidal",
+      id: "209646705",
+    },
+    {
+      service: "appleMusic",
+      id: "1600960868",
+      appleStorefront: "us",
+      appleSlug: "the-other-side-feat-wayne-jackson-martin-roth-remix",
+    },
+    {
+      service: "deezer",
+      id: "1594746151",
+    },
+    {
+      service: "spotify",
+      id: "1fYWz4YmxLhtZVcot6u51u",
+    },
+    {
+      service: "amazonMusic",
+      id: "B09NRYVP8V",
+    },
+  ]}
+/>
+
+### Architecture, Civil Engineering, and Urban Planning
+
+I regularly dream about buildings and urban spaces.
+
+#### Skyscrapers
+
+In a [501 Queen streetcar](https://en.wikipedia.org/wiki/501_Queen) during a school field trip, a chaperone spotted me gazing at [Scotia Plaza](https://en.wikipedia.org/wiki/Scotia_Plaza) and introduced me to the word "[skyscraper](https://en.wikipedia.org/wiki/Skyscraper)." While I insist we do not build tall buildings everywhere, I am generally a fan, and the [Skyscraper Museum](https://skyscraper.org/) is my favorite museum in New York City.
+
+<Carousel
+  client:visible
+  ariaLabel="Images depicting my interest in Skyscrapers"
+  id="skyscrapers-interest-carousel"
+>
+- <Image
+    alt="2008 sketch of a hexagonal building"
+    src={HexagonBuildingSketch}
+  />
+  2008-01-30: Sketching a hexagonally-based building that I first doodled in 9th grade.
+
+- <Image
+    alt="Building a model of Foster + Partners' 200 Greenwich Street"
+    src={FosterPartners2WTCModelImage}
+  />
+  2008-08-30: Building a model of 2 World Trade Center as it was [originally designed by Foster +
+  Partners](https://en.wikipedia.org/wiki/2_World_Trade_Center#/media/File:2_WTC_(2006_version)_photomontage,_aerial_view.jpg).
+
+- <iframe
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    src="https://www.youtube-nocookie.com/embed/YWV_-jixn_Y?playsinline=1"
+    title="Hexagonal building animation"
+  ></iframe>
+  2009-07-09: I modeled and animated that hexagonal building.
+
+- <Image
+      alt="Hexagonal skyscraper in Revit"
+      src={HexagonBuildingRevitImage}
+    />
+    2011-08-01: The hexagon becomes regular and the obsession continues into Revit for no good reason.
+</Carousel>
+
+### Language
+
+Though I'm fluent in only English and Bangla, I love learning about languages and chasing cognates.

@@ -1,0 +1,20 @@
+---
+import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
+
+interface Props {
+  instance: string;
+}
+
+const { instance } = Astro.props;
+---
+
+<PagefindConfig instance={instance} />
+<pagefind-modal instance={instance} reset-on-close class="md:hidden!">
+  <pagefind-modal-header>
+    <pagefind-input instance={instance}></pagefind-input>
+  </pagefind-modal-header>
+  <pagefind-modal-body>
+    <pagefind-summary instance={instance}></pagefind-summary>
+    <pagefind-results instance={instance} show-images></pagefind-results>
+  </pagefind-modal-body>
+</pagefind-modal>

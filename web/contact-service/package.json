@@ -1,0 +1,21 @@
+{
+  "name": "aakside-contacts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.ts",
+    "build": "npm run typecheck && wrangler deploy --dry-run --outdir dist",
+    "deploy": "npm run typecheck && wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "jose": "^6.1.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.6",
+    "@types/qrcode": "^1.5.6",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.120.0"
+  }
+}

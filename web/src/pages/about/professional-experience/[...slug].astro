@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from "astro:content";
+import Article from "../../../layouts/Article.astro";
+import {
+  getGitHubRepoPathForEntry,
+  latestCommitDiffUrlForEntry,
+  withGitContentDates,
+} from "../../../utils/content-meta";
+
+export async function getStaticPaths() {
+  const exps = await getCollection("professionalExperience");
+  return exps.map((exp) => ({
+    params: { slug: exp.id },
+    props: exp,
+  }));
+}
+
+const exp = withGitContentDates<"professionalExperience">(Astro.props);
+const { Content } = await render(exp);
+const sourcePath = getGitHubRepoPathForEntry(exp);
+const latestCommitDiffUrl = latestCommitDiffUrlForEntry(exp);
+---
+
+<Article
+  {...exp.data}
+  title={exp.data.title}
+  description={`Alvin Ali Khaled's experience at ${exp.data.title} as a ${exp.data.role}.`}
+  sourcePath={sourcePath}
+  latestCommitDiffUrl={latestCommitDiffUrl}
+>
+  <Content />
+</Article>

@@ -1,0 +1,22 @@
+---
+import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
+// Pagefind's stock searchbox template renders title + excerpt only — `show-images` is an attribute of <pagefind-results>, not <pagefind-searchbox>. This is its default template with a thumbnail added, sourced from the `image`/`image_alt` meta that BaseHead.astro tags.
+import resultTemplate from "./search-result.template.html?raw";
+
+interface Props {
+  instance: string;
+}
+
+const { instance } = Astro.props;
+---
+
+<PagefindConfig instance={instance} />
+<pagefind-searchbox
+  instance={instance}
+  show-sub-results
+  show-keyboard-hints={false}
+  hide-shortcut
+  class="block! w-full! md:[&_.pf-searchbox-dropdown]:right-0! md:[&_.pf-searchbox-dropdown]:left-auto! md:[&_.pf-searchbox-dropdown]:w-2xl!"
+>
+  <script type="text/pagefind-template" is:inline set:html={resultTemplate} />
+</pagefind-searchbox>

@@ -1,0 +1,81 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION } from "../../consts";
+import Timeline from "../../components/about/Timeline.astro";
+import Interests from "../../components/about/Interests.mdx";
+import PresenceElsewhere from "../../components/about/presence-elsewhere.astro";
+import { theme } from "virtual:theme";
+
+const themeColor = theme["--color-base-200"];
+
+const professionalExperience = (await getCollection("professionalExperience")).sort(
+  (a, b) => b.data.sortDate.getTime() - a.data.sortDate.getTime(),
+);
+---
+
+<!doctype html>
+<html lang="en" data-theme="aakside-blue">
+  <head>
+    <BaseHead sectionTitle="About" description={SITE_DESCRIPTION} pageType="ProfilePage" />
+    <meta name="theme-color" content={themeColor} />
+  </head>
+  <body>
+    <Header />
+    <div class="mx-auto my-4 flex w-full max-w-7xl flex-col px-6 lg:flex-row lg:items-start">
+      <div class="lg:block lg:flex-1">
+        <div class="prose order-1 pb-0! lg:m-0!">
+          <h1 class="mx-0 text-center">Re: Alvin</h1>
+          <hr class="mt-7! mb-6!" />
+          <p>
+            I'm a New Yorker with software engineering experience spanning machine learning,
+            distributed systems, and full-stack web development.
+          </p><p>
+            I've built machine learning pipelines, ad-serving infrastructure, and recommender
+            systems at scale in programmatic advertising, real-time data infrastructure for fintech
+            and a distributed LLM inference platform with verifiable proof-of-work semantics. My
+            technical range covers Rust, TypeScript, Python, and C++, from CUDA kernels and
+            streaming data pipelines to GraphQL APIs and product-facing UIs.
+          </p><p>
+            I'm interested in teaching and applying my skills across a variety of domains. Visit <a
+              href="https://incompet.net/"
+              target="_blank"
+              rel="noopener noreferrer">Incompetnet</a
+            > if you want to work together.
+          </p>
+        </div>
+
+        <div class="prose order-3 max-lg:pt-8! lg:mx-0! lg:my-0! lg:min-w-0">
+          <Interests />
+        </div>
+      </div>
+
+      <div class="lg:block lg:w-sm lg:flex-none">
+        <div class="prose order-2 max-lg:pt-4! lg:mt-10! lg:w-sm! lg:flex-none lg:[&_h2]:text-lg!">
+          <h2>Professional Experience (Abridged)</h2>
+          <div class="[&_.timeline-end]:mb-6!">
+            <Timeline
+              collection={professionalExperience}
+              detailsUrlPrefix="/about/professional-experience/"
+              eventDescriptionKey="role"
+              startTimelineAtFirstEntry={true}
+              endTimelineAtLastEntry={true}
+            />
+          </div>
+        </div>
+
+        <div
+          class="prose order-4 max-lg:my-0! max-lg:py-0! lg:w-sm! lg:flex-none lg:[&_h2]:text-lg!"
+        >
+          <h2>Presence Elsewhere</h2>
+          <div
+            class="[&_ul]:mt-2 [&_ul]:flex [&_ul]:list-none [&_ul]:flex-col [&_ul]:p-0 [&_ul>li]:h-6 [&_ul>li>a]:no-underline"
+          >
+            <PresenceElsewhere />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
