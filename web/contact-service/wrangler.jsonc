@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-09-21",
+  "main": "src/worker.ts",
+  "name": "aakside-contacts",
+  "keep_names": false,
+  // Preserve configuration entered through the Cloudflare dashboard.
+  "keep_vars": true,
+  "kv_namespaces": [
+    {
+      "binding": "CONTACTS",
+      "id": "c2b78a7305424420b002805b7bf5f613",
+    },
+  ],
+  "observability": { "enabled": false },
+  "preview_urls": false,
+  "routes": [{ "pattern": "contacts.aakside.com", "custom_domain": true }],
+  "workers_dev": false,
+}
