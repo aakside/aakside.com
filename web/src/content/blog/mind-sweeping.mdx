@@ -1,7 +1,7 @@
 ---
 description: "My journey to make a Minesweeper-inspired game on varied maps with multiplayer support."
 favicon: "/blog/mind-sweeping/favicon.svg"
-heroAlt: "Lower Manhattan, repeating radially in different styles."
+heroAlt: "A Minesweeper-inspired board with numbered cells, buoys, and waves."
 heroComponent: "mine-game-hero.astro"
 heroImage: "../../assets/blog/mind-sweeping/hero.svg"
 pubDate: 0
@@ -16,7 +16,7 @@ import Video from "../../components/Video.astro";
 
 ## The Initial Sweep
 
-As a kid, I didn't pay [Microsoft Minesweeper](https://en.wikipedia.org/wiki/Microsoft_Minesweeper) much mind on my Windows 95 computer, so I hadn't figured out the rules through my random clicking. As I browsed job listings in 2013 soon after being laid off from my first fulltime job, I came across a [programming challenge](https://web.archive.org/web/20130123165552/http://www.thumbtack.com/challenges#minesweeper) from [Thumbtack](<https://en.wikipedia.org/wiki/Thumbtack_(company)>) that ignited my interest in Minesweeper.
+As a kid, I didn't pay [Microsoft Minesweeper](https://en.wikipedia.org/wiki/Microsoft_Minesweeper) much mind on my Windows 95 computer, so I hadn't figured out the rules through my random clicking. As I browsed job listings in 2013 soon after being laid off from my first full-time job, I came across a [programming challenge](https://web.archive.org/web/20130123165552/http://www.thumbtack.com/challenges#minesweeper) from [Thumbtack](<https://en.wikipedia.org/wiki/Thumbtack_(company)>) that ignited my interest in Minesweeper.
 
 <figure>
   > ### Rules of Minesweeper
@@ -34,10 +34,11 @@ Eager to try [Backbone.js](https://backbonejs.org/) and having been a fan of the
     loading="lazy"
     frameborder="0"
     style="height: 630px;border:none;overflow:hidden;"
+    title="My original Minesweeper clone"
     >
   </iframe>
 
-  <figcaption>[My subpar submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge, which is might be impossible to play on a touchscreen. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
+  <figcaption>Baby's first Minesweeper clone: [my subpar submission](https://aakside.github.io/minesweeper/) for the Thumbtack Minesweeper challenge. It might be impossible to play on a touchscreen. I didn't realize then that I preferred a [dimetric projection](https://en.wikipedia.org/wiki/Axonometric_projection#Three_types) to an isometric one.</figcaption>
 </figure>
 
 ## Swept Away
@@ -51,16 +52,17 @@ I became addicted to playing [Mines](https://gitlab.gnome.org/GNOME/gnome-mines)
   <figcaption>My record for finding 99 mines: 1 minute and 15 seconds.</figcaption>
 </figure>
 
-Eventually I felt a pretty bad pain in my right hand, and was diagnosed with [De Quervain tendinopathy](https://en.wikipedia.org/wiki/De_Quervain_tendinopathy). I started wearing a brace and opting usually to play [Klondike](<https://en.wikipedia.org/wiki/Klondike_(solitaire)>) instead of Mines when I needed a quick distraction, but I never stopped thinking about it because...
+Eventually I felt a pretty bad pain in my right hand and was diagnosed with [De Quervain tendinopathy](https://en.wikipedia.org/wiki/De_Quervain_tendinopathy). I started wearing a brace and usually opting to play [Klondike](<https://en.wikipedia.org/wiki/Klondike_(solitaire)>) instead of Mines when I needed a quick distraction, but I never stopped thinking about it because...
 
 ## Filling the Void
 
 I'm back at it. I'm trying to control myself now, and I'm trying to engage with the concept of the game more than the game itself.
 
-I decided to remake the game again, but with a few twists:
+I decided to remake the game, but with a few twists:
 
 - No square grid
 - No mines, just "voids"
+  - And thus the name "Avoidant"
 - No immediate losing (getting rid of the momentary panic of pressing a wrong tile)
 - No secondary clicking, to help players on touchscreens
 - Multiplayer
@@ -81,7 +83,7 @@ Also, I wanted it to work in a web browser, so players won't need to download an
 
 While I chose to keep game logic in Rust to make state synchronization through Iroh easier, I decided to utilize Svelte for the UI due to my familiarity and reluctance to adopt yet another new UI framework. If I ever make a faster-paced game, I might consider something like [egui](https://www.egui.rs/).
 
-To maintain shared reactive state, I initially passed Svelte state from JS to Rust, but it was messy. I knew declaring reactive state in Rust was preferable so I considered implementing the [store contract](https://svelte.dev/docs/svelte/stores) in Rust, but thankfully I found that [jquesada2016](https://crates.io/users/jquesada2016) already implemented [Readable](https://docs.rs/svelte-store) to resolve my exact issue.
+To maintain shared reactive state, I initially passed Svelte state from JS to Rust, but it was messy. I knew declaring reactive state in Rust was preferable, so I considered implementing the [store contract](https://svelte.dev/docs/svelte/stores) in Rust, but thankfully I found that [jquesada2016](https://crates.io/users/jquesada2016) had already implemented [Readable](https://docs.rs/svelte-store) to resolve my exact issue.
 
 <figure>
   <CodeFromUrl
@@ -95,7 +97,6 @@ To maintain shared reactive state, I initially passed Svelte state from JS to Ru
     `Readable` made it very easy to [control state in
     Rust](https://github.com/kuncat/avoidant/blob/e86c2db39f70c6b80a4d149f2e1a52c6c9fae28b/crates/game/src/game_api.rs#L31)...
   </figcaption>
-  <figure></figure>
   <CodeFromUrl
     collapse={["1-22", "24-172"]}
     collapseStyle="collapsible-auto"
@@ -109,18 +110,14 @@ To maintain shared reactive state, I initially passed Svelte state from JS to Ru
   </figcaption>
 </figure>
 
-### Map Generation
-
-[Inspired by Red Blob Games](https://www.redblobgames.com/x/1830-jittered-grid/), I used Poisson disk sampling (with [bluenoise](https://github.com/arlyon/bluenoise-rs)) to generate evenly-spaced random points to feed into [voronator](https://github.com/fesoliveira014/voronator-rs) for voronoi diagram generation.
-
 ### Networking
 
-While I could have used [matchbox](https://github.com/johanhelsing/matchbox/) (I might one day), I drool at the idea of decentralized peer resolution. I had used [libp2p](https://libp2p.io/) in the context of distributed LLM inference before, and while that was fun to play with, I hesitated to it for this game because I had experienced a lot of latency with peer discovery and a high connection failure rate.
+While I could have used [matchbox](https://github.com/johanhelsing/matchbox/) (I might one day), I drool at the idea of decentralized peer resolution. I had used [libp2p](https://libp2p.io/) in the context of distributed LLM inference before, and while that was fun to play with, I hesitated to use it for this game because I had experienced a lot of latency with peer discovery and a high connection failure rate.
 
 <figure>
   > Critically, we empirically refute the long-held ’tribal knowledge’ of UDP’s superiority for NAT traversal, demonstrating that DCUtR’s high-precision, RTT-based synchronization yields statistically indistinguishable success rates for both TCP and QUIC (∼70%).
 
-  <figcaption>My fears of libp2p having low hole punching rates reaffirmed by [Challenging Tribal Knowledge – Large Scale Measurement Campaign on Decentralized NAT Traversal](https://arxiv.org/html/2510.27500v1).</figcaption>
+  <figcaption>Poor hole punching rates reported in [a large-scale study of decentralized NAT traversal](https://arxiv.org/abs/2510.27500v1) dissuaded me from using libp2p.</figcaption>
 </figure>
 
 I decided to try Iroh, hoping that one day soon it will [support WebRTC](https://docs.iroh.computer/languages/wasm-browser#no-direct-connections) so players on web browsers won't devour bandwidth on my self-hosted [Iroh Relay](https://github.com/n0-computer/iroh/tree/main/iroh-relay) server.
@@ -148,7 +145,9 @@ I decided to try Iroh, hoping that one day soon it will [support WebRTC](https:/
 
 ### Texels, DataTextures, and Shaders
 
-TODO
+As I played with larger maps, I realized that rendering each cell as a separate Threlte component was becoming a bottleneck that made the game lag significantly. I didn't know how I should get around storing cell state without having a Threlte component for each cell until I discovered using a [`DataTexture`](https://threejs.org/docs/#DataTexture) to store cell metadata.
+
+A `DataTexture`, it turned out, does not need to contain an actual image, and can simply store arbitrary data for the shader to read. I used one texel (the smallest unit of a texture) per cell with 4 1-byte channels to store cell exploration, void, fall distance and reveal state, instead of the typical RGBA values. Exploring a cell updates its metadata without rebuilding the terrain mesh.
 
 <figure>
   <Video
@@ -160,26 +159,38 @@ TODO
     ]}
   />
   <figcaption>
-    Moving from one Threlte component per cell to a total of 3 meshes to represent the entire map
-    let me play on huge maps that I knew would keep me busy for many nights to come after I
+    Using a total of 3 meshes to represent the entire map instead of one Threlte component _per
+    cell_ let me play on huge maps that I knew would keep me busy for many nights to come once I
     implemented game logic.
   </figcaption>
 </figure>
 
+### Map Generation
+
+[Inspired by Red Blob Games](https://www.redblobgames.com/x/1830-jittered-grid/), I used Poisson disk sampling (with [bluenoise](https://github.com/arlyon/bluenoise-rs)) to generate evenly-spaced random points to feed into [voronator](https://github.com/fesoliveira014/voronator-rs) for Voronoi diagram generation.
+
+The result was fun, but playing on a flattish map got boring. I had been wanting to play Minesweeper on 3D surfaces for a while, so I started experimenting...
+
+<figure>
+  <Video
+    sources={[
+      { src: "blog/mind-sweeping/avoidant-spheroid-test_av1.mp4", type: "video/mp4; codecs=av01" },
+      { src: "blog/mind-sweeping/avoidant-spheroid-test_h265.mp4", type: "video/mp4; codecs=hvc1" },
+      { src: "blog/mind-sweeping/avoidant-spheroid-test.webm", type: "video/webm; codecs=vp9" },
+      { src: "blog/mind-sweeping/avoidant-spheroid-test_h264.mp4", type: "video/mp4; codecs=avc1" },
+    ]}
+  />
+  <figcaption>Playing on a spheroid.</figcaption>
+</figure>
+
 ### Bangla
 
-I added a tutorial mode and Bangla translations to help my parents and extended family learn to play the game.
+I added a tutorial mode and Bangla translations to help my parents and extended family learn to play the game. As I should have expected, people don't like reading instructions, and making a tutorial that can suggest a good next logical move is hard without implementing a solver first.
 
 ## Play the Game
 
-<figure>
-  <Video sources={[{ src: "blog/mind-sweeping/avoidant-polyhedra-test.mp4" }]} />
-  <figcaption>
-    Like this blog post, the game is a work in progress, and here's a recent-ish video of unreleased
-    support for 3D polyhedral maps.
-  </figcaption>
-</figure>
-
 While making this game, I dreamt of making many more. I resurrected a long-held domain for my amateur game development "studio." Click the link below to play the game:
 
-[Avoidant](https://games.kuncat.com/avoidant/).
+[Play Avoidant](https://games.kuncat.com/avoidant/), or browse the [source code](https://github.com/kuncat/avoidant).
+
+Start with a small flat map if you want to get used to the rules, or try a polyhedron in multiplayer mode and watch your friends sweep around edges.

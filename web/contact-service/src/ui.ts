@@ -8,7 +8,6 @@ import {
 } from "./model.ts";
 import type { ApiResponses, ShareRequest } from "./types.ts";
 
-
 type Elements = {
   status: HTMLDivElement;
   result: HTMLDivElement;
